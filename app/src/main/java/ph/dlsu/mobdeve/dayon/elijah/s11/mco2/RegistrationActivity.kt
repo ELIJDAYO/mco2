@@ -30,13 +30,16 @@ class RegistrationActivity : AppCompatActivity() {
         }
     }
     private fun signUpUser() {
+        val email = binding.etSEmailAddress.text.toString()
+        val pass = binding.etSPassword.text.toString()
+        val confpass = binding.etSConfPassword.text.toString()
         // check pass
-        if (binding.etSEmailAddress.toString().isBlank() || binding.etSPassword.toString().isBlank() || binding.etSConfPassword.toString().isBlank()) {
+        if (email.isEmpty() || pass.isEmpty() || confpass.isEmpty()) {
             Toast.makeText(this, "Email and Password can't be blank", Toast.LENGTH_SHORT).show()
             return
         }
 
-        if (binding.etSPassword != binding.etSConfPassword) {
+        if (binding.etSPassword.toString() != binding.etSConfPassword.toString()) {
             Toast.makeText(this, "Password and Confirm Password do not match", Toast.LENGTH_SHORT)
                 .show()
             return
