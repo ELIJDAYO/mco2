@@ -8,5 +8,12 @@
     <string name="already_have_an_account_login">Already have an account, Login</string>
     <string name="login">Login</string>
     <string name="don_t_have_an_account_sign_in">Don`t have an account, Sign-in</string>
+    <string name="selected_item">Selected item:</string>
+    <string-array name="Gender">
+        <item>Male</item>
+        <item>Female</item>
+        <item>N/A</item>
+    </string-array>
+    <string name="year">Select Birth Year</string>
 
 </resources>

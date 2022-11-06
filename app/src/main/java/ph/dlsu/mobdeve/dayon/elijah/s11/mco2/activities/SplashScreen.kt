@@ -1,4 +1,4 @@
-package ph.dlsu.mobdeve.dayon.elijah.s11.mco2
+package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity

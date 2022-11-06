@@ -1,8 +1,10 @@
-package ph.dlsu.mobdeve.dayon.elijah.s11.mco2
+package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
+import android.content.ContentValues
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityLoginBinding
@@ -42,7 +44,8 @@ class LoginActivity : AppCompatActivity() {
             if (it.isSuccessful) {
                 Toast.makeText(this, "Successfully LoggedIn", Toast.LENGTH_SHORT).show()
             } else
-                Toast.makeText(this, "Log In failed ", Toast.LENGTH_SHORT).show()
+                Log.w(ContentValues.TAG, "signInWithCustomToken:failure", it.exception)
+            Toast.makeText(this, "Log In failed ", Toast.LENGTH_SHORT).show()
         }
     }
 }
