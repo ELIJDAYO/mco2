@@ -29,18 +29,29 @@ import java.util.*
 class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetListener {
     private lateinit var binding:ActivityRegistrationBinding
     private val calendar = Calendar.getInstance()
-    private val formatter = SimpleDateFormat("mm-dd-yyyy",Locale.TAIWAN)
+    private val formatter = SimpleDateFormat("yyyy-MM-dd",Locale.TAIWAN)
     // create Firebase authentication object
-    private lateinit var auth: FirebaseAuth
-    private var chosenyear: Int = 0
     @RequiresApi(Build.VERSION_CODES.N)
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityRegistrationBinding.inflate(layoutInflater)
         setContentView(binding.root)
         // Initialising auth object
-        auth = Firebase.auth
-
+        initSpinner()
+        binding.btnSSigned.setOnClickListener {
+            signUpUser()
+        }
+        // switching from signUp Activity to Login Activity
+        binding.tvRedirectLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnYear.setOnClickListener {
+            DatePickerDialog(this,this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show()
+        }
+    }
+    private fun initSpinner(){
         val gender = resources.getStringArray(R.array.Gender)
         val spinner = binding.spGender
         if (spinner != null) {
@@ -58,23 +69,10 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                 }
 
                 override fun onNothingSelected(parent: AdapterView<*>) {
-                    // write code to perform some action
                 }
             }
         }
-        binding.btnSSigned.setOnClickListener {
-            signUpUser()
-        }
-        // switching from signUp Activity to Login Activity
-        binding.tvRedirectLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
-        binding.btnYear.setOnClickListener {
-            DatePickerDialog(this,this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show()
-        }
     }
-
     private fun signUpUser() {
         val username = binding.etUsername.text.toString()
         val email = binding.etSEmailAddress.text.toString()
@@ -100,6 +98,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             progressDialog.setCanceledOnTouchOutside(false)
             progressDialog.show()
 
+            val auth: FirebaseAuth = FirebaseAuth.getInstance()
             auth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful) {
@@ -128,31 +127,31 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         val userMap=HashMap<String,Any>()
         userMap["uid"]=currentUserId
         userMap["username"]=userName.toLowerCase()
+        userMap["email"]=email.toLowerCase()
         userMap["birthday"]=birthday
         userMap["gender"]=gender
-        userMap["image"]= ContextCompat.getDrawable(applicationContext,R.mipmap.ic_launcher_tmp_prof) as Drawable
+        userMap["image"]= "R.drawable.superhero"
 
 
         userRef.child(currentUserId).setValue(userMap)
             .addOnCompleteListener {task ->
-                if(task.isSuccessful)
-                {
+                if(task.isSuccessful) {
                     Toast.makeText(this,"Account has been created",Toast.LENGTH_SHORT).show()
 
-
                     FirebaseDatabase.getInstance().reference
-                        .child("Follow").child(currentUserId)
-                        .child("Following").child(currentUserId)
+                        .child("Follow")
+                        .child(currentUserId)
+                        .child("Following")
+                        .child(currentUserId)
                         .setValue(true)
 
 
-                    val intent=Intent(this, MainActivity::class.java)
+                    val intent=Intent(this, LoginActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
                 }
-                else
-                {
+                else {
                     val message=task.exception!!.toString()
                     Toast.makeText(this,"Error : $message", Toast.LENGTH_LONG).show()
                     FirebaseAuth.getInstance().signOut()
@@ -164,6 +163,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         Log.e("Calendar","$p1 -- $p2 -- $p3")
         calendar.set(p1,p2,p3)
         displayFormattedDate(calendar.timeInMillis)
+
     }
     private fun displayFormattedDate(timestamp:Long){
         binding.tvAge.text = formatter.format(timestamp)

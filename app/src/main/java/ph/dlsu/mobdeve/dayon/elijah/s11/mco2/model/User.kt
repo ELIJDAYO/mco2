@@ -21,4 +21,44 @@ class User {
         this.gender = bio
         this.image = image
     }
+    //getters and Setters
+    fun getUsername(): String {
+        return username
+    }
+
+    fun setUsername(username: String) {
+        this.username = username
+    }
+
+    fun getUid(): String {
+        return uid
+    }
+
+    fun setUid(uid: String) {
+        this.uid = uid
+    }
+
+    fun getBirthday(): String {
+        return birthday
+    }
+
+    fun setBirthday(birthday: String) {
+        this.birthday = birthday
+    }
+
+    fun getGender(): String {
+        return gender
+    }
+
+    fun setGender(gender: String) {
+        this.gender = gender
+    }
+
+    fun getImage(): String {
+        return image
+    }
+
+    fun setImage(image: String) {
+        this.image = image
+    }
 }
