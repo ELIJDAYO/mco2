@@ -13,9 +13,12 @@
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/drawable/btn_shape_round.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/drawable/custom_btn1.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/activity_login.xml" value="0.22" />
-        <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/activity_main.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/activity_main.xml" value="0.22" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/activity_registration.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/activity_splash_screen.xml" value="0.17135416666666667" />
+        <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/fragment_home.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/fragment_home_fragment.xml" value="0.2328125" />
+        <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/menu/bot_nav_menu.xml" value="0.17552083333333332" />
       </map>
     </option>
   </component>
