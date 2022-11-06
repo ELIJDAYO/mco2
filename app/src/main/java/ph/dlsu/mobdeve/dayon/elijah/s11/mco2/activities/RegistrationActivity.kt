@@ -125,6 +125,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
         val userMap=HashMap<String,Any>()
         userMap["uid"]=currentUserId
+        val fullName = ""
         userMap["fullname"]=fullName
         userMap["username"]=userName.toLowerCase()
         userMap["email"]=email
@@ -145,7 +146,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                         .setValue(true)
 
 
-                    val intent=Intent(this@SignUpActivity, MainActivity::class.java)
+                    val intent=Intent(this, MainActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
