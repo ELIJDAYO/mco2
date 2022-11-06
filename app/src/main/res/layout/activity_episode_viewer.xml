@@ -80,6 +80,14 @@
                 app:layout_constraintStart_toEndOf="@+id/novelChapSelectBTN"
                 app:layout_constraintTop_toTopOf="@+id/novelChapSelectBTN" />
 
+            <TextView
+                android:id="@+id/commentTitleTV"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/novelChapTitle"
+                app:layout_constraintTop_toBottomOf="@+id/novelPreviousBTN"
+                android:text="Comments:"/>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -130,5 +138,7 @@
         android:adjustViewBounds="true"
         android:background="@color/colorNavBar" />
 
-ano lcenworld wala pa hahah
+
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
