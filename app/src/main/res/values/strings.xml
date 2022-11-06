@@ -16,4 +16,9 @@
     </string-array>
     <string name="year">Select Birth Year</string>
 
+
+    <string name="novelTitle">Classroom of the Elite</string>
+    <string name="novelAuthor">Syougo Kinugasa</string>
+    <string name="novelSynopsis">On the surface, Koudo Ikusei Senior High School is a utopia. The students enjoy an unparalleled amount of freedom, and it is ranked highly in Japan. However, the reality is less than ideal. Four classes, A through D, are ranked in order of merit, and only the top classes receive favorable treatment.</string>
+    <string name="starCount">839</string>
 </resources>
