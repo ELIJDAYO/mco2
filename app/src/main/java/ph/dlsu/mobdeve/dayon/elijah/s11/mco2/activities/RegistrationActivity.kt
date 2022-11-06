@@ -125,7 +125,6 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
         val userMap=HashMap<String,Any>()
         userMap["uid"]=currentUserId
-        val fullName = ""
         userMap["fullname"]=fullName
         userMap["username"]=userName.toLowerCase()
         userMap["email"]=email
