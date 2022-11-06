@@ -34,7 +34,7 @@
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/navSearchImg"
+        android:src="@drawable/nacsearchimg"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
@@ -45,7 +45,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/navProfileIB"
         app:layout_constraintStart_toStartOf="@+id/navSearchIB"
-        android:src="@drawable/navHomeImg"
+        android:src="@drawable/nav_home_img"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
@@ -56,7 +56,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/navSearchIB"
-        android:src="@drawable/navNotifImg"
+        android:src="@drawable/nav_notif_img"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
@@ -66,7 +66,7 @@
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/navProfileImg"
+        android:src="@drawable/nav_profile_img"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
