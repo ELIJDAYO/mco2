@@ -15,6 +15,8 @@ import android.widget.Toast
 import androidx.annotation.RequiresApi
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityRegistrationBinding
@@ -119,7 +121,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         progressDialog: ProgressDialog
     ) {
         val currentUserId=FirebaseAuth.getInstance().currentUser!!.uid
-        val userRef : DatabaseReference=FirebaseDatabase.getInstance().reference.child("Users")
+        val userRef : DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
 
         val userMap=HashMap<String,Any>()
         userMap["uid"]=currentUserId
