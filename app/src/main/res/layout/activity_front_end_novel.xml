@@ -9,9 +9,10 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="680dp"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/navHomeIB">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

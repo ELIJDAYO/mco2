@@ -9,9 +9,10 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="680dp"
+        android:layout_height="0dp"
         android:fillViewport="true"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/navHomeIB">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -22,46 +23,46 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="30dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="30dp"
+                android:background="@color/colorTextBackground"
+                android:padding="10dp"
+                android:text="Chapter 1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:layout_marginTop="50dp"
-                android:text="Chapter 1"
-                android:padding="10dp"
-                android:background="@color/colorTextBackground"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/novelContentTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:background="@color/colorTextBackground"
+                android:justificationMode="inter_word"
+                android:padding="15dp"
                 android:text="Temporary"
                 app:layout_constraintEnd_toEndOf="@+id/novelChapTitle"
                 app:layout_constraintStart_toStartOf="@+id/novelChapTitle"
-                app:layout_constraintTop_toBottomOf="@+id/novelChapTitle"
-                android:layout_marginTop="20dp"
-                android:padding="15dp"
-                android:justificationMode="inter_word"
-                android:background="@color/colorTextBackground"/>
+                app:layout_constraintTop_toBottomOf="@+id/novelChapTitle" />
             <!--"@string/novelContent"-->
 
             <Button
                 android:id="@+id/novelChapSelectBTN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="Chapter 1"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/novelContentTV"
-                android:layout_marginTop="20dp"
-                android:text="Chapter 1"/>
+                app:layout_constraintTop_toBottomOf="@+id/novelContentTV" />
 
             <ImageButton
                 android:id="@+id/novelPreviousBTN"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/previous_arrow_img"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
                 app:layout_constraintBottom_toBottomOf="@+id/novelChapSelectBTN"
                 app:layout_constraintEnd_toStartOf="@+id/novelChapSelectBTN"
                 app:layout_constraintStart_toStartOf="parent"
@@ -71,14 +72,13 @@
                 android:id="@+id/novelNextBTN"
                 android:layout_width="50dp"
                 android:layout_height="0dp"
+                android:adjustViewBounds="true"
                 android:background="@drawable/next_arrow_img"
                 android:scaleType="fitCenter"
-                android:adjustViewBounds="true"
                 app:layout_constraintBottom_toBottomOf="@+id/novelChapSelectBTN"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/novelChapSelectBTN"
                 app:layout_constraintTop_toTopOf="@+id/novelChapSelectBTN" />
-
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
