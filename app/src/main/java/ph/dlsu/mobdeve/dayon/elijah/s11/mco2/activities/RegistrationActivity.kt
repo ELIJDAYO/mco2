@@ -3,6 +3,7 @@ package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,7 +13,9 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
+import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -100,7 +103,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             auth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful) {
-                        saveUserInfo(username, email, pass, formatter.parse(birthday), gender, progressDialog)
+                        saveUserInfo(username, email, birthday, gender, progressDialog)
                     }
                     else
                     {
@@ -115,8 +118,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun saveUserInfo(
         userName: String,
         email: String,
-        password: String,
-        birthday: Date,
+        birthday: String,
         gender: String,
         progressDialog: ProgressDialog
     ) {
@@ -125,11 +127,10 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
 
         val userMap=HashMap<String,Any>()
         userMap["uid"]=currentUserId
-        userMap["fullname"]=fullName
         userMap["username"]=userName.toLowerCase()
-        userMap["email"]=email
-        userMap["bio"]="Hey! I am using InstaApp"
-        userMap["image"]="gs://instagram-clone-app-205f9.appspot.com/Default images/profile.png"
+        userMap["birthday"]=birthday
+        userMap["gender"]=gender
+        userMap["image"]= ContextCompat.getDrawable(applicationContext,R.mipmap.ic_launcher_tmp_prof) as Drawable
 
 
         userRef.child(currentUserId).setValue(userMap)

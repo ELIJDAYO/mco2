@@ -24,7 +24,7 @@
                 android:layout_marginTop="50dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/novelCoverImg" />
+                android:src="@drawable/novelcoverimg" />
 
             <TextView
                 android:id="@+id/novelTitleTV"
@@ -71,7 +71,7 @@
                 android:layout_height="40dp"
                 app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                android:src="@drawable/shareTWImg"
+                android:src="@drawable/sharetwimg"
                 android:background="@drawable/shareTWImg"
                 android:scaleType="fitCenter"/>
 
@@ -82,7 +82,7 @@
                 app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
                 app:layout_constraintEnd_toStartOf="@+id/shareTWIB"
                 android:layout_marginEnd="10dp"
-                android:src="@drawable/shareFBImg"
+                android:src="@drawable/sharefbimg"
                 android:background="@drawable/shareFBImg"
                 android:scaleType="fitCenter" />
 
@@ -145,7 +145,7 @@
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/navSearchImg"
+        android:src="@drawable/nacsearchimg"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
@@ -156,7 +156,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/navProfileIB"
         app:layout_constraintStart_toStartOf="@+id/navSearchIB"
-        android:src="@drawable/navHomeImg"
+        android:src="@drawable/navhomeimg"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
@@ -167,7 +167,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/navSearchIB"
-        android:src="@drawable/navNotifImg"
+        android:src="@drawable/navnotifimg"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
@@ -177,7 +177,7 @@
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:src="@drawable/navProfileImg"
+        android:src="@drawable/navprofileimg"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"/>
 
