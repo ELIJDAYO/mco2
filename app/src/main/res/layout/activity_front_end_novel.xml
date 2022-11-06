@@ -121,34 +121,46 @@
     </androidx.core.widget.NestedScrollView>
 
     <ImageButton
-        android:id="@+id/search"
+        android:id="@+id/navSearchIB"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/navSearchImg"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
     <ImageButton
-        android:id="@+id/home"
+        android:id="@+id/navHomeIB"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/profile"
-        app:layout_constraintStart_toStartOf="@+id/search" />
+        app:layout_constraintEnd_toStartOf="@+id/navProfileIB"
+        app:layout_constraintStart_toStartOf="@+id/navSearchIB"
+        android:src="@drawable/navHomeImg"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
     <ImageButton
-        android:id="@+id/inbox"
+        android:id="@+id/navNotificationIB"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/search" />
+        app:layout_constraintStart_toEndOf="@+id/navSearchIB"
+        android:src="@drawable/navNotifImg"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
     <ImageButton
-        android:id="@+id/profile"
+        android:id="@+id/navProfileIB"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"
+        android:src="@drawable/navProfileImg"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"/>
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
