@@ -10,6 +10,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="680dp"
+        android:fillViewtype="true"
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -147,29 +148,32 @@
         app:layout_constraintStart_toStartOf="parent"
         android:src="@drawable/nacsearchimg"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar"/>
 
     <ImageButton
         android:id="@+id/navHomeIB"
-        android:layout_width="100dp"
+        android:layout_width="90dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/navProfileIB"
         app:layout_constraintStart_toStartOf="@+id/navSearchIB"
         android:src="@drawable/nav_home_img"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar"/>
 
     <ImageButton
         android:id="@+id/navNotificationIB"
-        android:layout_width="100dp"
+        android:layout_width="90dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/navSearchIB"
         android:src="@drawable/nav_notif_img"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar"/>
 
     <ImageButton
         android:id="@+id/navProfileIB"
@@ -179,7 +183,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:src="@drawable/nav_profile_img"
         android:scaleType="fitCenter"
-        android:adjustViewBounds="true"/>
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
