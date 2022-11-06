@@ -40,11 +40,10 @@
                 android:background="@color/colorTextBackground"
                 android:justificationMode="inter_word"
                 android:padding="15dp"
-                android:text="Temporary"
+                android:text="@string/novelContent"
                 app:layout_constraintEnd_toEndOf="@+id/novelChapTitle"
                 app:layout_constraintStart_toStartOf="@+id/novelChapTitle"
                 app:layout_constraintTop_toBottomOf="@+id/novelChapTitle" />
-            <!--"@string/novelContent"-->
 
             <Button
                 android:id="@+id/novelChapSelectBTN"
@@ -86,7 +85,42 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@+id/novelChapTitle"
                 app:layout_constraintTop_toBottomOf="@+id/novelPreviousBTN"
+                android:layout_marginTop="20dp"
                 android:text="Comments:"/>
+
+            <EditText
+                android:id="@+id/commentNameET"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:hint="NAME"
+                app:layout_constraintEnd_toEndOf="@+id/novelChapTitle"
+                app:layout_constraintStart_toStartOf="@+id/novelChapTitle"
+                app:layout_constraintTop_toBottomOf="@+id/commentTitleTV"
+                android:padding="10dp"
+                android:background="@color/colorTextBackground"/>
+
+            <EditText
+                android:id="@+id/commentDescET"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@color/colorTextBackground"
+                android:hint="Description"
+                android:padding="10dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintEnd_toEndOf="@+id/novelChapTitle"
+                app:layout_constraintStart_toStartOf="@+id/novelChapTitle"
+                app:layout_constraintTop_toBottomOf="@+id/commentNameET"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:background="@color/colorTextBackground"
+                app:layout_constraintEnd_toEndOf="@+id/novelChapTitle"
+                app:layout_constraintStart_toStartOf="@+id/novelChapTitle"
+                app:layout_constraintTop_toBottomOf="@+id/commentDescET"
+                android:layout_marginTop="20dp"
+                android:text="gamerBoy : THis is a Very Nice NOVEL"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>
