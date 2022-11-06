@@ -3,7 +3,6 @@ package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
-import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,9 +12,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.DatePicker
 import android.widget.Toast
-import androidx.annotation.DrawableRes
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseReference
@@ -42,6 +39,20 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         auth = Firebase.auth
 
         val gender = resources.getStringArray(R.array.Gender)
+        initSpinner()
+        binding.btnSSigned.setOnClickListener {
+            signUpUser()
+        }
+        // switching from signUp Activity to Login Activity
+        binding.tvRedirectLogin.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            startActivity(intent)
+        }
+        binding.btnYear.setOnClickListener {
+            DatePickerDialog(this,this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show()
+        }
+    }
+    private fun initSpinner(){
         val spinner = binding.spGender
         if (spinner != null) {
             val adapter = ArrayAdapter(this,
@@ -56,25 +67,15 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                         getString(R.string.selected_item) + " " +
                                 "" + gender[position], Toast.LENGTH_SHORT).show()
                 }
-
                 override fun onNothingSelected(parent: AdapterView<*>) {
                     // write code to perform some action
+                    dismiss()
+                    onDestroy()
                 }
             }
-        }
-        binding.btnSSigned.setOnClickListener {
-            signUpUser()
-        }
-        // switching from signUp Activity to Login Activity
-        binding.tvRedirectLogin.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            startActivity(intent)
-        }
-        binding.btnYear.setOnClickListener {
-            DatePickerDialog(this,this,calendar.get(Calendar.YEAR),calendar.get(Calendar.MONTH),calendar.get(Calendar.DAY_OF_MONTH)).show()
+
         }
     }
-
     private fun signUpUser() {
         val username = binding.etUsername.text.toString()
         val email = binding.etSEmailAddress.text.toString()
@@ -94,23 +95,16 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             return
         }
         else {
-            val progressDialog= ProgressDialog(this@RegistrationActivity)
-            progressDialog.setTitle("SignUp")
-            progressDialog.setMessage("Please wait...")
-            progressDialog.setCanceledOnTouchOutside(false)
-            progressDialog.show()
 
             auth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful) {
-                        saveUserInfo(username, email, birthday, gender, progressDialog)
+                        saveUserInfo(username, email, pass, bithday, gender, progressDialog)
                     }
-                    else
-                    {
+                    else {
                         val message=task.exception!!.toString()
                         Toast.makeText(this,"Error : $message", Toast.LENGTH_LONG).show()
                         auth.signOut()
-                        progressDialog.dismiss()
                     }
                 }
         }
@@ -118,25 +112,34 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
     private fun saveUserInfo(
         userName: String,
         email: String,
-        birthday: String,
+        password: String,
+        birthday: Date,
         gender: String,
         progressDialog: ProgressDialog
     ) {
+        val progressDialog= ProgressDialog(this@SignUpActivity)
+        progressDialog.setTitle("SignUp")
+        progressDialog.setMessage("Please wait...")
+        progressDialog.setCanceledOnTouchOutside(false)
+        progressDialog.show()
+
         val currentUserId=FirebaseAuth.getInstance().currentUser!!.uid
         val userRef : DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
 
         val userMap=HashMap<String,Any>()
         userMap["uid"]=currentUserId
         userMap["username"]=userName.toLowerCase()
+        userMap["email"]=email
         userMap["birthday"]=birthday
         userMap["gender"]=gender
-        userMap["image"]= ContextCompat.getDrawable(applicationContext,R.mipmap.ic_launcher_tmp_prof) as Drawable
+        userMap["image"]=ContextCompat.getDrawable(this, R.mipmap.ic_launcher_tmp_prof)
 
 
         userRef.child(currentUserId).setValue(userMap)
-            .addOnCompleteListener {task ->
-                if(task.isSuccessful)
+            .addOnCompleteListener {
+                if(it.isSuccessful)
                 {
+                    progressDialog.dismiss()
                     Toast.makeText(this,"Account has been created",Toast.LENGTH_SHORT).show()
 
 
@@ -146,7 +149,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                         .setValue(true)
 
 
-                    val intent=Intent(this, MainActivity::class.java)
+                    val intent=Intent(this, LoginActivity::class.java)
                     intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
                     startActivity(intent)
                     finish()
@@ -156,7 +159,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                     val message=task.exception!!.toString()
                     Toast.makeText(this,"Error : $message", Toast.LENGTH_LONG).show()
                     FirebaseAuth.getInstance().signOut()
-                    progressDialog.dismiss()
+                    progressDialog.finish()
                 }
             }
     }
