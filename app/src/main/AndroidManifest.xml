@@ -15,7 +15,10 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".EpisodeViewer"
+            android:name=".activities.OtherUser"
+            android:exported="false" />
+        <activity
+            android:name=".activities.EpisodeViewer"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
