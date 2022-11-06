@@ -79,6 +79,8 @@
                 app:layout_constraintStart_toEndOf="@+id/novelChapSelectBTN"
                 app:layout_constraintTop_toTopOf="@+id/novelChapSelectBTN" />
 
+
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
@@ -88,7 +90,7 @@
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:src="@drawable/nacsearchimg"
+        android:src="@drawable/nav_search_img"
         android:scaleType="fitCenter"
         android:adjustViewBounds="true"
         android:background="@color/colorNavBar"/>
