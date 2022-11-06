@@ -17,14 +17,14 @@
             android:layout_height="match_parent">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/novelCover"
                 android:layout_width="130dp"
                 android:layout_height="180dp"
                 android:layout_marginStart="30dp"
                 android:layout_marginTop="50dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:src="@drawable/novelCoverImg" />
 
             <TextView
                 android:id="@+id/novelTitle"
@@ -32,7 +32,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="50dp"
                 android:layout_marginEnd="30dp"
-                android:text="Random Novel Title Temporary"
+                android:text="@string/novelTitle"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -42,7 +42,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/novelTitle"
                 android:layout_marginTop="10dp"
-                android:text="Random Novel Author Name"
+                android:text="@string/novelAuthor"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitle"
                 app:layout_constraintStart_toStartOf="@+id/novelTitle"
                 app:layout_constraintTop_toBottomOf="@+id/novelTitle" />
@@ -51,31 +51,52 @@
                 android:id="@+id/star"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="@+id/novelTitle" />
+                app:layout_constraintBottom_toBottomOf="@+id/novelCover"
+                app:layout_constraintStart_toStartOf="@+id/novelTitle"
+                android:background="@drawable/star"/>
+
+            <TextView
+                android:id="@+id/starCount"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/starCount"
+                app:layout_constraintBottom_toBottomOf="@+id/novelCover"
+                app:layout_constraintEnd_toStartOf="@+id/shareFB"
+                app:layout_constraintStart_toEndOf="@+id/star"
+                app:layout_constraintTop_toTopOf="@+id/star"
+                android:gravity="center"/>
 
             <ImageButton
                 android:id="@+id/shareTW"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle" />
+                app:layout_constraintBottom_toBottomOf="@+id/novelCover"
+                app:layout_constraintEnd_toEndOf="@+id/novelTitle"
+                android:src="@drawable/shareTWImg"
+                android:background="@drawable/shareTWImg"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
 
             <ImageButton
                 android:id="@+id/shareFB"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toStartOf="@+id/shareTW" />
+                app:layout_constraintBottom_toBottomOf="@+id/novelCover"
+                app:layout_constraintEnd_toStartOf="@+id/shareTW"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/shareFBImg"
+                android:background="@drawable/shareFBImg"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
 
             <TextView
                 android:id="@+id/synopsis"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="20dp"
-                android:text="1123123123"
+                android:text="@string/novelSynopsis"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/novelCover"
                 app:layout_constraintTop_toBottomOf="@+id/star" />
 
 
@@ -85,7 +106,7 @@
                 android:layout_height="30dp"
                 android:layout_marginTop="15dp"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/novelCover"
                 app:layout_constraintTop_toBottomOf="@+id/synopsis" />
 
             <Button
@@ -95,7 +116,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Chapter 2"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/novelCover"
                 app:layout_constraintTop_toBottomOf="@+id/genre" />
 
             <Button
@@ -105,7 +126,7 @@
                 android:layout_marginTop="10dp"
                 android:text="Chapter 1"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/novelCover"
                 app:layout_constraintTop_toBottomOf="@+id/chapter2" />
 
             <TextView
@@ -115,7 +136,7 @@
                 android:layout_marginTop="20dp"
                 android:text="gamerBoy : THis is a Very Nice NOVEL"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="@+id/novelCover"
                 app:layout_constraintTop_toBottomOf="@+id/chapter1" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
