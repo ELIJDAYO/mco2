@@ -125,7 +125,19 @@
                 android:padding="10dp"
                 android:background="@color/colorTextBackground"/>
 
-            <Button
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/novelChap2BTN"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:text="Chapter 2"
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
+                app:layout_constraintTop_toBottomOf="@+id/novelGenreTV"
+                />
+
+            <!--<Button
                 android:id="@+id/novelChap2BTN"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -133,9 +145,9 @@
                 android:text="Chapter 2"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
                 app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelGenreTV" />
+                app:layout_constraintTop_toBottomOf="@+id/novelGenreTV" />-->
 
-            <Button
+            <!--<Button
                 android:id="@+id/novelChap1BTN"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
@@ -143,19 +155,19 @@
                 android:text="Chapter 1"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
                 app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelChap2BTN" />
+                app:layout_constraintTop_toBottomOf="@+id/novelChap2BTN" />-->
 
             <TextView
                 android:id="@+id/commentTV"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:background="@color/colorTextBackground"
+                android:padding="10dp"
                 android:text="gamerBoy : THis is a Very Nice NOVEL"
                 app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
                 app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelChap1BTN"
-                android:padding="10dp"
-                android:background="@color/colorTextBackground"/>
+                app:layout_constraintTop_toBottomOf="@+id/novelChap2BTN"
+                android:layout_marginTop="20dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
