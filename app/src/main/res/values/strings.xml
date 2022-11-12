@@ -7,8 +7,8 @@
     <string name="signed">Signed</string>
     <string name="already_have_an_account_login">Already have an account, Login</string>
     <string name="login">Login</string>
-    <string name="don_t_have_an_account_sign_in">Don`t have an account, Sign-in</string>
-    <string name="selected_item">Selected item:</string>
+    <string name="don_t_have_an_account_sign_in">Dont have an account, Sign-in</string>
+    <string name="selected_item">Selected item </string>
     <string-array name="Gender">
         <item>Male</item>
         <item>Female</item>
@@ -45,6 +45,17 @@
     <string name="title_home">title_home</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="total_of_n_episodes">Total of N episodes</string>
+    <string name="added_on_yyyy_mm_dd">Added on yyyy-mm-dd</string>
+    <string name="episodes">Episodes</string>
+    <string name="n">N</string>
+    <string name="_0">0</string>
+    <string name="placeholder">Placeholder</string>
+    <string name="followers">Followers</string>
+    <string name="stars">Stars</string>
+    <string name="works">Works</string>
+    <string name="bookmarks">Bookmarks</string>
+    <string name="followed">Followed</string>
 
 
 </resources>
