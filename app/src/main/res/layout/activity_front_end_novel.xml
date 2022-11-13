@@ -9,146 +9,212 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="680dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="0dp"
+        android:fillViewport="true"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/navHomeIB">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
+            <TextView
+                android:id="@+id/novelTitleBGTV"
+                android:layout_width="0dp"
+                android:layout_height="00dp"
+                app:layout_constraintBottom_toBottomOf="@+id/starIB"
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelTitleTV"
+                app:layout_constraintTop_toTopOf="@+id/novelTitleTV"
+                android:background="@color/colorTextBackground"/>
+
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/novelCoverIV"
                 android:layout_width="130dp"
                 android:layout_height="180dp"
                 android:layout_marginStart="30dp"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="50dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                android:src="@drawable/novel_cover_img"
+                />
 
             <TextView
-                android:id="@+id/novelTitle"
+                android:id="@+id/novelTitleTV"
                 android:layout_width="170dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="70dp"
+                android:layout_marginTop="50dp"
                 android:layout_marginEnd="30dp"
-                android:text="Random Novel Title Temporary"
+                android:text="@string/novelTitle"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                android:padding="10dp"/>
 
             <TextView
-                android:id="@+id/novelAuthor"
+                android:id="@+id/novelAuthorTV"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/novelTitle"
-                android:layout_marginTop="10dp"
-                android:text="Random Novel Author Name"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/novelTitle"
-                app:layout_constraintTop_toBottomOf="@+id/novelTitle" />
+                android:text="@string/novelAuthor"
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelTitleTV"
+                app:layout_constraintTop_toBottomOf="@+id/novelTitleTV"
+                android:padding="10dp"/>
 
             <ImageButton
-                android:id="@+id/star"
+                android:id="@+id/starIB"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintStart_toStartOf="@+id/novelTitle" />
-
-            <ImageButton
-                android:id="@+id/shareTW"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle" />
-
-            <ImageButton
-                android:id="@+id/shareFB"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView"
-                app:layout_constraintEnd_toStartOf="@+id/shareTW" />
+                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
+                app:layout_constraintStart_toStartOf="@+id/novelTitleTV"
+                android:background="@drawable/star"/>
 
             <TextView
-                android:id="@+id/synopsis"
+                android:id="@+id/starCountTV"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/starCount"
+                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
+                app:layout_constraintEnd_toStartOf="@+id/shareFBIB"
+                app:layout_constraintStart_toEndOf="@+id/starIB"
+                app:layout_constraintTop_toTopOf="@+id/starIB"
+                android:gravity="center"/>
+
+            <ImageButton
+                android:id="@+id/shareTWIB"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                android:src="@drawable/share_twi_img"
+                android:background="@drawable/share_twi_img"
+                android:scaleType="fitCenter"/>
+
+            <ImageButton
+                android:id="@+id/shareFBIB"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
+                app:layout_constraintEnd_toStartOf="@+id/shareTWIB"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/share_fb_img"
+                android:background="@drawable/share_fb_img"
+                android:scaleType="fitCenter" />
+
+            <TextView
+                android:id="@+id/novelSynopsisTV"
                 android:layout_width="0dp"
                 android:layout_height="150dp"
                 android:layout_marginTop="20dp"
-                android:text="1123123123"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/star" />
+                android:text="@string/novelSynopsis"
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
+                app:layout_constraintTop_toBottomOf="@+id/starIB"
+                android:padding="10dp"
+                android:background="@color/colorTextBackground"/>
 
 
             <TextView
-                android:id="@+id/genre"
+                android:id="@+id/novelGenreTV"
                 android:layout_width="0dp"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/synopsis" />
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
+                app:layout_constraintTop_toBottomOf="@+id/novelSynopsisTV"
+                android:text="@string/novelGenre"
+                android:padding="10dp"
+                android:background="@color/colorTextBackground"/>
 
-            <Button
-                android:id="@+id/chapter2"
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/novelChapBTN"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
+                app:layout_constraintTop_toBottomOf="@+id/novelGenreTV"
+                android:nestedScrollingEnabled="false" />
+
+            <!--<Button
+                android:id="@+id/novelChap2BTN"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:text="Chapter 2"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/genre" />
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
+                app:layout_constraintTop_toBottomOf="@+id/novelGenreTV" />-->
 
-            <Button
-                android:id="@+id/chapter1"
+            <!--<Button
+                android:id="@+id/novelChap1BTN"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="10dp"
                 android:text="Chapter 1"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/chapter2" />
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
+                app:layout_constraintTop_toBottomOf="@+id/novelChap2BTN" />-->
 
             <TextView
-                android:id="@+id/comment"
+                android:id="@+id/commentTV"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="20dp"
+                android:background="@color/colorTextBackground"
+                android:padding="10dp"
                 android:text="gamerBoy : THis is a Very Nice NOVEL"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitle"
-                app:layout_constraintStart_toStartOf="@+id/imageView"
-                app:layout_constraintTop_toBottomOf="@+id/chapter1" />
+                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
+                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
+                app:layout_constraintTop_toBottomOf="@+id/novelChapBTN"
+                android:layout_marginTop="20dp"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
     <ImageButton
-        android:id="@+id/search"
+        android:id="@+id/navSearchIB"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/nav_search_img"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar"/>
 
     <ImageButton
-        android:id="@+id/home"
-        android:layout_width="100dp"
+        android:id="@+id/navHomeIB"
+        android:layout_width="90dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/profile"
-        app:layout_constraintStart_toStartOf="@+id/search" />
+        app:layout_constraintEnd_toStartOf="@+id/navProfileIB"
+        app:layout_constraintStart_toStartOf="@+id/navSearchIB"
+        android:src="@drawable/nav_home_img"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar"/>
 
     <ImageButton
-        android:id="@+id/inbox"
+        android:id="@+id/navNotificationIB"
+        android:layout_width="90dp"
+        android:layout_height="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/navSearchIB"
+        android:src="@drawable/nav_notif_img"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar"/>
+
+    <ImageButton
+        android:id="@+id/navProfileIB"
         android:layout_width="100dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/search" />
-
-    <ImageButton
-        android:id="@+id/profile"
-        android:layout_width="100dp"
-        android:layout_height="50dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:src="@drawable/nav_profile_img"
+        android:scaleType="fitCenter"
+        android:adjustViewBounds="true"
+        android:background="@color/colorNavBar" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
