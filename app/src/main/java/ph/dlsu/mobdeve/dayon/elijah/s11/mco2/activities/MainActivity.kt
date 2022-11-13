@@ -8,6 +8,8 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityMainBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.HomeFragment
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.NotificationFragment
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.SearchFragment
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.UserFragment
 
 
@@ -42,6 +44,15 @@ class MainActivity : AppCompatActivity() {
                 moveToFragment(UserFragment())
                 return@OnNavigationItemSelectedListener true
             }
+            R.id.nav_notifications -> {
+                moveToFragment(NotificationFragment())
+                return@OnNavigationItemSelectedListener true
+            }
+            R.id.nav_search -> {
+                moveToFragment(SearchFragment())
+                return@OnNavigationItemSelectedListener true
+            }
+
         }
         false
     }
