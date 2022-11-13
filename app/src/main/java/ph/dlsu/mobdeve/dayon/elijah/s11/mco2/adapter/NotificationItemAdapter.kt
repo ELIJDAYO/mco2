@@ -1,22 +1,17 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter
 
-import android.content.Context
 import android.content.Intent
-import android.content.res.Resources
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovel
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ItemNotificationBinding
-import java.util.stream.Collectors.toCollection
 
 
 class NotificationItemAdapter : RecyclerView.Adapter<NotificationItemAdapter.ViewHolder>(){
-    private var notificationArrayList = arrayOf(
+    private var notificationArray = arrayOf(
         "You got a comment by @shimara",
         "@garian reported a grammar error",
         "Reincarnated slave reached 1000 stars!"
@@ -48,11 +43,11 @@ class NotificationItemAdapter : RecyclerView.Adapter<NotificationItemAdapter.Vie
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.notificationText.text = notificationArrayList[i]
+        viewHolder.notificationText.text = notificationArray[i]
     }
 
     override fun getItemCount(): Int {
-        return notificationArrayList.size
+        return notificationArray.size
     }
 
 
