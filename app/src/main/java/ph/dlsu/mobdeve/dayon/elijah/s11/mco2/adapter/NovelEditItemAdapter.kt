@@ -10,25 +10,19 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 
 
-class NovelItemAdapter : RecyclerView.Adapter<NovelItemAdapter.ViewHolder>() {
+class NovelEditItemAdapter : RecyclerView.Adapter<NovelEditItemAdapter.ViewHolder>() {
     private val titleNovel = arrayOf(
-        "Goblin Slayer",
-        "灰まみれの騎士",
-        "13番目の転生者",
+        "Battle Ship Yamato Awakens",
+        "Dungeon Seeker",
+        "Helmed Beast Slayer",
         "High School of the Elites")
-    private val numEpisodes = arrayOf(
-        "21", "33", "19", "100",
-    )
-    private val date = arrayOf(
-        "Jan 1", "Feb 1", "March 1", "April 1")
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemTitle: TextView? = null
-        var itemDate: TextView? = null
-        var itemCount: TextView? = null
+
         init {
             itemTitle = itemView.findViewById(R.id.tv_title_inp)
-            itemDate = itemView.findViewById(R.id.tv_date_inp)
-            itemCount = itemView.findViewById(R.id.tv_count_inp)
+
             itemView.setOnClickListener {
                 var position: Int = bindingAdapterPosition
                 val context = itemView.context
@@ -55,8 +49,6 @@ class NovelItemAdapter : RecyclerView.Adapter<NovelItemAdapter.ViewHolder>() {
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         viewHolder.itemTitle?.text = titleNovel[i]
-        viewHolder.itemDate?.text = date[i]
-        viewHolder.itemCount?.text = numEpisodes[i]
     }
 
     override fun getItemCount(): Int {

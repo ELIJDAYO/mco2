@@ -19,10 +19,8 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.WriteNewEpisode"
-            android:exported="true">
-
-        </activity>
+            android:name=".activities.EditNovelActivity"
+            android:exported="false" />
         <activity
             android:name=".activities.OptionActivity"
             android:exported="false" />
@@ -30,13 +28,13 @@
             android:name=".activities.OtherUser"
             android:exported="false" />
         <activity
-            android:name=".activities.EpisodeViewer"
+            android:name=".activities.EpisodeViewerActivity"
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.FrontEndNovel"
+            android:name=".activities.FrontEndNovelActivity"
             android:exported="true" />
         <activity
             android:name=".activities.RegistrationActivity"

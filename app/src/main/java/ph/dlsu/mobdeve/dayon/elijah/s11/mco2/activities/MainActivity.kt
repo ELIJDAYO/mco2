@@ -45,8 +45,10 @@ class MainActivity : AppCompatActivity() {
 
         else if (lastFragment == "userprofile"){
             moveToFragment(UserFragment())
-
-        }else
+        }
+        else if (lastFragment == "home"){
+            moveToFragment(HomeFragment())
+        } else
             moveToFragment(HomeFragment())
     }
     private fun moveToFragment(fragment: Fragment)

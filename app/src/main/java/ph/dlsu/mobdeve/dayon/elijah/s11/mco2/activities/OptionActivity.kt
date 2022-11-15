@@ -21,7 +21,6 @@ class OptionActivity : AppCompatActivity() {
             intent.putExtra("last_fragment","userprofile")
             startActivity(intent)
             finish()
-
         }
     }
 

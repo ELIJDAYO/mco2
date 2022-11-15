@@ -1,11 +1,14 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EpisodeViewerActivity
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.NovelChapterBtnBinding
 
 class NovelChapterAdapter : RecyclerView.Adapter<NovelChapterAdapter.NovelChapterViewHolder> {
@@ -38,7 +41,10 @@ class NovelChapterAdapter : RecyclerView.Adapter<NovelChapterAdapter.NovelChapte
         var name = ""
 
         init{
-            itemView.setOnClickListener(this)
+            itemView.setOnClickListener {
+                val intent = Intent(context, EpisodeViewerActivity::class.java)
+                context.startActivity(intent)
+            }
         }
 
         fun bindName(name:String){

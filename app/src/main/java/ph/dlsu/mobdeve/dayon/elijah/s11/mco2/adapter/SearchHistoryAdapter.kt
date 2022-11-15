@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovel
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 
 class SearchHistoryAdapter : RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>(){
     private var searchHistoryArray = arrayOf(
@@ -26,7 +26,7 @@ class SearchHistoryAdapter : RecyclerView.Adapter<SearchHistoryAdapter.ViewHolde
             itemView.setOnClickListener {
                 var position: Int = getAbsoluteAdapterPosition()
                 val context = itemView.context
-                val intent = Intent(context, FrontEndNovel::class.java).apply {//
+                val intent = Intent(context, FrontEndNovelActivity::class.java).apply {//
                     putExtra("NUMBER", position)
                     putExtra("CODE", searchHistoryText.text)
                 }

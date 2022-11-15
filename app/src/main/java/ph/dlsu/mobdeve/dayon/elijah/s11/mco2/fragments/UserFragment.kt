@@ -20,23 +20,9 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserBinding
 
 
 class UserFragment : Fragment() {
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<NovelItemAdapter.ViewHolder>? = null
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
-    private val titleNovel = arrayOf(
-        "Goblin Slayer",
-        "灰まみれの騎士",
-        "13番目の転生者",
-        "High School of the Elites")
-    private val numEpisodes = arrayOf(
-        "21", "33", "19", "100",
-    )
-    private val date = arrayOf(
-        "Jan 1", "Feb 1", "March 1", "April 1")
-    private var tabLayout: TabLayout? = null
-    private var rv: RecyclerView? = null
-    val animalsArray = arrayOf(
+    val tabArray = arrayOf(
         "Recent Works",
         "Bookmark",
         "Followed"
@@ -66,7 +52,7 @@ class UserFragment : Fragment() {
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = animalsArray[position]
+            tab.text = tabArray[position]
         }.attach()
 //        binding.rv.apply{
 //            layoutManager = LinearLayoutManager(activity)
