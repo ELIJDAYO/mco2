@@ -9,6 +9,7 @@
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
+        android:enableOnBackInvokedCallback="true"
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher_bookhero_background"
         android:label="@string/app_name"
@@ -16,9 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.mco2"
         android:usesCleartextTraffic="true"
-        tools:targetApi="31"
-        android:enableOnBackInvokedCallback="true"
-        >
+        tools:targetApi="31">
+        <activity
+            android:name=".activities.WriteNewEpisode"
+            android:exported="true">
+
+        </activity>
         <activity
             android:name=".activities.OptionActivity"
             android:exported="false" />
@@ -33,7 +37,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.FrontEndNovel"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".activities.RegistrationActivity"
             android:exported="false" />
@@ -49,7 +53,7 @@
         <activity
             android:name=".activities.SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar"></activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
