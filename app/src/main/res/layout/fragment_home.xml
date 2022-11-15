@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
-    android:background="@color/light_yellow"
+    android:background="@color/white_smoke"
     tools:context=".fragments.HomeFragment">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -50,77 +50,78 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Trending"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="3dp"
+                android:text="Trending"
                 android:textSize="20sp"
-                android:textStyle="normal"
-                />
+                android:textStyle="normal" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_trending"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Recommended"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="3dp"
+                android:text="Newest"
                 android:textSize="20sp"
-                android:textStyle="normal"
-                />
+                android:textStyle="normal" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_recommended"
+                android:id="@+id/rv_newest"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Filler1"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="3dp"
+                android:text="Sci-fi"
                 android:textSize="20sp"
-                android:textStyle="normal"
-                />
+                android:textStyle="normal" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_top1_tag"
+                android:id="@+id/rv_scifi"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Filler2"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="3dp"
+                android:text="Fantasy"
                 android:textSize="20sp"
-                android:textStyle="normal"
-                />
+                android:textStyle="normal" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_top2_tag"
+                android:id="@+id/rv_fantasy"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Filler3"
                 android:layout_marginTop="10dp"
                 android:layout_marginBottom="3dp"
+                android:text="Romance"
                 android:textSize="20sp"
                 android:textStyle="normal"
 
                 />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rv_top3_tag"
+                android:id="@+id/rv_romance"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </androidx.recyclerview.widget.RecyclerView>
+                android:layout_height="wrap_content"></androidx.recyclerview.widget.RecyclerView>
 
         </LinearLayout>
 

@@ -7,7 +7,7 @@
     android:fitsSystemWindows="true"
     tools:context=".fragments.UserFragment"
     android:orientation="vertical"
-    android:background="@color/light_yellow"
+    android:background="@color/white_smoke"
     >
 
     <com.google.android.material.appbar.AppBarLayout
@@ -38,6 +38,7 @@
                     android:src="@drawable/edit" />
 
                 <ImageView
+                    android:id="@+id/iv_seting"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
                     android:layout_alignParentEnd="true"
@@ -46,7 +47,6 @@
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
-
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
@@ -64,7 +64,7 @@
             android:layout_height="100dp"
             android:layout_gravity="center"
             android:layout_marginStart="10dp"
-            android:background="@color/white"
+            android:background="@color/white_smoke"
             android:src="@drawable/horse"/>
 
         <TextView
@@ -150,9 +150,8 @@
             </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </LinearLayout>
-
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/tabs"
+        android:id="@+id/appbarmid"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
@@ -161,44 +160,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/ll1">
         <!--&lt;!&ndash;        TODO use tab layout-->
-        <Button
-            android:id="@+id/btn_works"
-            android:layout_width="135dp"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/al_2"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:text="@string/works"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/btn_bookmarks"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_bookmarks"
-            android:layout_width="136dp"
-            android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:text="@string/bookmarks"
-            android:textColor="@color/black"
-            app:layout_constraintEnd_toStartOf="@+id/btn_followed"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/btn_followed"
-            android:layout_width="136dp"
-            android:layout_height="wrap_content"
-            android:background="@color/light_grey"
-            android:text="@string/followed"
-            android:textColor="@color/black"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:tabBackground="@color/colorPrimary"
+                app:tabGravity="fill"
+                app:tabMode="fixed"
+                app:tabTextColor="@android:color/white" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv"
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.viewpager2.widget.ViewPager2
+
+        android:id="@+id/viewPager"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tabs"
-/>
+        app:layout_constraintTop_toBottomOf="@+id/appbarmid"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

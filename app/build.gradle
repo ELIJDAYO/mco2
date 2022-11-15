@@ -2,6 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
+ext {
+    compileSdkVersion = 33
+    targetSdkVersion = 33
+}
 
 android {
     compileSdk 33
@@ -9,7 +13,7 @@ android {
     defaultConfig {
         applicationId "ph.dlsu.mobdeve.dayon.elijah.s11.mco2"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -56,6 +60,12 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation "androidx.recyclerview:recyclerview:1.2.1"
+
+    implementation "androidx.activity:activity:1.7.0-alpha02"
+
+    implementation 'com.google.android.material:material:1.7.0'
+
+    implementation 'io.github.ahmad-hamwi:tabsync:1.0.1'
 }
 //connects to firebase
 apply plugin: 'com.google.gms.google-services'

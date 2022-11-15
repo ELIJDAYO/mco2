@@ -57,6 +57,9 @@
     <string name="works">Works</string>
     <string name="bookmarks">Bookmarks</string>
     <string name="followed">Followed</string>
+    <string name="edit_account_detail">Edit Account Detail</string>
+    <string name="remove_following">Remove Following</string>
+    <string name="sign_out">Sign Out</string>
 
 
 </resources>

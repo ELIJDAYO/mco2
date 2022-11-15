@@ -8,15 +8,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelItemAdapter
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentHomeBinding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserRV1Binding
 
-class HomeFragment : Fragment() {
+class UserFragmentRV1 : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<NovelItemAdapter.ViewHolder>? = null
-    private var _binding: FragmentHomeBinding? = null
-    // This property is only valid between onCreateView and
-// onDestroyView.
+    private var _binding: FragmentUserRV1Binding? = null
     private val binding get() = _binding!!
+
 //    override fun onCreate(savedInstanceState: Bundle?) {
 //        super.onCreate(savedInstanceState)
 //    }
@@ -26,38 +25,26 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         // Inflate the layout for this fragment
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        _binding = FragmentUserRV1Binding.inflate(inflater, container, false)
         return binding.root
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
-        binding.rvTrending.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(activity)
-            // set the custom adapter to the RecyclerView
-            adapter = NovelItemAdapter()
-        }
-        binding.rvNewest.apply{
+        setupData()
+    }
+    private fun setupData() {
+        binding.rv.apply {
             layoutManager = LinearLayoutManager(activity)
             adapter = NovelItemAdapter()
         }
-        binding.rvFantasy.apply{
-            layoutManager = LinearLayoutManager(activity)
-            adapter = NovelItemAdapter()
-        }
-        binding.rvScifi.apply{
-            layoutManager = LinearLayoutManager(activity)
-            adapter = NovelItemAdapter()
-        }
-        binding.rvRomance.apply{
-            layoutManager = LinearLayoutManager(activity)
-            adapter = NovelItemAdapter()
-        }
+//        binding.label.text = getString(R.string.app_name)
+//        val color = arguments?.getString("color")
+//        binding.root.setBackgroundColor(Color.parseColor(color))
+//        val position = arguments?.getString("label")
+//        binding.label.text = position
     }
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
     }
-
 }

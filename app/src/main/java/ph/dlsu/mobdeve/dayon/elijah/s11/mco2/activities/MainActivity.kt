@@ -22,10 +22,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //TODO how to use viewbinding in fragment
-//        binding = ActivityMainBinding.bind(layoutInflater)
         setContentView(R.layout.activity_main)
-
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -33,7 +30,24 @@ class MainActivity : AppCompatActivity() {
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
 
-        moveToFragment(HomeFragment())
+
+        val publisher = intent.getStringExtra("PUBLISHER_ID")
+        val lastFragment = intent.getStringExtra("last_fragment")
+        if(publisher!=null) {
+            val prefs: SharedPreferences.Editor? =
+                getSharedPreferences("PREFS", Context.MODE_PRIVATE)
+                    .edit().apply {
+                        putString("profileId", publisher)
+                        apply()
+                    }
+            moveToFragment(UserFragment())
+        }
+
+        else if (lastFragment == "userprofile"){
+            moveToFragment(UserFragment())
+
+        }else
+            moveToFragment(HomeFragment())
     }
     private fun moveToFragment(fragment: Fragment)
     {

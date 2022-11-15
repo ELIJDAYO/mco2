@@ -18,11 +18,9 @@ class NovelItemAdapter : RecyclerView.Adapter<NovelItemAdapter.ViewHolder>() {
         "灰まみれの騎士",
         "13番目の転生者",
         "High School of the Elites")
-
     private val numEpisodes = arrayOf(
         "21", "33", "19", "100",
     )
-
     private val date = arrayOf(
         "Jan 1", "Feb 1", "March 1", "April 1")
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
