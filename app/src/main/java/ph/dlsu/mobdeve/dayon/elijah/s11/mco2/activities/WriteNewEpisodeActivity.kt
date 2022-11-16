@@ -6,7 +6,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityWriteNewEpisodeBinding
 
-class WriteNewEpisode : AppCompatActivity() {
+class WriteNewEpisodeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWriteNewEpisodeBinding
 

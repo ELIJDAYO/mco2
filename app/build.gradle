@@ -3,17 +3,17 @@ plugins {
     id 'org.jetbrains.kotlin.android'
 }
 ext {
-    compileSdkVersion = 33
-    targetSdkVersion = 33
+    compileSdkVersion = 32
+    targetSdkVersion = 32
 }
 
 android {
-    compileSdk 33
+    compileSdk 32
 
     defaultConfig {
         applicationId "ph.dlsu.mobdeve.dayon.elijah.s11.mco2"
         minSdk 23
-        targetSdk 33
+        targetSdk 32
         versionCode 1
         versionName "1.0"
 

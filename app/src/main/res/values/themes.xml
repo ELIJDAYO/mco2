@@ -20,7 +20,11 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-<!--    <style name="MonthPickerDialogStyle">-->
+    <style name="WorkRepoBtn" parent="ThemeOverlay.AppCompat">
+        <item name="colorAccent">@color/powder_blue</item>
+    </style>
+
+    <!--    <style name="MonthPickerDialogStyle">-->
 <!--        <item name="monthBgColor">@color/white</item>-->
 <!--        <item name="monthBgSelectedColor">@color/orange</item>-->
 <!--        <item name="monthFontColorSelected">@color/white</item>-->
