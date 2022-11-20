@@ -6,6 +6,17 @@
     android:layout_height="match_parent"
     android:background="@color/white_smoke"
     tools:context=".activities.EditNovelActivity">
+    <Button
+        android:id="@+id/btn_create_episode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#98DADE"
+        android:text="Create New Episode"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/rv_tags"
+        app:layout_constraintStart_toStartOf="@+id/rv_tags"
+        app:layout_constraintTop_toBottomOf="@+id/rv_tags" />
 
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
@@ -99,19 +110,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_synopsis" />
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/_20sdp"
-        android:background="@color/light_cyan"
-        android:backgroundTint="@color/powder_blue"
-        android:text="Go To Work Repo"
-        android:textSize="@dimen/_16sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
-
     <LinearLayout
         android:id="@+id/linearLayout4"
         android:layout_width="match_parent"
@@ -145,11 +143,11 @@
         android:id="@+id/rv_tags"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_30sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout4" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
