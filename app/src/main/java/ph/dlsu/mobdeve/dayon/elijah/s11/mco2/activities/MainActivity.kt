@@ -9,10 +9,7 @@ import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityMainBinding
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.HomeFragment
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.NotificationFragment
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.SearchFragment
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.UserFragment
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.*
 
 
 class MainActivity : AppCompatActivity() {
@@ -73,7 +70,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_search -> {
-                moveToFragment(SearchFragment())
+                moveToFragment(SearchResultFragment())
                 return@OnNavigationItemSelectedListener true
             }
 

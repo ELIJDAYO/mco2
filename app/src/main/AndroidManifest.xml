@@ -19,7 +19,16 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".CreateNewNovelActivity"
+            android:name=".FilterActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.SearchEditNovel"
+            android:exported="true"></activity>
+        <activity
+            android:name=".activities.CalendarAndTime"
+            android:exported="true" />
+        <activity
+            android:name=".activities.CreateNewNovelActivity"
             android:exported="false" />
         <activity
             android:name=".activities.EditNovelActivity"

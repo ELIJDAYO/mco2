@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".activities.FilterActivity"
+    android:background="@color/colorBackground">
+
+
+    <RadioGroup
+        android:id="@+id/sortPopularityRecentRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/colorTextBackground"
+        android:layout_marginTop="100dp">
+
+        <RadioButton
+            android:id="@+id/sortPopularityRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort By Popularity" />
+
+        <RadioButton
+            android:id="@+id/sortRecentRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort By Recent" />
+    </RadioGroup>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/starConstraint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/sortPopularityRecentRG"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorTextBackground">
+
+        <TextView
+            android:id="@+id/starsGreaterTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stars >"
+            android:layout_marginStart="30dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/firstStarET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint=" "
+            app:layout_constraintBottom_toBottomOf="@+id/starsGreaterTV"
+            app:layout_constraintStart_toEndOf="@+id/starsGreaterTV"
+            app:layout_constraintTop_toTopOf="@+id/starsGreaterTV" />
+
+        <TextView
+            android:id="@+id/starsLesserTV"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="and Stars <"
+            app:layout_constraintBottom_toBottomOf="@+id/starsGreaterTV"
+            app:layout_constraintStart_toEndOf="@+id/firstStarET"
+            app:layout_constraintTop_toTopOf="@+id/starsGreaterTV" />
+
+        <EditText
+            android:id="@+id/secondStarET"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint=" "
+            app:layout_constraintBottom_toBottomOf="@+id/starsGreaterTV"
+            app:layout_constraintStart_toEndOf="@+id/starsLesserTV"
+            app:layout_constraintTop_toTopOf="@+id/starsGreaterTV" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+
+    <RadioGroup
+        android:id="@+id/sortOngoingFinishedRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/starConstraint"
+        android:layout_marginTop="20dp"
+        android:background="@color/colorTextBackground">
+
+        <RadioButton
+            android:id="@+id/sortOngoingRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort By Ongoing" />
+
+        <RadioButton
+            android:id="@+id/sortFinishedRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sort By Finished" />
+    </RadioGroup>
+
+    <RadioGroup
+        android:id="@+id/sortSeriesSNEssayNSFWRG"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/sortOngoingFinishedRG"
+        android:background="@color/colorTextBackground"
+        android:layout_marginTop="20dp">
+
+        <RadioButton
+            android:id="@+id/sortSeriesRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Series" />
+
+        <RadioButton
+            android:id="@+id/sortNovelRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Short Novel" />
+
+        <RadioButton
+            android:id="@+id/sortEssayRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Essay" />
+
+        <RadioButton
+            android:id="@+id/sortNSFWRB"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="NSFW" />
+    </RadioGroup>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
