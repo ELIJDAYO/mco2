@@ -12,7 +12,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.TagAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityFrontEndNovelBinding
 
 
-class FrontEndNovelActivity : AppCompatActivity() {
+class EditFrontEndNovelActivity : AppCompatActivity() {
 
     private var chapterTitle:ArrayList<String> = ArrayList<String>()
     private lateinit var binding: ActivityFrontEndNovelBinding
@@ -26,7 +26,7 @@ class FrontEndNovelActivity : AppCompatActivity() {
 
         chapterTitle = resources.getStringArray(R.array.novelChapterTitle).toCollection(ArrayList())
         binding.rvEpisodes.layoutManager = LinearLayoutManager(applicationContext)
-        novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, chapterTitle,"view")
+        novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, chapterTitle, "edit")
         binding.rvEpisodes.adapter = novelEpisodeAdapter
 
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
@@ -36,15 +36,17 @@ class FrontEndNovelActivity : AppCompatActivity() {
 
         binding.ibBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
+//            val intent= Intent(this@WriteNewEpisodeActivity,WorkRepoActivity::class.java)
+//            startActivity(intent)
+//            finish()
         }
-        binding.ibNovel.visibility = View.INVISIBLE
-        binding.ibEps.visibility = View.INVISIBLE
-        binding.ivClose.setOnClickListener {
-            val intent= Intent(this@FrontEndNovelActivity,MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.putExtra("last_fragment","home")
-            startActivity(intent)
-            finish()
-        }
+        binding.ivClose.visibility = View.INVISIBLE
+//        binding.ivClose.setOnClickListener {
+//            val intent= Intent(this@EditFrontEndNovelActivity,MainActivity::class.java)
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+//            intent.putExtra("last_fragment","home")
+//            startActivity(intent)
+//            finish()
+//        }
     }
 }

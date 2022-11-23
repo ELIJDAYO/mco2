@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white_smoke"
-    tools:context=".activities.EditNovelActivity">
-
+    tools:context=".activities.WorkRepoActivity">
     <com.google.android.material.appbar.AppBarLayout
         android:id="@+id/app_bar"
         android:layout_width="match_parent"
@@ -42,7 +40,7 @@
                     android:layout_centerInParent="true"
                     android:layout_marginLeft="6dp"
                     android:maxLines="1"
-                    android:text="Edit Mode"
+                    android:text="Work Repository"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -62,75 +60,13 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/cl1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:layout_below="@id/app_bar"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/app_bar">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="36dp"
-            android:text="@string/my_works"
-            android:textColor="@color/black"
-            android:textSize="@dimen/_25sdp"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/ib_add_new_novel"
-            android:layout_width="41dp"
-            android:layout_height="44dp"
-            android:layout_marginEnd="36dp"
-            android:background="@color/white_smoke"
-            android:src="@drawable/add"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ib_delete_novel"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.51" />
-
-        <ImageView
-            android:id="@+id/ib_delete_novel"
-            android:layout_width="41dp"
-            android:layout_height="44dp"
-            android:layout_marginEnd="28dp"
-            android:background="@color/white_smoke"
-            android:padding="@dimen/_3sdp"
-            android:src="@drawable/x"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.51" />
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_novel"
+        android:id="@+id/rv_work_repo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cl1"
         android:paddingStart="@dimen/_10sdp"
-        app:layout_constraintTop_toBottomOf="@+id/cl1"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <Button
-        android:id="@+id/btn_work_repo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@color/light_cyan"
-        android:textSize="@dimen/_16sdp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:text="Go To Work Repo"
-        android:backgroundTint="@color/powder_blue"
-        android:layout_marginBottom="@dimen/_20sdp"
-        />
+        android:layout_marginTop="@dimen/_60sdp"
+        app:layout_constraintTop_toBottomOf="@+id/app_bar" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

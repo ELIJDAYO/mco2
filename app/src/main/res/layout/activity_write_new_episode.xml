@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/colorBackground"
+    android:background="@color/white_smoke"
     tools:context=".activities.WriteNewEpisodeActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -39,10 +39,10 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerInParent="true"
+                    android:layout_centerHorizontal="true"
                     android:layout_marginLeft="6dp"
                     android:maxLines="1"
-                    android:text="Write New Novel"
+                    android:text="Write New Episode"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
@@ -81,7 +81,7 @@
 
 
     <Button
-        android:id="@+id/NewEpisodeSaveBTN"
+        android:id="@+id/btn_save_to_work_repo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"

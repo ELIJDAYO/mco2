@@ -251,19 +251,19 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/novelChapBTN"
+                android:id="@+id/rv_episodes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
                 android:layout_below="@+id/cl_eps"
-                android:nestedScrollingEnabled="false"
                 android:layout_marginLeft="@dimen/_10sdp"
-                android:layout_marginRight="@dimen/_10sdp"/>
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:nestedScrollingEnabled="false" />
             <TextView
                 android:id="@+id/tv_reviews"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_below="@id/novelChapBTN"
+                android:layout_below="@id/rv_episodes"
                 android:layout_marginTop="@dimen/_30sdp"
                 android:text="@string/reviews"
                 android:layout_marginLeft="@dimen/_10sdp"

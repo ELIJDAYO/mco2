@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.tabs.TabLayout
 import com.google.android.material.tabs.TabLayoutMediator
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.OptionActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.ViewPagerAdapter
@@ -22,7 +23,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserBinding
 class UserFragment : Fragment() {
     private var _binding: FragmentUserBinding? = null
     private val binding get() = _binding!!
-    val tabArray = arrayOf(
+    private val tabArray = arrayOf(
         "Recent Works",
         "Bookmark",
         "Followed"
@@ -41,6 +42,9 @@ class UserFragment : Fragment() {
 
         binding.ivSeting.setOnClickListener{
             startActivity(Intent(context, OptionActivity::class.java))
+        }
+        binding.ivEdit.setOnClickListener{
+            startActivity(Intent(context, EditNovelActivity::class.java))
         }
         return binding.root
     }
