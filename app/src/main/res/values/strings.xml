@@ -66,6 +66,10 @@
     <string name="synopsis">Synopsis</string>
     <string name="attach_thumbnail_photo_optional">Attach Thumbnail Photo(Optional)</string>
     <string name="tags">Tags</string>
+    <string name="reviews">Reviews</string>
+    <string name="leave_reviews">Leave Reviews</string>
+    <string name="submit">submit</string>
+    <string name="novel_title">Novel Title</string>
 
 
 </resources>

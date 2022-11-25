@@ -1,14 +1,14 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
 import android.app.ProgressDialog
-import android.content.ContentValues
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.content.SharedPreferences
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityLoginBinding
+
 
 class LoginActivity : AppCompatActivity() {
     private lateinit var binding: ActivityLoginBinding
@@ -30,11 +30,19 @@ class LoginActivity : AppCompatActivity() {
         }
     }
     private fun login() {
-        val email = binding.etEmailAddress.text.toString()
-        val pass = binding.etPassword.text.toString()
-        // calling signInWithEmailAndPassword(email, pass)
-        // function using Firebase auth object
-        // On successful response Display a Toast
+        var email = binding.etEmailAddress.text.toString()
+        var pass = binding.etPassword.text.toString()
+
+        val prefs: SharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
+        var emailPref = prefs.getString("email","")
+        var passPref = prefs.getString("password","")
+        if(!emailPref.isNullOrBlank()){
+            email = emailPref
+        }
+        if(!passPref.isNullOrBlank()){
+            pass = passPref
+        }
+
         if (email.isBlank() || pass.isBlank() ) {
             Toast.makeText(this, "Email and Password can't be blank", Toast.LENGTH_SHORT).show()
             return
@@ -47,9 +55,12 @@ class LoginActivity : AppCompatActivity() {
         val auth: FirebaseAuth = FirebaseAuth.getInstance()
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
 
-
-
             if (it.isSuccessful) {
+                val editor = prefs.edit()
+                editor.putString("email", email)
+                editor.putString("password", pass)
+                editor.apply()
+
                 progressDialog.dismiss()
 
                 Toast.makeText(this, "Successfully LoggedIn", Toast.LENGTH_SHORT).show()

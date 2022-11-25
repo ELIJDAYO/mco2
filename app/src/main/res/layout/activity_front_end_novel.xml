@@ -46,7 +46,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginLeft="6dp"
                     android:maxLines="1"
                     android:text="Novel Page"
@@ -70,166 +69,245 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
-        app:layout_constraintTop_toBottomOf="@id/app_bar"
-        app:layout_constraintBottom_toBottomOf="parent" >
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/app_bar">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-            <TextView
-                android:id="@+id/novelTitleBGTV"
-                android:layout_width="0dp"
-                android:layout_height="00dp"
-                app:layout_constraintBottom_toBottomOf="@+id/starIB"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelTitleTV"
-                app:layout_constraintTop_toTopOf="@+id/novelTitleTV"
-                android:background="@color/colorTextBackground"/>
-
-            <ImageView
-                android:id="@+id/novelCoverIV"
-                android:layout_width="130dp"
-                android:layout_height="180dp"
-                android:layout_marginStart="30dp"
-                android:layout_marginTop="50dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:src="@drawable/novel_cover_img"
-                />
-
-            <TextView
-                android:id="@+id/novelTitleTV"
-                android:layout_width="170dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="50dp"
-                android:layout_marginEnd="30dp"
-                android:text="@string/novelTitle"
+            <LinearLayout
+                android:id="@+id/ll1"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_25sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                android:padding="10dp"/>
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
-            <TextView
-                android:id="@+id/novelAuthorTV"
-                android:layout_width="0dp"
+                <ImageView
+                    android:id="@+id/novelCoverIV"
+                    android:layout_width="130dp"
+                    android:layout_height="180dp"
+                    android:src="@drawable/novel_cover_img" />
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="@dimen/_30sdp"
+                    android:background="@color/colorTextBackground"
+                    android:orientation="vertical">
+
+                    <ImageButton
+                        android:id="@+id/ib_novel"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
+                        android:background="@drawable/write"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/novelTitleTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="top"
+                        android:padding="10dp"
+                        android:text="@string/novelTitle"
+                        android:textSize="@dimen/_16sdp"
+                        android:textStyle="bold"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ib_novel" />
+
+                    <TextView
+                        android:id="@+id/novelAuthorTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="@string/novelAuthor"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintHorizontal_bias="0.0"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/novelTitleTV" />
+
+                    <ImageButton
+                        android:id="@+id/starIB"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/star"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintStart_toStartOf="parent" />
+
+                    <TextView
+                        android:id="@+id/starCountTV"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:gravity="center"
+                        android:text="@string/starCount"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/shareFBIB"
+                        app:layout_constraintStart_toEndOf="@+id/starIB"
+                        app:layout_constraintTop_toTopOf="@+id/starIB" />
+
+                    <ImageButton
+                        android:id="@+id/shareTWIB"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/share_twi_img"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/share_twi_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="@+id/novelTitleTV" />
+
+                    <ImageButton
+                        android:id="@+id/shareFBIB"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/share_fb_img"
+                        android:scaleType="fitCenter"
+                        android:src="@drawable/share_fb_img"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toStartOf="@+id/shareTWIB" />
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <io.github.glailton.expandabletextview.ExpandableTextView
+                android:id="@+id/expand_tv"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/novelAuthor"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelTitleTV"
-                app:layout_constraintTop_toBottomOf="@+id/novelTitleTV"
-                android:padding="10dp"/>
-
-            <ImageButton
-                android:id="@+id/starIB"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
-                app:layout_constraintStart_toStartOf="@+id/novelTitleTV"
-                android:background="@drawable/star"/>
-
-            <TextView
-                android:id="@+id/starCountTV"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/starCount"
-                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
-                app:layout_constraintEnd_toStartOf="@+id/shareFBIB"
-                app:layout_constraintStart_toEndOf="@+id/starIB"
-                app:layout_constraintTop_toTopOf="@+id/starIB"
-                android:gravity="center"/>
-
-            <ImageButton
-                android:id="@+id/shareTWIB"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                android:src="@drawable/share_twi_img"
-                android:background="@drawable/share_twi_img"
-                android:scaleType="fitCenter"/>
-
-            <ImageButton
-                android:id="@+id/shareFBIB"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                app:layout_constraintBottom_toBottomOf="@+id/novelCoverIV"
-                app:layout_constraintEnd_toStartOf="@+id/shareTWIB"
-                android:layout_marginEnd="10dp"
-                android:src="@drawable/share_fb_img"
-                android:background="@drawable/share_fb_img"
-                android:scaleType="fitCenter" />
-
-            <TextView
-                android:id="@+id/novelSynopsisTV"
-                android:layout_width="0dp"
-                android:layout_height="150dp"
-                android:layout_marginTop="20dp"
+                android:layout_below="@id/ll1"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="50dp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:background="@color/colorTextBackground"
                 android:text="@string/novelSynopsis"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/starIB"
-                android:padding="10dp"
-                android:background="@color/colorTextBackground"/>
-
+                app:animDuration="500"
+                app:collapsedLines="3"
+                app:isExpanded="true"
+                app:readLessText="Read Less"
+                app:readMoreText="Read More"
+                app:textMode="line" />
 
             <TextView
-                android:id="@+id/novelGenreTV"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelSynopsisTV"
-                android:text="@string/novelGenre"
-                android:padding="10dp"
-                android:background="@color/colorTextBackground"/>
-
+                android:id="@+id/tv_tags"
+                android:layout_width="match_parent"
+                android:layout_height="38dp"
+                android:layout_below="@id/expand_tv"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="35dp"
+                android:text="@string/tags"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/novelChapBTN"
-                android:layout_width="0dp"
+                android:id="@+id/rv_tags"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelGenreTV"
+                android:layout_below="@+id/tv_tags"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
                 android:nestedScrollingEnabled="false" />
 
-            <!--<Button
-                android:id="@+id/novelChap2BTN"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:text="Chapter 2"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelGenreTV" />-->
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl_eps"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_38sdp"
+                android:layout_below="@+id/rv_tags">
 
-            <!--<Button
-                android:id="@+id/novelChap1BTN"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginTop="10dp"
-                android:text="Chapter 1"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelChap2BTN" />-->
+                <TextView
+                    android:id="@+id/tv_episodes"
+                    android:layout_width="match_parent"
+                    android:layout_height="38dp"
+                    android:text="@string/episodes"
+                    android:textSize="@dimen/_20sdp"
+                    android:textStyle="bold"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
 
+                <ImageButton
+                    android:id="@+id/ib_eps"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_gravity="end"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:background="@drawable/write"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_episodes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cl_eps"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:nestedScrollingEnabled="false" />
             <TextView
-                android:id="@+id/commentTV"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:background="@color/colorTextBackground"
-                android:padding="10dp"
-                android:text="gamerBoy : THis is a Very Nice NOVEL"
-                app:layout_constraintEnd_toEndOf="@+id/novelTitleTV"
-                app:layout_constraintStart_toStartOf="@+id/novelCoverIV"
-                app:layout_constraintTop_toBottomOf="@+id/novelChapBTN"
-                android:layout_marginTop="20dp"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:id="@+id/tv_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rv_episodes"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="@string/reviews"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:nestedScrollingEnabled="false"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:layout_marginRight="@dimen/_10sdp"
+                android:layout_below="@id/tv_reviews"/>
+            <TextView
+                android:id="@+id/tv_reviews2"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/rv_reviews"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:text="@string/leave_reviews"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:textSize="@dimen/_20sdp"
+                android:textStyle="bold"/>
+            <EditText
+                android:id="@+id/et_reviews"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginRight="@dimen/_20sdp"
+                android:layout_below="@id/tv_reviews2"
+                android:hint="Enter here"
+                android:padding="@dimen/_10sdp"
+                android:background="@color/light_grey"/>
+            <Button
+                android:id="@+id/btn_submit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/submit"
+                android:layout_below="@id/et_reviews"
+                android:layout_marginLeft="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_20sdp"/>
+
+        </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

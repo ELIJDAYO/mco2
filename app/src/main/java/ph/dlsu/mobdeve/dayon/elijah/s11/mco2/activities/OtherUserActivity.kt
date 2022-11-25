@@ -4,7 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityOtherUserBinding
 
-class OtherUser : AppCompatActivity() {
+class OtherUserActivity : AppCompatActivity() {
     private lateinit var binding: ActivityOtherUserBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

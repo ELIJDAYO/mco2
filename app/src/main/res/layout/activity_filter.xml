@@ -62,7 +62,7 @@
             android:id="@+id/starsLesserTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="and Stars <"
+            android:text="and Stars &lt;"
             app:layout_constraintBottom_toBottomOf="@+id/starsGreaterTV"
             app:layout_constraintStart_toEndOf="@+id/firstStarET"
             app:layout_constraintTop_toTopOf="@+id/starsGreaterTV" />

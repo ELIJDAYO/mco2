@@ -4,25 +4,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.318" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_calendar_and_time.xml" value="0.1551796157059315" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_episode_viewer.xml" value="0.26518585675430645" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_filter.xml" value="0.1912568306010929" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_front_end_novel.xml" value="0.26721014492753625" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_login.xml" value="0.26132246376811596" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_main.xml" value="0.26132246376811596" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_other_user.xml" value="0.29743589743589743" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_search_edit_novel.xml" value="0.1" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_temp.xml" value="0.264945652173913" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_write_new_episode.xml" value="0.28351449275362317" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_search.xml" value="0.28377153218495016" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_search_result.xml" value="0.31765711842667804" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_notification.xml" value="0.28377153218495016" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_novel_edit_post.xml" value="0.31765711842667804" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_novel_post.xml" value="0.28377153218495016" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_searchhistory.xml" value="0.28377153218495016" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_searchresult.xml" value="0.31680205215904234" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_searchresult_nav.xml" value="0.31765711842667804" />
-        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/novel_chapter_btn.xml" value="0.2456732798649219" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/drawable/btn_shape_round.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/drawable/custom_btn1.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/activity_episode_viewer.xml" value="0.12" />
@@ -38,25 +25,39 @@
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/novel_post_item.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/menu/bot_nav_menu.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/drawable/border_edge.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/drawable/border_edge2.xml" value="0.1425" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/drawable/btn_shape_round.xml" value="0.1425" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/drawable/card_edge.xml" value="0.4466666666666667" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/drawable/custom_btn1.xml" value="0.184" />
-        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_create_new_novel.xml" value="0.22" />
-        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_edit_novel.xml" value="0.22" />
-        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_episode_viewer.xml" value="0.1" />
-        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_front_end_novel.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_calendar_and_time.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_create_new_novel.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_edit_novel.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_episode_viewer.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_filter.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_front_end_novel.xml" value="0.22" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_login.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_option.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_other_user.xml" value="0.22" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_registration.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_work_repo.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/activity_write_new_episode.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/card_edge.xml" value="0.36302083333333335" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_home.xml" value="0.17552083333333332" />
-        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_user.xml" value="0.12" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_search.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_search_result.xml" value="0.1" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_user.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_user_r_v1.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_user_r_v2.xml" value="0.16145833333333334" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/fragment_user_r_v3.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/item_edit_tag.xml" value="0.4466666666666667" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/item_notification.xml" value="0.17552083333333332" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/item_novel_edit_post.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/item_novel_post.xml" value="0.22" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/item_searchhistory.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/item_tag.xml" value="0.17552083333333332" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/item_work_repo.xml" value="0.22" />
+        <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/layout/novel_chapter_btn.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/edayo/Downloads/4thYearTerm1/mobdeve/app/src/main/res/menu/bot_nav_menu.xml" value="0.17552083333333332" />
       </map>
     </option>

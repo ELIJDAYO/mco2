@@ -1,5 +1,6 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -7,7 +8,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCalendarAndTime
 import java.util.*
 
 
-class CalendarAndTime : AppCompatActivity() {
+class CalendarAndTimeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCalendarAndTimeBinding
 
@@ -93,6 +94,9 @@ class CalendarAndTime : AppCompatActivity() {
         binding.calendarAndTimeBtn.setOnClickListener() {
             Toast.makeText(applicationContext, calendarMsg, Toast.LENGTH_SHORT).show()
             Toast.makeText(applicationContext, timeMsg, Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, WorkRepoActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
 

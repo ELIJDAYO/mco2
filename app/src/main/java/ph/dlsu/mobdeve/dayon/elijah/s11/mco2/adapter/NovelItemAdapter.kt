@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditFrontEndNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 
 
@@ -37,7 +38,7 @@ class NovelItemAdapter : RecyclerView.Adapter<NovelItemAdapter.ViewHolder>() {
 //                    putExtra("title", itemTitle?.text)
 //                    putExtra("date", itemDate?.text)
 //                    putExtra("num_episodes", itemCount?.text)
-                    if (position == 3){
+                    if (position >= 0){
                         itemView.setOnClickListener{
                             val intent = Intent(context, FrontEndNovelActivity::class.java)
                             context.startActivity(intent)

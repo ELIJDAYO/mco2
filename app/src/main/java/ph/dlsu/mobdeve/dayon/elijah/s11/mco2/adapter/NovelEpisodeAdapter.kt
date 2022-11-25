@@ -7,17 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EpisodeViewerActivity
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.NovelChapterBtnBinding
 
-class NovelChapterAdapter : RecyclerView.Adapter<NovelChapterAdapter.NovelChapterViewHolder> {
+class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.NovelChapterViewHolder> {
     private var chapterTitleArrayList = ArrayList<String>()
     private lateinit var context: Context
+    private lateinit var mode: String
 
-    constructor(context: Context, chapterTitleArrayList: ArrayList<String>){
+    constructor(context: Context, chapterTitleArrayList: ArrayList<String>, mode: String){
         this.context = context
         this.chapterTitleArrayList = chapterTitleArrayList
+        this.mode = mode
     }
 
 
@@ -28,7 +30,7 @@ class NovelChapterAdapter : RecyclerView.Adapter<NovelChapterAdapter.NovelChapte
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
-    ): NovelChapterAdapter.NovelChapterViewHolder {
+    ): NovelEpisodeAdapter.NovelChapterViewHolder {
         val novelChapterBtnBinding = NovelChapterBtnBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return NovelChapterViewHolder(novelChapterBtnBinding)
     }
@@ -42,8 +44,14 @@ class NovelChapterAdapter : RecyclerView.Adapter<NovelChapterAdapter.NovelChapte
 
         init{
             itemView.setOnClickListener {
-                val intent = Intent(context, EpisodeViewerActivity::class.java)
-                context.startActivity(intent)
+                if (mode=="view"){
+                    val intent = Intent(context, EpisodeViewerActivity::class.java)
+                    context.startActivity(intent)
+                }
+                else if(mode == "edit"){
+                    val intent = Intent(context, EditNovelActivity::class.java)
+                    context.startActivity(intent)
+                }
             }
         }
 

@@ -2,18 +2,17 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
-ext {
-    compileSdkVersion = 32
-    targetSdkVersion = 32
-}
+//ext {
+//    compileSdkVersion = 32
+//    targetSdkVersion = 32
+//}
 
 android {
-    compileSdk 32
-
+    compileSdk 33
     defaultConfig {
         applicationId "ph.dlsu.mobdeve.dayon.elijah.s11.mco2"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -66,6 +65,10 @@ dependencies {
     implementation 'com.google.android.material:material:1.7.0'
 
     implementation 'io.github.ahmad-hamwi:tabsync:1.0.1'
+
+    implementation "io.github.glailton.expandabletextview:expandabletextview:1.0.2"
+
+
 }
 //connects to firebase
 apply plugin: 'com.google.gms.google-services'
