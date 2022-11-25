@@ -1,10 +1,4 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model
-
-import java.text.DateFormat
-import java.text.SimpleDateFormat
-import java.time.LocalDate
-import java.util.*
-
 class User {
     private var uid: String = ""
     private var username: String = ""

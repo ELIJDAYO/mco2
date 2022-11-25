@@ -2,10 +2,10 @@ plugins {
     id 'com.android.application'
     id 'org.jetbrains.kotlin.android'
 }
-ext {
-    compileSdkVersion = 33
-    targetSdkVersion = 33
-}
+//ext {
+//    compileSdkVersion = 32
+//    targetSdkVersion = 32
+//}
 
 android {
     compileSdk 33
