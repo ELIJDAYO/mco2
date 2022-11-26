@@ -23,7 +23,7 @@ class EditNovelActivity : AppCompatActivity() {
         binding.ibBack.setOnClickListener {
             val intent= Intent(this@EditNovelActivity,MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-//            intent.putExtra("last_fragment","userprofile")
+            intent.putExtra("last_fragment","userprofile")
             startActivity(intent)
             finish()
         }

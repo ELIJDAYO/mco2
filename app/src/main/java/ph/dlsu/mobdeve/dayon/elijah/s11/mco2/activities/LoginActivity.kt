@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.text.Editable
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
@@ -33,16 +34,6 @@ class LoginActivity : AppCompatActivity() {
         var email = binding.etEmailAddress.text.toString()
         var pass = binding.etPassword.text.toString()
 
-        val prefs: SharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
-        var emailPref = prefs.getString("email","")
-        var passPref = prefs.getString("password","")
-        if(!emailPref.isNullOrBlank()){
-            email = emailPref
-        }
-        if(!passPref.isNullOrBlank()){
-            pass = passPref
-        }
-
         if (email.isBlank() || pass.isBlank() ) {
             Toast.makeText(this, "Email and Password can't be blank", Toast.LENGTH_SHORT).show()
             return
@@ -56,10 +47,11 @@ class LoginActivity : AppCompatActivity() {
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
 
             if (it.isSuccessful) {
-                val editor = prefs.edit()
-                editor.putString("email", email)
-                editor.putString("password", pass)
-                editor.apply()
+//                val editor = prefs.edit()
+//                editor.putString("profileId",)
+//                editor.putString("email", email)
+//                editor.putString("password", pass)
+//                editor.apply()
 
                 progressDialog.dismiss()
 

@@ -4,12 +4,15 @@ import android.content.Context
 import android.content.Intent
 import android.content.res.Resources
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
+import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.content.res.AppCompatResources.getDrawable
 import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.content.res.ResourcesCompat
@@ -23,6 +26,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.StorageReference
+import com.squareup.picasso.Picasso
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.OptionActivity
@@ -30,6 +35,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.ViewPagerAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentHomeBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserBinding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
 
 
 class UserFragment : Fragment() {
@@ -42,6 +48,9 @@ class UserFragment : Fragment() {
     )
     private lateinit var profileId: String
     private lateinit var firebaseUser: FirebaseUser
+    private  var storageProfileRef:StorageReference?=null
+    private  var imageUri: Uri?=null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -51,29 +60,29 @@ class UserFragment : Fragment() {
         _binding = FragmentUserBinding.inflate(inflater, container, false)
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
 
-        val pref = context?.getSharedPreferences("PREFS", Context.MODE_PRIVATE)
-        val follow = ResourcesCompat.getDrawable(resources,R.drawable.heart_edge, null)
-        val followed = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
-
-
+        val pref = context?.getSharedPreferences("UserData", Context.MODE_PRIVATE)
         if (pref != null) {
-            this.profileId = pref.getString("profileId", "none")!!
+            this.profileId = pref.getString("profileId","")!!
         }
-
+        //for now use this
+        this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
         init()
+
         if (profileId == firebaseUser.uid) {
-            binding.ibFollow.background = followed
+            binding.ivFollow.background = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
             binding.ivEdit.visibility = View.VISIBLE
             binding.ivSetting.visibility = View.VISIBLE
         } else if (profileId != firebaseUser.uid) {
-            binding.ibFollow.background = follow
+            Toast.makeText(activity,"$profileId vs $firebaseUser.uid",Toast.LENGTH_SHORT).show()
+            binding.ivFollow.background = ResourcesCompat.getDrawable(resources,R.drawable.heart_edge, null)
             binding.ivEdit.visibility = View.INVISIBLE
             binding.ivSetting.visibility = View.INVISIBLE
             checkFollowOrFollowingButtonStatus()
         }
-        binding.ibFollow.setOnClickListener {
-            if(binding.ibFollow.drawable == follow){
-                binding.ibFollow.background = followed
+        binding.ivFollow.setOnClickListener {
+            if(binding.tvIsfollowed.text == "no"){
+                binding.tvIsfollowed.text = "yes"
+                binding.ivFollow.background = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
                 firebaseUser.uid.let { it1 ->
                     FirebaseDatabase.getInstance().reference
                         .child("Follow").child(it1.toString())
@@ -90,7 +99,8 @@ class UserFragment : Fragment() {
                         .setValue(true)
                 }
             }else{
-                binding.ibFollow.background = follow
+                binding.tvIsfollowed.text = "no"
+                binding.ivFollow.background = ResourcesCompat.getDrawable(resources,R.drawable.heart_edge, null)
                 firebaseUser.uid.let { it1 ->
                     FirebaseDatabase.getInstance().reference
                         .child("Follow").child(it1)
@@ -105,7 +115,9 @@ class UserFragment : Fragment() {
                 }
             }
         }
-
+        binding.cmvImg.setOnClickListener {
+            uploadProfileImg()
+        }
         binding.ivSetting.setOnClickListener{
             startActivity(Intent(context, OptionActivity::class.java))
         }
@@ -115,24 +127,46 @@ class UserFragment : Fragment() {
         return binding.root
     }
     private fun init(){
+        setNumFollowers()
+        setUserInfo()
+
+
+    }
+    private fun uploadProfileImg(){
+
+    }
+    private fun setUserInfo(){
+        val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(profileId)
+        userRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()){
+                    val user = snapshot.getValue(User::class.java)
+                    Picasso.get().load(user!!.getImage()).placeholder(R.drawable.superhero).into(binding.cmvImg)
+                    binding.tvUsername.text = user.getUsername()
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
+    private fun setNumFollowers(){
         val followersRef = firebaseUser.uid.let {
             FirebaseDatabase.getInstance().reference
-                .child("Follow").child(it)
-                .child("Following").child(profileId)
+                .child("Follow").child(profileId)
+                .child("Followers")
         }
-        if(followersRef != null){
-            followersRef.addValueEventListener(object: ValueEventListener{
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    val count = snapshot.childrenCount
-                    binding.tvFollowers.text = count.toString()
-                }
-
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
-
-            })
-        }
+        followersRef.addValueEventListener(object: ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val count = snapshot.childrenCount
+                binding.tvFollowers.text = count.toString()
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
     }
     private fun checkFollowOrFollowingButtonStatus() {
 
@@ -150,11 +184,11 @@ class UserFragment : Fragment() {
                 override fun onDataChange(p0: DataSnapshot) {
                     if (p0.child(profileId).exists()) {
                         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
-                        binding.ibFollow.background = drawable
+                        binding.ivFollow.background = drawable
 //                        view?.edit_profile_Button?.text = "Following"
                     } else {
                         val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart_edge, null)
-                        binding.ibFollow.background = drawable                    }
+                        binding.ivFollow.background = drawable                    }
                 }
             })
         }

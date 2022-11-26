@@ -3,6 +3,7 @@ package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 import android.app.DatePickerDialog
 import android.app.ProgressDialog
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -92,24 +93,32 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             return
         }
         else {
-            val progressDialog= ProgressDialog(this@RegistrationActivity)
-            progressDialog.setTitle("SignUp")
-            progressDialog.setMessage("Please wait...")
-            progressDialog.setCanceledOnTouchOutside(false)
-            progressDialog.show()
+//            val currentUserId=FirebaseAuth.getInstance().currentUser!!.uid
+//            val prefs: SharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
+//            var editor = prefs.edit()
+//            editor.putString("profileId",currentUserId)
+//            editor.putString("email",email)
+//            editor.putString("password",pass)
+//            editor.apply()
+
+//            val progressDialog= ProgressDialog(this@RegistrationActivity)
+//            progressDialog.setTitle("SignUp")
+//            progressDialog.setMessage("Please wait...")
+//            progressDialog.setCanceledOnTouchOutside(false)
+//            progressDialog.show()
 
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
             auth.createUserWithEmailAndPassword(email,pass)
                 .addOnCompleteListener { task ->
                     if(task.isSuccessful) {
-                        saveUserInfo(username, email, birthday, gender, progressDialog)
+                        saveUserInfo(username, email, birthday, gender)
                     }
                     else
                     {
                         val message=task.exception!!.toString()
                         Toast.makeText(this,"Error : $message", Toast.LENGTH_LONG).show()
                         auth.signOut()
-                        progressDialog.dismiss()
+//                        progressDialog.dismiss()
                     }
                 }
         }
@@ -119,7 +128,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
         email: String,
         birthday: String,
         gender: String,
-        progressDialog: ProgressDialog
+//        progressDialog: ProgressDialog
     ) {
         val currentUserId=FirebaseAuth.getInstance().currentUser!!.uid
         val userRef : DatabaseReference = FirebaseDatabase.getInstance().reference.child("Users")
@@ -155,7 +164,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                     val message=task.exception!!.toString()
                     Toast.makeText(this,"Error : $message", Toast.LENGTH_LONG).show()
                     FirebaseAuth.getInstance().signOut()
-                    progressDialog.dismiss()
+//                    progressDialog.dismiss()
                 }
             }
     }
