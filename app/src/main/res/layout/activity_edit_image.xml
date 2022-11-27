@@ -17,7 +17,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/editUsername_toolbar"
+            android:id="@+id/editImage_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentStart="true">
@@ -44,7 +44,7 @@
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="6dp"
                     android:maxLines="1"
-                    android:text="Edit Username"
+                    android:text="Edit Image"
                     android:textColor="@android:color/black"
                     android:textSize="18sp"
                     android:textStyle="bold" />
