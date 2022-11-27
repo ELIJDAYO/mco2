@@ -19,6 +19,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".RemoveBookmarkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".removeFollowersActivity"
+            android:exported="false" />
+        <activity
             android:name=".editImageActivity"
             android:exported="false" />
         <activity
