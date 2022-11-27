@@ -8,7 +8,7 @@ plugins {
 //}
 
 android {
-    compileSdk 32
+    compileSdk 33
     defaultConfig {
         applicationId "ph.dlsu.mobdeve.dayon.elijah.s11.mco2"
         minSdk 23
