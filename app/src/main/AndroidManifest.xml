@@ -19,6 +19,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".editImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".editUsernameActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.WorkRepoActivity"
             android:exported="false" />
         <activity
@@ -53,9 +59,7 @@
             android:exported="false" />
         <activity
             android:name=".activities.LoginActivity"
-            android:exported="true" >
-
-        </activity>
+            android:exported="true" />
         <activity
             android:name=".activities.FrontEndNovelActivity"
             android:exported="true" />
@@ -74,9 +78,7 @@
         <activity
             android:name=".activities.SplashScreen"
             android:exported="true"
-            android:theme="@style/Theme.AppCompat.Light.NoActionBar" >
-
-        </activity>
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
     </application>
 
 </manifest>
