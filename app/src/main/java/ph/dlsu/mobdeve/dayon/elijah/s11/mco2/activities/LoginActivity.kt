@@ -38,6 +38,7 @@ class LoginActivity : AppCompatActivity() {
             Toast.makeText(this, "Email and Password can't be blank", Toast.LENGTH_SHORT).show()
             return
         }
+
         val progressDialog= ProgressDialog(this@LoginActivity)
         progressDialog.setTitle("Login")
         progressDialog.setMessage("Please wait...")
@@ -69,4 +70,5 @@ class LoginActivity : AppCompatActivity() {
             }
         }
     }
+    
 }
