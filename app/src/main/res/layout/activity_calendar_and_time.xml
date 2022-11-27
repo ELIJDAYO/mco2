@@ -7,16 +7,52 @@
     tools:context=".activities.CalendarAndTimeActivity"
     android:background="@color/colorBackground">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/calendarAndTime_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentStart="true"
+        android:background="@color/lawn_green"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/ib_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:background="@color/lawn_green"
+                android:padding="@dimen/_5sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/previous_arrow_img" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Calendar And Time"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:maxLines="1"
+                android:textColor="@android:color/black"
+                android:layout_centerInParent="true" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <DatePicker
         android:id="@+id/datePicker"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:background="@color/white"
         android:datePickerMode="calendar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="50dp"
-        android:background="@color/white"/>
+        app:layout_constraintTop_toBottomOf="@+id/calendarAndTime_toolbar" />
 
     <TimePicker
         android:id="@+id/timePicker1"

@@ -7,19 +7,43 @@
     android:background="@color/colorBackground"
     tools:context=".fragments.SearchResultFragment">
 
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/notificationSettings_toolbar"
+        android:layout_height="50dp"
+        android:layout_width="match_parent"
+        android:layout_alignParentStart="true"
+        android:background="@color/lawn_green"
+        >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageButton
+                android:id="@+id/ib_back"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentLeft="true"
+                android:background="@color/lawn_green"
+                android:padding="@dimen/_5sdp"
+                android:scaleType="fitCenter"
+                android:src="@drawable/previous_arrow_img" />
+
+
+            <ImageButton
+                android:id="@+id/filterIB"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/ic_filter" />
+
+        </RelativeLayout>
+    </androidx.appcompat.widget.Toolbar>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-        <ImageButton
-            android:id="@+id/filterIB"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/ic_filter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="30dp"
-            android:layout_marginEnd="30dp"/>
 
         <TextView
             android:id="@+id/searchResultTV"

@@ -28,7 +28,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <androidx.appcompat.widget.Toolbar
-            android:id="@+id/accountSettings_toolbar"
+            android:id="@+id/notificationSettings_toolbar"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentStart="true">
