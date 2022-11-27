@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.318" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_calendar_and_time.xml" value="0.25385312783318226" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_create_new_novel.xml" value="0.31765711842667804" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_edit_novel.xml" value="0.31765711842667804" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_episode_viewer.xml" value="0.26518585675430645" />
@@ -17,14 +18,23 @@
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_search_edit_novel.xml" value="0.25385312783318226" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_splash_screen.xml" value="0.31765711842667804" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_temp.xml" value="0.264945652173913" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_work_repo.xml" value="0.31765711842667804" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/activity_write_new_episode.xml" value="0.25385312783318226" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_home.xml" value="0.31765711842667804" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_notification.xml" value="0.25385312783318226" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_search.xml" value="0.25385312783318226" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_search_result.xml" value="0.25385312783318226" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_user.xml" value="0.25385312783318226" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_user_r_v1.xml" value="0.31765711842667804" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/fragment_user_r_v2.xml" value="0.31765711842667804" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_notification.xml" value="0.25385312783318226" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_novel_edit_post.xml" value="0.31765711842667804" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_novel_post.xml" value="0.25385312783318226" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_remove_tag.xml" value="0.31765711842667804" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_searchhistory.xml" value="0.25385312783318226" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_searchresult.xml" value="0.25385312783318226" />
         <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_searchresult_nav.xml" value="0.25385312783318226" />
+        <entry key="..\:/Users/chuaj/OneDrive - De La Salle University - Manila/Documents/GitHub/mco2/app/src/main/res/layout/item_work_repo.xml" value="0.31765711842667804" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/drawable/btn_shape_round.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/drawable/custom_btn1.xml" value="0.1" />
         <entry key="..\:/Users/edayo/Downloads/4th year term1/mobdeve/app/src/main/res/layout/activity_episode_viewer.xml" value="0.12" />
