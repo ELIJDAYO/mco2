@@ -8,6 +8,35 @@
   "client": [
     {
       "client_info": {
+        "mobilesdk_app_id": "1:629701935754:android:6dd67a48f26bc3bf36a373",
+        "android_client_info": {
+          "package_name": "com.example.sample_instagram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "629701935754-0pmpei816hh11dcmtgi2uf3ev66prnan.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDITqaYLG3I4_mG2aF5fYpX4rvnGuE5TNU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "629701935754-0pmpei816hh11dcmtgi2uf3ev66prnan.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
         "mobilesdk_app_id": "1:629701935754:android:a93c49169d080c1036a373",
         "android_client_info": {
           "package_name": "ph.dlsu.mobdeve.dayon.elijah.s11.mco2"
