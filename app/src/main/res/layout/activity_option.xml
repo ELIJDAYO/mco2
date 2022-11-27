@@ -50,6 +50,7 @@
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
+
     <LinearLayout
         android:id="@+id/ll1"
         android:layout_width="match_parent"
