@@ -93,19 +93,6 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
             return
         }
         else {
-//            val currentUserId=FirebaseAuth.getInstance().currentUser!!.uid
-//            val prefs: SharedPreferences = getSharedPreferences("UserData", MODE_PRIVATE)
-//            var editor = prefs.edit()
-//            editor.putString("profileId",currentUserId)
-//            editor.putString("email",email)
-//            editor.putString("password",pass)
-//            editor.apply()
-
-//            val progressDialog= ProgressDialog(this@RegistrationActivity)
-//            progressDialog.setTitle("SignUp")
-//            progressDialog.setMessage("Please wait...")
-//            progressDialog.setCanceledOnTouchOutside(false)
-//            progressDialog.show()
 
             val auth: FirebaseAuth = FirebaseAuth.getInstance()
             auth.createUserWithEmailAndPassword(email,pass)

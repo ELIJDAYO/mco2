@@ -2,14 +2,16 @@ package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model
 
 class Episode {
     private var episodeId: String = ""
+    private var novelId: String = ""
     private var title: String = ""
     private var content: String = ""
     private var releaseDate: String = ""
     private var isDraft: Boolean = true
     constructor()
 
-    constructor(episodeId: String, title: String, content: String, releaseDate:String, isDraft:Boolean) {
+    constructor(episodeId: String, novelId: String, title: String, content: String, releaseDate:String, isDraft:Boolean) {
         this.episodeId = episodeId
+        this.novelId = novelId
         this.title = title
         this.content = content
         this.releaseDate = releaseDate

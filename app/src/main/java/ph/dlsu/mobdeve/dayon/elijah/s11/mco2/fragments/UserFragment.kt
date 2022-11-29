@@ -55,8 +55,7 @@ class UserFragment : Fragment() {
     private lateinit var profileId: String
     private lateinit var firebaseUser: FirebaseUser
     private var storageProfileRef: StorageReference?=null
-    private  var myUrl=""
-    private  var imageUri: Uri?=null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -65,7 +64,7 @@ class UserFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentUserBinding.inflate(inflater, container, false)
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
-        storageProfileRef = FirebaseStorage.getInstance().reference.child("Profile Pictures")
+        storageProfileRef = FirebaseStorage.getInstance().reference.child("Pictures")
 
         //for now use this
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
