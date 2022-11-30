@@ -39,6 +39,9 @@ class Episode {
     fun getReleaseDate():String{
         return releaseDate
     }
+    fun getIsDraft():Boolean{
+        return isDraft
+    }
     fun getReleaseTime():String{
         return releaseTime
     }

@@ -18,10 +18,10 @@ class WorkRepoActivity : AppCompatActivity() {
     private lateinit var workRepoAdapter: WorkRepoItemAdapter
     private lateinit var episodeRef: DatabaseReference
     private lateinit var profileId: String
-    private lateinit var repoList: ArrayList<Episode>
+    private var repoList= arrayListOf<Episode>()
 
     private lateinit var novelTitle: String
-    private lateinit var novelTitleList: ArrayList<String>
+    private var novelTitleList= arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,9 +45,7 @@ class WorkRepoActivity : AppCompatActivity() {
     }
     private fun fetchEpisodesFirebase(){
         episodeRef = FirebaseDatabase.getInstance().reference.child("Episodes")
-        var query = episodeRef.orderByChild("uid").equalTo(profileId)
-            .orderByChild("isDraft").equalTo(true)
-
+        var query = episodeRef.orderByChild("novelId")
             query.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 repoList.clear()
@@ -56,9 +54,11 @@ class WorkRepoActivity : AppCompatActivity() {
                     for(element in snapshot.children){
                         var episode = snapshot.getValue(Episode::class.java)
                         if (episode != null) {
-                            repoList.add(episode)
-                            fetchNovelTitle(episode.getNovelId()).toString()
-                            novelTitleList.add(novelTitle)
+                            if(episode.getIsDraft()){
+                                repoList.add(episode)
+                                fetchNovelTitle(episode.getNovelId()).toString()
+                                novelTitleList.add(novelTitle)
+                            }
                         }
                     }
                     workRepoAdapter.notifyDataSetChanged()
