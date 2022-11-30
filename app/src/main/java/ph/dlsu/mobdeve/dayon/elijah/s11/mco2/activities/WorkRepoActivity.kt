@@ -46,9 +46,8 @@ class WorkRepoActivity : AppCompatActivity() {
     private fun fetchEpisodesFirebase(){
         episodeRef = FirebaseDatabase.getInstance().reference.child("Episodes")
         var query = episodeRef.orderByChild("uid").equalTo(profileId)
-            .orderByChild("isDraft").equalTo(true)
 
-            query.addListenerForSingleValueEvent(object : ValueEventListener{
+        query.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 repoList.clear()
                 novelTitleList.clear()
