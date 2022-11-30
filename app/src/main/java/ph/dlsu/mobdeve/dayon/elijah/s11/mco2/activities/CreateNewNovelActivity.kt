@@ -27,9 +27,9 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
 
 class CreateNewNovelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateNewNovelBinding
-    private lateinit var tagList:ArrayList<String>
+    private var tagList= arrayListOf<String>()
     private lateinit var profileId: String
-    private lateinit var imageUri:String
+    private var imageUri:String = ""
 
     private var storageProfileRef: StorageReference?=null
 
@@ -50,7 +50,9 @@ class CreateNewNovelActivity : AppCompatActivity() {
             addNovel()
         }
         binding.tvThumbnail.setOnClickListener{
-            deleteThumbnail()
+            if(!imageUri.isNullOrBlank()) {
+                deleteThumbnail()
+            }
             val galleryIntent = Intent(Intent.ACTION_PICK)
 //             here item is type of image
             galleryIntent.type = "image/*"
@@ -128,25 +130,9 @@ class CreateNewNovelActivity : AppCompatActivity() {
         return uri.path?.lastIndexOf('/')?.let { uri.path?.substring(it) }
     }
     private fun deleteThumbnail(){
-        val userRef = FirebaseDatabase.getInstance().reference.child("Users").child(profileId)
-        userRef.addValueEventListener(object: ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if (snapshot.exists()){
-//                    val user = snapshot.getValue(User::class.java)
-//                    val uri = user!!.getImage()
-                    val ref = FirebaseStorage.getInstance().getReferenceFromUrl(imageUri)
-                    Toast.makeText(this@CreateNewNovelActivity,"$ref",Toast.LENGTH_SHORT).show()
-                    ref.delete()
-
-                    imageUri = ""
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
+        val ref = FirebaseStorage.getInstance().getReferenceFromUrl(imageUri)
+        ref.delete()
+        imageUri = ""
     }
     private fun addNovel(){
         val title = binding.etTitle.text.toString()

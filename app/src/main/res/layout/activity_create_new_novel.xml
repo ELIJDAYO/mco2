@@ -94,11 +94,11 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/et_title" />
-    <EditText
+    <TextView
         android:id="@+id/tv_thumbnail"
         android:layout_width="0dp"
         android:layout_height="@dimen/_35sdp"
-        android:layout_gravity="center_vertical"
+        android:gravity="center"
         android:layout_marginLeft="@dimen/_30sdp"
         android:layout_marginTop="@dimen/_30sdp"
         android:layout_marginRight="@dimen/_30sdp"
