@@ -6,9 +6,7 @@ import android.os.Bundle
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.WorkRepoItemAdapter
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityEditNovelBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityWorkRepoBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
@@ -18,23 +16,21 @@ class WorkRepoActivity : AppCompatActivity() {
     private lateinit var workRepoAdapter: WorkRepoItemAdapter
     private lateinit var episodeRef: DatabaseReference
     private lateinit var profileId: String
-    private var repoList= arrayListOf<Episode>()
+    private var repoList= ArrayList<Episode>()
 
     private lateinit var novelTitle: String
-    private var novelTitleList= arrayListOf<String>()
+    private var novelTitleList= ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWorkRepoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
 
         binding.rvWorkRepo.layoutManager = LinearLayoutManager(applicationContext)
-        workRepoAdapter = WorkRepoItemAdapter(this, novelTitleList,repoList)
         fetchEpisodesFirebase()
-
+        workRepoAdapter = WorkRepoItemAdapter(this, novelTitleList,repoList)
         binding.rvWorkRepo.adapter = workRepoAdapter
         binding.ibBack.setOnClickListener {
             val intent = Intent(this, EditNovelActivity::class.java)
@@ -53,10 +49,11 @@ class WorkRepoActivity : AppCompatActivity() {
                 if(snapshot.exists()){
                     for(element in snapshot.children){
                         var episode = snapshot.getValue(Episode::class.java)
+                        novelTitleList = ArrayList<String>()
                         if (episode != null) {
                             if(episode.getIsDraft()){
                                 repoList.add(episode)
-                                fetchNovelTitle(episode.getNovelId()).toString()
+                                fetchNovelTitle(episode.getNovelId())
                                 novelTitleList.add(novelTitle)
                             }
                         }
