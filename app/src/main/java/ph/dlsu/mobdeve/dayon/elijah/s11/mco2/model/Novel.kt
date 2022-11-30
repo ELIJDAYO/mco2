@@ -11,7 +11,8 @@ class Novel {
     constructor()
 
     constructor(novelId: String,
-                uid:String,title: String,
+                uid:String,
+                title: String,
                 synopsis: String,
                 imageUri: String,
                 numEpisodes: Int,
@@ -28,6 +29,9 @@ class Novel {
     }
     fun getTitle():String{
         return title
+    }
+    fun getUid():String{
+        return uid
     }
     fun getSynopsis():String{
         return synopsis
@@ -46,5 +50,8 @@ class Novel {
     }
     fun setImageUri(imageUri:String){
         this.imageUri=imageUri
+    }
+    fun setUid(uid:String){
+        this.uid = uid
     }
 }

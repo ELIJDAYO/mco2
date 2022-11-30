@@ -2,20 +2,25 @@ package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model
 
 class Episode {
     private var episodeId: String = ""
+    private var novelTitle:String = ""
     private var novelId: String = ""
     private var uid: String = ""
-    private var title: String = ""
+    private var episodeTitle: String = ""
     private var content: String = ""
     private var releaseDate: String = ""
     private var releaseTime: String = ""
     private var isDraft: Boolean = true
     constructor()
 
-    constructor(episodeId: String, novelId: String, uid:String, title: String, content: String, releaseDate:String, isDraft:Boolean) {
+    constructor(episodeId: String, novelTitle:String,
+                novelId: String, uid:String,
+                episodeTitle:String, content: String,
+                releaseDate:String, isDraft:Boolean) {
         this.episodeId = episodeId
+        this.novelTitle = novelTitle
         this.novelId = novelId
         this.uid = uid
-        this.title = title
+        this.episodeTitle = episodeTitle
         this.content = content
         this.releaseDate = releaseDate
         this.releaseTime = releaseTime
@@ -30,8 +35,11 @@ class Episode {
     fun getUid():String{
         return uid
     }
-    fun getTitle():String{
-        return title
+    fun getEpisodeTitle():String{
+        return episodeTitle
+    }
+    fun getNovelTitle():String{
+        return novelTitle
     }
     fun getContent():String{
         return content
@@ -54,8 +62,11 @@ class Episode {
     fun setUid(uid: String){
         this.uid = uid
     }
-    fun setTitle(title:String){
-        this.title=title
+    fun setNovelTitle(novelTitle:String){
+        this.novelTitle=novelTitle
+    }
+    fun setEpTitle(episodeTitle:String){
+        this.episodeTitle=episodeTitle
     }
     fun setContent(content:String){
         this.content=content

@@ -8,13 +8,13 @@
     >
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="63dp"
+        android:layout_height="80dp"
         android:orientation="horizontal"
         android:background="@color/white_smoke"
         >
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="70dp"
             android:orientation="horizontal"
             android:background="@drawable/card_edge"
             >
@@ -39,11 +39,10 @@
                     android:ellipsize="end"
 
                     android:maxLines="1"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30dp"
                     android:text="Episode Title"
                     android:textSize="@dimen/_11sdp"
                     android:paddingStart="@dimen/_5sdp"
-                    android:paddingTop="@dimen/_2sdp"
                     android:paddingEnd="@dimen/_5sdp"
                     android:textColor="@color/black"
 
@@ -55,10 +54,9 @@
 
                     <TextView
                         android:id="@+id/tv_novel_title_iwp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:layout_height="20dp"
                         android:paddingStart="@dimen/_5sdp"
-                        android:paddingTop="@dimen/_2sdp"
                         android:text="@string/novel_title"
                         android:textSize="@dimen/_7sdp"
 

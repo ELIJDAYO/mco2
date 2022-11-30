@@ -7,9 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.CalendarAndTimeActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 
 
 class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder> {
@@ -25,14 +30,10 @@ class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder>
         "2022-11-30",
         "2022-11-26",
         "Draft")
-    private var context: Context
-    private var novelTitleList: ArrayList<String>
     private var repoList:ArrayList<Episode>
 
 
-    constructor(context: Context,novelTitleList: ArrayList<String>,repoList: ArrayList<Episode>){
-        this.context = context
-        this.novelTitleList = novelTitleList
+    constructor(repoList: ArrayList<Episode>){
         this.repoList = repoList
     }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -41,8 +42,8 @@ class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder>
         var itemReleaseDate: TextView? = null
 
         init {
-            itemNovelTitle = itemView.findViewById(R.id.tv_ep_title_iwp)
-            itemEpisodeTitle = itemView.findViewById(R.id.tv_novel_title_iwp)
+            itemEpisodeTitle = itemView.findViewById(R.id.tv_ep_title_iwp)
+            itemNovelTitle = itemView.findViewById(R.id.tv_novel_title_iwp)
             itemReleaseDate = itemView.findViewById(R.id.tv_release_date_iwp)
 
             itemView.setOnClickListener {
@@ -68,13 +69,13 @@ class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder>
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
         val repo = repoList[i]
-        val novelTitle = novelTitleList[i]
-        viewHolder.itemNovelTitle?.text = novelTitle
-        viewHolder.itemEpisodeTitle?.text = repo.getTitle()
-        viewHolder.itemReleaseDate?.text = repo.getReleaseDate()
+        viewHolder.itemEpisodeTitle?.text = repo.getEpisodeTitle()
+        viewHolder.itemNovelTitle?.text = repo.getNovelTitle()
+        viewHolder.itemReleaseDate?.text = repo.getIsDraft().toString()
     }
 
     override fun getItemCount(): Int {
         return repoList.size
     }
+
 }

@@ -16,14 +16,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import com.bumptech.glide.Glide
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCreateNewNovelBinding
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
+import java.util.*
+import kotlin.collections.HashMap
 
 class CreateNewNovelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateNewNovelBinding
@@ -143,10 +142,10 @@ class CreateNewNovelActivity : AppCompatActivity() {
         }else{
             this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
             val novelRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Novels")
-            val novelId = novelRef.push().key
+            val novelId = novelRef.push().key.toString()
             val novelMap=HashMap<String,Any>()
 
-            novelMap["novelId"] = novelId!!
+            novelMap["novelId"] = novelId
             novelMap["uid"] = profileId
             novelMap["title"] = title
             novelMap["synopsis"] = synopsis
@@ -165,8 +164,9 @@ class CreateNewNovelActivity : AppCompatActivity() {
             }
 
 
-            val intent = Intent(this, WriteNewEpisodeActivity::class.java)
+            val intent = Intent(this, CreateNewEpisodeActivity::class.java)
             intent.putExtra("novelId", novelId)
+            intent.putExtra("novelTitle",title)
             startActivity(intent)
             finish()
         }
