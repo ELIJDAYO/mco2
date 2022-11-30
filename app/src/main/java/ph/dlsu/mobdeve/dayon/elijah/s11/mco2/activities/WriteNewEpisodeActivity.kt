@@ -16,7 +16,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityWriteNewEpisode
 class WriteNewEpisodeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityWriteNewEpisodeBinding
-    private lateinit var profileId: String
+    private var novelId: String? = null
     private lateinit var firebaseUser: FirebaseUser
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -31,9 +31,6 @@ class WriteNewEpisodeActivity : AppCompatActivity() {
         }
         binding.btnSaveToWorkRepo.setOnClickListener {
             addEpisodeInfo()
-//            val intent = Intent(this, WorkRepoActivity::class.java)
-//            startActivity(intent)
-//            finish()
         }
 
     }
@@ -45,7 +42,22 @@ class WriteNewEpisodeActivity : AppCompatActivity() {
             Toast.makeText(this,"Either field is blank", Toast.LENGTH_SHORT).show()
             return
         }else{
+            novelId = intent.getStringExtra("novelId")
+            val episodeRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Episodes")
+            val episodeId = episodeRef.push().key
+            val episodeMap = HashMap<String,Any>()
 
+            episodeMap["episodeId"] = episodeId!!
+            episodeMap["novelId"] = novelId!!
+            episodeMap["title"] = title
+            episodeMap["content"] = content
+            episodeMap["isDraft"] = true
+
+            episodeRef.child(episodeId).setValue(episodeMap)
+
+            val intent = Intent(this, WorkRepoActivity::class.java)
+            startActivity(intent)
+            finish()
         }
 
     }

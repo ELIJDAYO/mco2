@@ -85,8 +85,6 @@ class CreateNewNovelActivity : AppCompatActivity() {
         })
     }
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
-    // lambda expression to receive a result back, here we
-        // receive single item(photo) on selection
         registerForActivityResult( ActivityResultContracts.StartActivityForResult()) { result ->
             if (result != null) {
                 // getting URI of selected Image
@@ -171,6 +169,16 @@ class CreateNewNovelActivity : AppCompatActivity() {
 
             novelRef.child(novelId).setValue(novelMap)
 //            novelRef.child(novelId).updateChildren(novelMap)
+
+            val tagRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Tags")
+            val tagMap=HashMap<String, Any>()
+            for (tag in tagList){
+                tagMap["novelId"] = novelId
+                tagMap["tagName"] = tag
+                tagRef.child(novelId).setValue(tagMap)
+            }
+
+
             val intent = Intent(this, WriteNewEpisodeActivity::class.java)
             intent.putExtra("novelId", novelId)
             startActivity(intent)
