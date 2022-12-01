@@ -4,13 +4,20 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.google.firebase.database.*
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.WorkRepoItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCalendarAndTimeBinding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
+import java.text.SimpleDateFormat
 import java.util.*
 
 
 class CalendarAndTimeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCalendarAndTimeBinding
+    private var episodeId: String=""
+    private var formattedDateTime=""
+    private lateinit var episodeRef: DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -34,7 +41,7 @@ class CalendarAndTimeActivity : AppCompatActivity() {
 
         ) { view, year, month, day ->
             val month = month + 1
-            calendarMsg = "You Selected: $year/$month/$day"
+            calendarMsg = "$year/$month/$day"
 
         }
 
@@ -85,20 +92,27 @@ class CalendarAndTimeActivity : AppCompatActivity() {
             val hour1 = if (hour < 10) "0" + hour2 else hour2
             val min = if (minute < 10) "0" + minute2 else minute2
             // display format of time
-            timeMsg = "Time is: $hour1 : $min $am_pm2"
-
-
+            timeMsg = "$hour1:$min $am_pm2"
         }
-
 
         binding.calendarAndTimeBtn.setOnClickListener() {
-            Toast.makeText(applicationContext, calendarMsg, Toast.LENGTH_SHORT).show()
-            Toast.makeText(applicationContext, timeMsg, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(applicationContext, calendarMsg, Toast.LENGTH_SHORT).show()
+//            Toast.makeText(applicationContext, timeMsg, Toast.LENGTH_SHORT).show()
+            formattedDateTime = SimpleDateFormat("yyyy/mm/dd HH:mm a").parse(calendarMsg!!+" "+timeMsg!!).toString()
+            fetchEpisodeInfo()
             val intent = Intent(this, WorkRepoActivity::class.java)
             startActivity(intent)
+
             finish()
         }
+    }
+    private fun fetchEpisodeInfo(){
 
-
+        episodeId = intent.getStringExtra("episodeId").toString()
+        episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
+        val episodeMap = HashMap<String,Any>()
+        episodeMap["episodeId"] = episodeId
+        episodeMap["releaseDateTime"] = formattedDateTime
+        episodeRef.child(episodeId).updateChildren(episodeMap)
     }
 }

@@ -53,6 +53,7 @@ class CreateNewEpisodeActivity : AppCompatActivity() {
             episodeMap["episodeTitle"] = epTitle
             episodeMap["content"] = content
             episodeMap["isDraft"] = true
+            episodeMap["isPublished"] = false
 
             episodeRef.child(episodeId).setValue(episodeMap)
 

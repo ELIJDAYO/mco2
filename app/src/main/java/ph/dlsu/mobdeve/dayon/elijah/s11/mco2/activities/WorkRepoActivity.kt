@@ -1,17 +1,14 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
-import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.WorkRepoItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityWorkRepoBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 
 class WorkRepoActivity : AppCompatActivity() {
     lateinit var binding: ActivityWorkRepoBinding
@@ -53,7 +50,7 @@ class WorkRepoActivity : AppCompatActivity() {
                             repoList.add(episode)
                         }
                     }
-                    workRepoAdapter = WorkRepoItemAdapter(repoList)
+                    workRepoAdapter = WorkRepoItemAdapter(this@WorkRepoActivity,repoList)
                     binding.rvWorkRepo.adapter = workRepoAdapter
                 }
             }

@@ -31,9 +31,10 @@ class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder>
         "2022-11-26",
         "Draft")
     private var repoList:ArrayList<Episode>
+    private lateinit var context:Context
 
-
-    constructor(repoList: ArrayList<Episode>){
+    constructor(context: Context,repoList: ArrayList<Episode>){
+        this.context=context
         this.repoList = repoList
     }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -46,19 +47,6 @@ class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder>
             itemNovelTitle = itemView.findViewById(R.id.tv_novel_title_iwp)
             itemReleaseDate = itemView.findViewById(R.id.tv_release_date_iwp)
 
-            itemView.setOnClickListener {
-                var position: Int = bindingAdapterPosition
-                val context = itemView.context
-//                val intent = Intent(context, HomeFragment::class.java).apply {
-//                    putExtra("NUMBER", position)
-                    if (position >= 0){
-                        itemView.setOnClickListener{
-                            val intent = Intent(context, CalendarAndTimeActivity::class.java)
-                            context.startActivity(intent)
-                        }
-                    }
-//                context.startActivity(intent)
-            }
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -72,6 +60,12 @@ class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder>
         viewHolder.itemEpisodeTitle?.text = repo.getEpisodeTitle()
         viewHolder.itemNovelTitle?.text = repo.getNovelTitle()
         viewHolder.itemReleaseDate?.text = repo.getIsDraft().toString()
+
+        viewHolder.itemView.setOnClickListener {
+            val intent = Intent(context,CalendarAndTimeActivity::class.java)
+            intent.putExtra("episodeId",repo.getEpisodeId())
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
