@@ -16,21 +16,29 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.TagAdapter
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.WorkRepoItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCreateNewNovelBinding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 import java.util.*
 import kotlin.collections.HashMap
 
 class CreateNewNovelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateNewNovelBinding
-    private var tagList= arrayListOf<String>()
+    private var tagNameList= arrayListOf<String>()
+    private var tagList= arrayListOf<Tag>()
     private lateinit var profileId: String
     private var imageUri:String = ""
-
+    private lateinit var tagAdapter:TagAdapter
+    private lateinit var tagRef:DatabaseReference
     private var storageProfileRef: StorageReference?=null
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,6 +47,9 @@ class CreateNewNovelActivity : AppCompatActivity() {
 
         storageProfileRef = FirebaseStorage.getInstance().reference.child("Pictures")
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
+
+        binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
+        fetchTagsFirebase()
 
         binding.ibBack.setOnClickListener {
             val intent= Intent(this@CreateNewNovelActivity,EditNovelActivity::class.java)
@@ -70,7 +81,7 @@ class CreateNewNovelActivity : AppCompatActivity() {
                 tagDialog.setPositiveButton("Ok", object : DialogInterface.OnClickListener {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         val tag = etTag.text.toString()
-                        tagList.add(tag)
+                        tagNameList.add(tag)
                     }
                 })
                 tagDialog.setNegativeButton("Cancel",object: DialogInterface.OnClickListener {
@@ -83,6 +94,27 @@ class CreateNewNovelActivity : AppCompatActivity() {
                 })
                 tagDialog.show()
             }
+        })
+    }
+    private fun fetchTagsFirebase(){
+        tagRef = FirebaseDatabase.getInstance().getReference("Tags")
+        var query = tagRef.orderByChild("novelId")
+        query.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                tagList.clear()
+                if(snapshot.exists()){
+                    for(element in snapshot.children){
+                        var novelTag = element.getValue(Tag::class.java)
+                        tagList.add(novelTag!!)
+                    }
+                    tagAdapter = TagAdapter(this@CreateNewNovelActivity,tagList)
+                    binding.rvTags.adapter = tagAdapter
+                }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
         })
     }
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
@@ -157,7 +189,7 @@ class CreateNewNovelActivity : AppCompatActivity() {
 
             val tagRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Tags")
             val tagMap=HashMap<String, Any>()
-            for (tag in tagList){
+            for (tag in tagNameList){
                 tagMap["novelId"] = novelId
                 tagMap["tagName"] = tag
                 tagRef.child(novelId).setValue(tagMap)

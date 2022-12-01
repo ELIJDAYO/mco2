@@ -125,6 +125,7 @@ class CalendarAndTimeActivity : AppCompatActivity() {
         val episodeMap = HashMap<String,Any>()
         episodeMap["episodeId"] = episodeId
         episodeMap["releaseDateTime"] = formattedDateTime
+        episodeMap["isDraft"] = false
         episodeRef.child(episodeId).updateChildren(episodeMap)
     }
 }

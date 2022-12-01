@@ -59,7 +59,12 @@ class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder>
         val repo = repoList[i]
         viewHolder.itemEpisodeTitle?.text = repo.getEpisodeTitle()
         viewHolder.itemNovelTitle?.text = repo.getNovelTitle()
-        viewHolder.itemReleaseDate?.text = repo.getIsDraft().toString()
+        val releasedDatetime = repo.getReleaseDateTime()
+        if(releasedDatetime.isNullOrBlank()){
+            viewHolder.itemReleaseDate?.text = "Draft"
+        }else{
+            viewHolder.itemReleaseDate?.text = releasedDatetime
+        }
 
         viewHolder.itemView.setOnClickListener {
             val intent = Intent(context,CalendarAndTimeActivity::class.java)

@@ -29,9 +29,9 @@ class FrontEndNovelActivity : AppCompatActivity() {
         novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, chapterTitle,"view")
         binding.rvEpisodes.adapter = novelEpisodeAdapter
 
-        binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
-        tagAdapter = TagAdapter()
-        binding.rvTags.adapter = tagAdapter
+//        binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
+//        tagAdapter = TagAdapter()
+//        binding.rvTags.adapter = tagAdapter
 
 
         binding.ibBack.setOnClickListener {

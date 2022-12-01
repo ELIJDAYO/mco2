@@ -70,6 +70,7 @@
     <string name="leave_reviews">Leave Reviews</string>
     <string name="submit">submit</string>
     <string name="novel_title">Novel Title</string>
+    <string name="releasedate">releaseDate</string>
 
 
 </resources>

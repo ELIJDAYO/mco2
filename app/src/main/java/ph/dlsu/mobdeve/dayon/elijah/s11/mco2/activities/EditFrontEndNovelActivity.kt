@@ -30,7 +30,7 @@ class EditFrontEndNovelActivity : AppCompatActivity() {
         binding.rvEpisodes.adapter = novelEpisodeAdapter
 
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
-        tagAdapter = TagAdapter()
+//        tagAdapter = TagAdapter(this, )
         binding.rvTags.adapter = tagAdapter
 
 
