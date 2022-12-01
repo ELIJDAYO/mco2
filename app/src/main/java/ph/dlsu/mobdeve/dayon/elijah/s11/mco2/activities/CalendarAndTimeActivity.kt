@@ -1,13 +1,16 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
+import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import com.google.firebase.database.*
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.WorkRepoItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCalendarAndTimeBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -34,7 +37,7 @@ class CalendarAndTimeActivity : AppCompatActivity() {
         var calendarTodayMonth = calendarToday.get(Calendar.MONTH) + 1
         var calendarTodayDay = calendarToday.get(Calendar.DAY_OF_MONTH)
 
-        calendarMsg = "You Selected: $calendarTodayYear/$calendarTodayMonth/$calendarTodayDay"
+        calendarMsg = "$calendarTodayYear-$calendarTodayMonth-$calendarTodayDay"
         datePicker.init(
             calendarToday.get(Calendar.YEAR), calendarToday.get(Calendar.MONTH),
             calendarToday.get(Calendar.DAY_OF_MONTH)
@@ -68,7 +71,7 @@ class CalendarAndTimeActivity : AppCompatActivity() {
         val hour1 = if (hour < 10) "0" + hour else hour
         val min = if (minute < 10) "0" + minute else minute
         // display format of time
-        timeMsg = "Time is: $hour1 : $min $am_pm"
+        timeMsg = "$hour1:$min $am_pm"
 
         timePicker.setOnTimeChangedListener() { _, hour, minute ->
 
@@ -89,16 +92,24 @@ class CalendarAndTimeActivity : AppCompatActivity() {
                 else -> am_pm2 = "AM"
             }
 
-            val hour1 = if (hour < 10) "0" + hour2 else hour2
+            var hour1 = if (hour < 10) "0" + hour2 else hour2
             val min = if (minute < 10) "0" + minute2 else minute2
             // display format of time
-            timeMsg = "$hour1:$min $am_pm2"
+            timeMsg = " $hour1:$min $am_pm2"
+            if(am_pm == "PM"){
+                val hourInt = Integer.parseInt(min as String) + 12
+                hour1 = hourInt.toString()
+                timeMsg = " $hour1:$min $am_pm2"
+            }
         }
 
         binding.calendarAndTimeBtn.setOnClickListener() {
-//            Toast.makeText(applicationContext, calendarMsg, Toast.LENGTH_SHORT).show()
-//            Toast.makeText(applicationContext, timeMsg, Toast.LENGTH_SHORT).show()
-            formattedDateTime = SimpleDateFormat("yyyy/mm/dd HH:mm a").parse(calendarMsg!!+" "+timeMsg!!).toString()
+//            Toast.makeText(applicationContext,"$calendarMsg   $timeMsg", Toast.LENGTH_SHORT).show()
+
+            val datetime = calendarMsg+" "+timeMsg
+
+            formattedDateTime = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN).parse(datetime)!!.toString()
+            Log.e(TAG,"output datetime $formattedDateTime")
             fetchEpisodeInfo()
             val intent = Intent(this, WorkRepoActivity::class.java)
             startActivity(intent)
@@ -107,6 +118,7 @@ class CalendarAndTimeActivity : AppCompatActivity() {
         }
     }
     private fun fetchEpisodeInfo(){
+            Toast.makeText(applicationContext,"Entered fetchFun", Toast.LENGTH_SHORT).show()
 
         episodeId = intent.getStringExtra("episodeId").toString()
         episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
