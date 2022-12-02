@@ -36,7 +36,7 @@ class TagAdapter : RecyclerView.Adapter<TagAdapter.ViewHolder>{
         var itemTag: TextView? = null
         var removeIv: ImageView? = null
         init {
-            itemTag = itemView.findViewById(R.id.tv_title_iet)
+            itemTag = itemView.findViewById(R.id.tv_title_it)
             removeIv = itemView.findViewById(R.id.iv_remove_irt)
         }
     }

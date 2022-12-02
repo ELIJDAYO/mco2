@@ -7,7 +7,6 @@ import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelEpisodeAdapter
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.RemovableTagAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.TagAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityFrontEndNovelBinding
 

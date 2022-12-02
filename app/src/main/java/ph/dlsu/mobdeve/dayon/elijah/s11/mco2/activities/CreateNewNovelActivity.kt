@@ -22,6 +22,7 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.TagAdapter
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.TagRemoveAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.WorkRepoItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCreateNewNovelBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
@@ -32,10 +33,9 @@ import kotlin.collections.HashMap
 class CreateNewNovelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateNewNovelBinding
     private var tagNameList= arrayListOf<String>()
-    private var tagList= arrayListOf<Tag>()
     private lateinit var profileId: String
     private var imageUri:String = ""
-    private lateinit var tagAdapter:TagAdapter
+    private lateinit var tagAdapter:TagRemoveAdapter
     private lateinit var tagRef:DatabaseReference
     private var storageProfileRef: StorageReference?=null
 
@@ -49,7 +49,9 @@ class CreateNewNovelActivity : AppCompatActivity() {
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
 
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
-        fetchTagsFirebase()
+        tagAdapter = TagRemoveAdapter(this@CreateNewNovelActivity,tagNameList)
+        binding.rvTags.adapter = tagAdapter
+
 
         binding.ibBack.setOnClickListener {
             val intent= Intent(this@CreateNewNovelActivity,EditNovelActivity::class.java)
@@ -82,6 +84,7 @@ class CreateNewNovelActivity : AppCompatActivity() {
                     override fun onClick(p0: DialogInterface?, p1: Int) {
                         val tag = etTag.text.toString()
                         tagNameList.add(tag)
+                        tagAdapter.notifyDataSetChanged()
                     }
                 })
                 tagDialog.setNegativeButton("Cancel",object: DialogInterface.OnClickListener {
@@ -96,18 +99,18 @@ class CreateNewNovelActivity : AppCompatActivity() {
             }
         })
     }
-    private fun fetchTagsFirebase(){
+    private fun fetchTagsFirebase(){//dont use this fun
         tagRef = FirebaseDatabase.getInstance().getReference("Tags")
         var query = tagRef.orderByChild("novelId")
         query.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                tagList.clear()
+                tagNameList.clear()
                 if(snapshot.exists()){
                     for(element in snapshot.children){
                         var novelTag = element.getValue(Tag::class.java)
-                        tagList.add(novelTag!!)
+//                        tagNameList.add(novelTag!!.getNovelId)
                     }
-                    tagAdapter = TagAdapter(this@CreateNewNovelActivity,tagList)
+//                    tagAdapter = TagAdapter(this@CreateNewNovelActivity,tagList)
                     binding.rvTags.adapter = tagAdapter
                 }
             }
