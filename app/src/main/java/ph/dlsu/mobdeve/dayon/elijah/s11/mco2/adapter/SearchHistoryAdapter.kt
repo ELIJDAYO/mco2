@@ -9,12 +9,12 @@ import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 
-class SearchHistoryAdapter : RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>(){
-    private var searchHistoryArray = arrayOf(
-        "Goblin Slayer",
-        "Random Title",
-        "Title1203193012"
-    )
+class SearchHistoryAdapter(private var searchHistoryArray: ArrayList<String>) : RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>(){
+//    private var searchHistoryArray = arrayOf(
+//        "Goblin Slayer",
+//        "Random Title",
+//        "Title1203193012"
+//    )
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var searchHistoryText: TextView

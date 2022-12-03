@@ -5,42 +5,58 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.FragmentContainer
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NotificationItemAdapter
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.WorkRepoItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentNotificationBinding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 
 
 class NotificationFragment : Fragment() {
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
-    private var adapter: RecyclerView.Adapter<NotificationItemAdapter.ViewHolder>? = null
-    private var _binding: FragmentNotificationBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var adapter: RecyclerView.Adapter<NotificationItemAdapter.ViewHolder>
+    private lateinit var binding : FragmentNotificationBinding
+    private lateinit var database: DatabaseReference
+    private var notificationList = arrayListOf<String>()
+    private lateinit var profileId: String
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentNotificationBinding.inflate(inflater, container, false)
-        return binding.root
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
+
+        binding = FragmentNotificationBinding.inflate(layoutInflater)
+
+        fetchNotificationFirebase()
     }
 
-    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(itemView, savedInstanceState)
-        binding.notificationItemBTN.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(activity)
-            // set the custom adapter to the RecyclerView
-            adapter = NotificationItemAdapter()
-        }
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+    private fun fetchNotificationFirebase(){
+        database = FirebaseDatabase.getInstance().getReference("Notification")
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                notificationList.clear()
+                if(snapshot.exists()){
+                    for(element in snapshot.children){
+                        var notification = element.getValue(String::class.java)
+                        notificationList.add(notification!!)
+                    }
+                    adapter = NotificationItemAdapter(notificationList)
+                    binding.notificationItemBTN.adapter = adapter
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
     }
 
 }

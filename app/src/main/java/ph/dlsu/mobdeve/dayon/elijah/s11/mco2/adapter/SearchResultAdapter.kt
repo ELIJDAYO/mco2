@@ -1,6 +1,5 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter
 
-import android.app.appsearch.SearchResult
 import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,8 +8,6 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EpisodeViewerActivity
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.SearchEditNovel
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivitySearchEditNovelBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ItemSearchresultBinding
 
 class SearchResultAdapter : RecyclerView.Adapter<SearchResultAdapter.SearchResultViewHolder> {

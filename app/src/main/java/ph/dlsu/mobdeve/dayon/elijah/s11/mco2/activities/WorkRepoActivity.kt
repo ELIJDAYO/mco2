@@ -40,7 +40,7 @@ class WorkRepoActivity : AppCompatActivity() {
     private fun fetchEpisodesFirebase(){
         episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
         var query = episodeRef.orderByChild("novelId")
-            query.addValueEventListener(object : ValueEventListener{
+        query.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 repoList.clear()
                 if(snapshot.exists()){

@@ -5,18 +5,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 
 
-class NotificationItemAdapter : RecyclerView.Adapter<NotificationItemAdapter.ViewHolder>(){
-    private var notificationArray = arrayOf(
-        "You got a comment by @shimara",
-        "@garian reported a grammar error",
-        "Reincarnated slave reached 1000 stars!"
-    )
+class NotificationItemAdapter(private val notificationList: ArrayList<String>) : RecyclerView.Adapter<NotificationItemAdapter.ViewHolder>(){
+//    private var notificationArray = arrayOf(
+//        "You got a comment by @shimara",
+//        "@garian reported a grammar error",
+//        "Reincarnated slave reached 1000 stars!"
+//    )
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var notificationText: TextView
@@ -28,7 +27,7 @@ class NotificationItemAdapter : RecyclerView.Adapter<NotificationItemAdapter.Vie
             itemView.setOnClickListener {
                 var position: Int = getAbsoluteAdapterPosition()
                 val context = itemView.context
-                val intent = Intent(context, FrontEndNovelActivity::class.java).apply {//
+                val intent = Intent(context, FrontEndNovelActivity::class.java).apply {//Not Sure where to intent to
                     putExtra("NUMBER", position)
                     putExtra("CODE", notificationText.text)
                 }
@@ -38,17 +37,16 @@ class NotificationItemAdapter : RecyclerView.Adapter<NotificationItemAdapter.Vie
     }
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context)
-            .inflate(R.layout.item_notification, viewGroup, false)
+        val v = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_notification, viewGroup, false)
         return ViewHolder(v)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.notificationText.text = notificationArray[i]
+        viewHolder.notificationText.text = this.notificationList[i]
     }
 
     override fun getItemCount(): Int {
-        return notificationArray.size
+        return this.notificationList.size
     }
 
 

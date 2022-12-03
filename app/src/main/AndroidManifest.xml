@@ -43,7 +43,7 @@
             android:name=".activities.FilterActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.SearchEditNovel"
+            android:name=".activities.SearchEditNovelActivity"
             android:exported="true" />
         <activity
             android:name=".activities.CalendarAndTimeActivity"

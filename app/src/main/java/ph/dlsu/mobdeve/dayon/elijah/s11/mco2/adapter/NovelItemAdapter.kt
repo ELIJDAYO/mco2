@@ -22,6 +22,7 @@ class NovelItemAdapter : RecyclerView.Adapter<NovelItemAdapter.ViewHolder>() {
     )
     private val date = arrayOf(
         "Jan 1", "Feb 1", "March 1", "April 1")
+
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemTitle: TextView? = null
         var itemDate: TextView? = null

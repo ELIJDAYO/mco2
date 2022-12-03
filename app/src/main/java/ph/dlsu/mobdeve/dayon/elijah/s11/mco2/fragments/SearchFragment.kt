@@ -7,41 +7,53 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.*
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NotificationItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.SearchHistoryAdapter
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentNotificationBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentSearchBinding
 
 class SearchFragment : Fragment() {
 
-    private var layoutManager: RecyclerView.LayoutManager? = null
+
     private var adapter: RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>? = null
-    private var _binding: FragmentSearchBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding : FragmentSearchBinding
+    private lateinit var database: DatabaseReference
+    private var searchHistoryArray = arrayListOf<String>()
+    private lateinit var profileId: String
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
+        this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
 
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        _binding = FragmentSearchBinding.inflate(inflater, container, false)
-        return binding.root
+        binding = FragmentSearchBinding.inflate(layoutInflater)
+
+        fetchSearchHistoryFirebase()
     }
 
-    override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(itemView, savedInstanceState)
-        binding.searchHistoryList.apply {
-            // set a LinearLayoutManager to handle Android
-            // RecyclerView behavior
-            layoutManager = LinearLayoutManager(activity)
-            // set the custom adapter to the RecyclerView
-            adapter = SearchHistoryAdapter()
-        }
-    }
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-    }
+    private fun fetchSearchHistoryFirebase(){
+        database = FirebaseDatabase.getInstance().getReference("SearchHistory")
+        database.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                searchHistoryArray.clear()
+                if(snapshot.exists()){
+                    for(element in snapshot.children){
+                        var searchHistory = element.getValue(String::class.java)
+                        searchHistoryArray.add(searchHistory!!)
+                    }
+                    adapter = SearchHistoryAdapter(searchHistoryArray)
+                    binding.searchHistoryList.adapter = adapter
+                }
+            }
 
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+
+    }
 }
