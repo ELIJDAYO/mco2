@@ -35,7 +35,7 @@ class UserFragmentRV1 : Fragment() {
     private fun setupData() {
         binding.rv.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = NovelItemAdapter()
+//            adapter = NovelItemAdapter()
         }
 //        binding.label.text = getString(R.string.app_name)
 //        val color = arguments?.getString("color")

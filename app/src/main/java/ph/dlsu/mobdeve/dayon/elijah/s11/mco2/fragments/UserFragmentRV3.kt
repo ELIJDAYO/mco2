@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelItemAdapter
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserRV2Binding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserRV3Binding
 
 class UserFragmentRV3 : Fragment() {
@@ -35,7 +33,7 @@ class UserFragmentRV3 : Fragment() {
         super.onViewCreated(itemView, savedInstanceState)
         binding.rv.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = NovelItemAdapter()
+//            adapter = NovelItemAdapter()
         }
     }
     override fun onDestroyView() {

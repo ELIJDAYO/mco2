@@ -9,18 +9,18 @@ import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 
-class SearchResultNavAdapter(private var searchResultNavArray: ArrayList<String>,private var searchResultNavStarArray: ArrayList<Int> ) : RecyclerView.Adapter<SearchResultNavAdapter.ViewHolder>(){
-//    private var searchResultNavArray = arrayOf(
-//        "Goblin Slayer",
-//        "Random Title",
-//        "Title1203193012"
-//    )
-//
-//    private var searchResultNavStarArray = arrayOf(
-//        12,
-//        100,
-//        1
-//    )
+class SearchResultNavAdapter : RecyclerView.Adapter<SearchResultNavAdapter.ViewHolder>(){
+    private var searchResultNavArray = arrayOf(
+        "Goblin Slayer",
+        "Random Title",
+        "Title1203193012"
+    )
+
+    private var searchResultNavStarArray = arrayOf(
+        12,
+        100,
+        1
+    )
 
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

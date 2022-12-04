@@ -7,7 +7,7 @@ class Novel {
     private var synopsis: String = ""
     private var imageUri: String = ""
     private var numEpisodes: Int = 0
-    private var tags: ArrayList<String>? = null
+
     constructor()
 
     constructor(novelId: String,
@@ -39,6 +39,9 @@ class Novel {
     fun getImageUri():String{
         return imageUri
     }
+    fun getNumEp():Int{
+        return numEpisodes
+    }
     fun setPostId(postId:String){
         this.novelId=novelId
     }
@@ -53,5 +56,8 @@ class Novel {
     }
     fun setUid(uid:String){
         this.uid = uid
+    }
+    fun setNumEp(numEpisodes:Int){
+        this.numEpisodes = numEpisodes
     }
 }

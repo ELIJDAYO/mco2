@@ -33,7 +33,7 @@ class UserFragmentRV2 : Fragment() {
         super.onViewCreated(itemView, savedInstanceState)
         binding.rv.apply {
             layoutManager = LinearLayoutManager(activity)
-            adapter = NovelItemAdapter()
+//            adapter = NovelItemAdapter()
         }
     }
     override fun onDestroyView() {

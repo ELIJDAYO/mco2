@@ -26,7 +26,6 @@ class WorkRepoActivity : AppCompatActivity() {
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
 
         binding.rvWorkRepo.layoutManager = LinearLayoutManager(applicationContext)
-
         fetchEpisodesFirebase()
 
 
@@ -46,7 +45,7 @@ class WorkRepoActivity : AppCompatActivity() {
                 if(snapshot.exists()){
                     for(element in snapshot.children){
                         var episode = element.getValue(Episode::class.java)
-                        if(episode!!.getIsDraft()){
+                        if(episode!!.getIsDraft() || !episode.getIsPublished()){
                             repoList.add(episode)
                         }
                     }

@@ -24,7 +24,9 @@ class RemoveFollowersAdapter : RecyclerView.Adapter<RemoveFollowersAdapter.Remov
         this.mode = mode
     }
 
-
+    override fun getItemCount(): Int {
+        return followerArrayList.size
+    }
 
 
     override fun onCreateViewHolder(
@@ -65,9 +67,7 @@ class RemoveFollowersAdapter : RecyclerView.Adapter<RemoveFollowersAdapter.Remov
         }
     }
 
-    override fun getItemCount(): Int {
-        return followerArrayList.size
-    }
+
 
 
 

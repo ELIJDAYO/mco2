@@ -10,6 +10,7 @@ class Episode {
     private var episodeTitle: String = ""
     private var content: String = ""
     private var releaseDateTime: String = ""
+    private var countStars: Int = 0
     private var isDraft: Boolean = true
     private var isPublished: Boolean = false
     constructor()
@@ -17,7 +18,8 @@ class Episode {
     constructor(episodeId: String, novelTitle:String,
                 novelId: String, uid:String,
                 episodeTitle:String, content: String,
-                releaseDate:String, isDraft:Boolean,isPublished:Boolean) {
+                releaseDate:String,
+                isDraft:Boolean,isPublished:Boolean) {
         this.episodeId = episodeId
         this.novelTitle = novelTitle
         this.novelId = novelId
@@ -46,13 +48,16 @@ class Episode {
     fun getContent():String{
         return content
     }
+    fun geCountStars():Int{
+        return countStars
+    }
     fun getReleaseDateTime():String{
         return releaseDateTime
     }
     fun getIsDraft():Boolean{
         return isDraft
     }
-    fun getPublished():Boolean{
+    fun getIsPublished():Boolean{
         return isPublished
     }
 
@@ -67,6 +72,9 @@ class Episode {
     }
     fun setNovelTitle(novelTitle:String){
         this.novelTitle=novelTitle
+    }
+    fun setCountStars(countStars: Int){
+        this.countStars=countStars
     }
     fun setEpTitle(episodeTitle:String){
         this.episodeTitle=episodeTitle

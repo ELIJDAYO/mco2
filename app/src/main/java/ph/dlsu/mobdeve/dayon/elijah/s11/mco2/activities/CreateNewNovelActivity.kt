@@ -71,54 +71,31 @@ class CreateNewNovelActivity : AppCompatActivity() {
 //             ActivityResultLauncher callback
             imagePickerActivityResult.launch(galleryIntent)
         }
-        binding.addTags.setOnClickListener (object : View.OnClickListener{
-            override fun onClick(p0: View?) {
-                val tagDialog = AlertDialog.Builder(this@CreateNewNovelActivity)
-                tagDialog.setTitle("Input Novel Tag")
+        binding.addTags.setOnClickListener {
+            val tagDialog = AlertDialog.Builder(this@CreateNewNovelActivity)
+            tagDialog.setTitle("Input Novel Tag")
 
-                val etTag = EditText(this@CreateNewNovelActivity)
-                etTag.inputType = InputType.TYPE_CLASS_TEXT
-                tagDialog.setView(etTag)
+            val etTag = EditText(this@CreateNewNovelActivity)
+            etTag.inputType = InputType.TYPE_CLASS_TEXT
+            tagDialog.setView(etTag)
 
-                tagDialog.setPositiveButton("Ok", object : DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        val tag = etTag.text.toString()
-                        tagNameList.add(tag)
-                        tagAdapter.notifyDataSetChanged()
-                    }
-                })
-                tagDialog.setNegativeButton("Cancel",object: DialogInterface.OnClickListener {
-                    override fun onClick(p0: DialogInterface?, p1: Int) {
-                        if (p0 != null) {
-                            p0.cancel()
-                        }
-                    }
-
-                })
-                tagDialog.show()
-            }
-        })
-    }
-    private fun fetchTagsFirebase(){//dont use this fun
-        tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-        var query = tagRef.orderByChild("novelId")
-        query.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                tagNameList.clear()
-                if(snapshot.exists()){
-                    for(element in snapshot.children){
-                        var novelTag = element.getValue(Tag::class.java)
-//                        tagNameList.add(novelTag!!.getNovelId)
-                    }
-//                    tagAdapter = TagAdapter(this@CreateNewNovelActivity,tagList)
-                    binding.rvTags.adapter = tagAdapter
+            tagDialog.setPositiveButton("Ok", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    val tag = etTag.text.toString()
+                    tagNameList.add(tag)
+                    tagAdapter.notifyDataSetChanged()
                 }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+            })
+            tagDialog.setNegativeButton("Cancel", object : DialogInterface.OnClickListener {
+                override fun onClick(p0: DialogInterface?, p1: Int) {
+                    if (p0 != null) {
+                        p0.cancel()
+                    }
+                }
 
-        })
+            })
+            tagDialog.show()
+        }
     }
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
         registerForActivityResult( ActivityResultContracts.StartActivityForResult()) { result ->

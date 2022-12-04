@@ -67,11 +67,16 @@ class CalendarAndTimeActivity : AppCompatActivity() {
             }
             else -> am_pm = "AM"
         }
-
-        val hour1 = if (hour < 10) "0" + hour else hour
+        if(am_pm == "PM"){
+            val hourInt = hour + 12
+            hour = hourInt
+        }
+        var hour1 = if (hour < 10) "0" + hour else hour
         val min = if (minute < 10) "0" + minute else minute
         // display format of time
-        timeMsg = "$hour1:$min $am_pm"
+//        timeMsg = "$hour1:$min $am_pm"
+        timeMsg = "$hour1:$min"
+
 
         timePicker.setOnTimeChangedListener() { _, hour, minute ->
 
@@ -92,15 +97,18 @@ class CalendarAndTimeActivity : AppCompatActivity() {
                 else -> am_pm2 = "AM"
             }
 
+            if(am_pm2 == "PM"){
+                val hourInt = Integer.parseInt(min as String) + 12
+                hour1 = hourInt.toString()
+                timeMsg = " $hour1:$min"
+            }
+
             var hour1 = if (hour < 10) "0" + hour2 else hour2
             val min = if (minute < 10) "0" + minute2 else minute2
             // display format of time
-            timeMsg = " $hour1:$min $am_pm2"
-            if(am_pm == "PM"){
-                val hourInt = Integer.parseInt(min as String) + 12
-                hour1 = hourInt.toString()
-                timeMsg = " $hour1:$min $am_pm2"
-            }
+//            timeMsg = " $hour1:$min $am_pm2"
+            timeMsg = "$hour1:$min"
+
         }
 
         binding.calendarAndTimeBtn.setOnClickListener() {
@@ -108,7 +116,8 @@ class CalendarAndTimeActivity : AppCompatActivity() {
 
             val datetime = calendarMsg+" "+timeMsg
 
-            formattedDateTime = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN).parse(datetime)!!.toString()
+//            formattedDateTime = SimpleDateFormat("yyyy-mm-dd hh:mm").parse(datetime)!!.toString()
+            formattedDateTime = datetime
             Log.e(TAG,"output datetime $formattedDateTime")
             fetchEpisodeInfo()
             val intent = Intent(this, WorkRepoActivity::class.java)
@@ -118,7 +127,7 @@ class CalendarAndTimeActivity : AppCompatActivity() {
         }
     }
     private fun fetchEpisodeInfo(){
-            Toast.makeText(applicationContext,"Entered fetchFun", Toast.LENGTH_SHORT).show()
+        Toast.makeText(applicationContext,"Entered fetchFun", Toast.LENGTH_SHORT).show()
 
         episodeId = intent.getStringExtra("episodeId").toString()
         episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
