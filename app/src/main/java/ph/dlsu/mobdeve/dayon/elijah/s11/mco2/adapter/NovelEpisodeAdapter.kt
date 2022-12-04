@@ -5,63 +5,71 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.CalendarAndTimeActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EpisodeViewerActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.NovelChapterBtnBinding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 
-class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.NovelChapterViewHolder> {
-    private var chapterTitleArrayList = ArrayList<String>()
+class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder> {
+    private var episodeList = ArrayList<Episode>()
     private lateinit var context: Context
-    private lateinit var mode: String
+    private var mode:String="view"
 
-    constructor(context: Context, chapterTitleArrayList: ArrayList<String>, mode: String){
+    constructor(context: Context, episodeList: ArrayList<Episode>, mode: String){
         this.context = context
-        this.chapterTitleArrayList = chapterTitleArrayList
-        this.mode = mode
+        this.episodeList = episodeList
     }
 
 
     override fun getItemCount(): Int {
-        return chapterTitleArrayList.size
+        return episodeList.size
     }
 
     override fun onCreateViewHolder(
-        parent: ViewGroup,
-        viewType: Int
-    ): NovelEpisodeAdapter.NovelChapterViewHolder {
-        val novelChapterBtnBinding = NovelChapterBtnBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return NovelChapterViewHolder(novelChapterBtnBinding)
+        viewGroup: ViewGroup,
+        i: Int
+    ): ViewHolder {
+        val v = LayoutInflater.from(viewGroup.context)
+            .inflate(R.layout.item_work_repo, viewGroup, false)
+        return ViewHolder(v)
     }
 
-    override fun onBindViewHolder(holder: NovelChapterViewHolder, position: Int) {
-        holder.bindName(chapterTitleArrayList[position])
+    override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
+        val episode = episodeList[i]
+        viewHolder.itemEpisodeTitle?.text = episode.getEpisodeTitle()
+        viewHolder.itemNovelTitle?.text = episode.getNovelTitle()
+        viewHolder.itemReleaseDate?.text = episode.getReleaseDateTime()
+
+        viewHolder.itemView.setOnClickListener {
+            val intent = Intent(context, EpisodeViewerActivity::class.java)
+            intent.putExtra("episodeId",episode.getEpisodeId())
+            context.startActivity(intent)
+        }
     }
 
-    inner class NovelChapterViewHolder(private val novelChapterBtnBinding: NovelChapterBtnBinding) : RecyclerView.ViewHolder(novelChapterBtnBinding.root), View.OnClickListener {
-        var name = ""
-
+    inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        var itemNovelTitle: TextView? = null
+        var itemEpisodeTitle: TextView? = null
+        var itemReleaseDate: TextView? = null
         init{
-            itemView.setOnClickListener {
-                if (mode=="view"){
-                    val intent = Intent(context, EpisodeViewerActivity::class.java)
-                    context.startActivity(intent)
-                }
-                else if(mode == "edit"){
-                    val intent = Intent(context, EditNovelActivity::class.java)
-                    context.startActivity(intent)
-                }
-            }
-        }
-
-        fun bindName(name:String){
-            this.name = name
-            novelChapterBtnBinding.novelChapterLayout.text = "$name"
-        }
-
-        override fun onClick(v: View?){
-            Toast.makeText(context, "${name}", Toast.LENGTH_SHORT).show()
+            itemEpisodeTitle = itemView.findViewById(R.id.tv_ep_title_iwp)
+            itemNovelTitle = itemView.findViewById(R.id.tv_novel_title_iwp)
+            itemReleaseDate = itemView.findViewById(R.id.tv_release_date_iwp)
+//            itemView.setOnClickListener {
+//                if (mode=="view"){
+//                    val intent = Intent(context, EpisodeViewerActivity::class.java)
+//                    context.startActivity(intent)
+//                }
+//                else if(mode == "edit"){
+//                    val intent = Intent(context, EditNovelActivity::class.java)
+//                    context.startActivity(intent)
+//                }
+//            }
         }
     }
 

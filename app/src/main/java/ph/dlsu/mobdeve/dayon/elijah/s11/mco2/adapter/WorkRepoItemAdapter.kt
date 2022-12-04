@@ -18,18 +18,6 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 
 
 class WorkRepoItemAdapter : RecyclerView.Adapter<WorkRepoItemAdapter.ViewHolder> {
-    private val titleNovel = arrayOf(
-        "Battle Ship Yamato Awakens",
-        "Dungeon Seeker",
-        "Dungeon Seeker")
-    private val titleEpisode = arrayOf(
-        "Episode 10",
-        "Miracle BOy",
-        "Despair falls upon all")
-    private val releaseDate = arrayOf(
-        "2022-11-30",
-        "2022-11-26",
-        "Draft")
     private var repoList:ArrayList<Episode>
     private lateinit var context:Context
 

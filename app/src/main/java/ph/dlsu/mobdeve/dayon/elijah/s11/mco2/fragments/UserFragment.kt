@@ -257,22 +257,20 @@ class UserFragment : Fragment() {
                 .child("Following")
         }
 
-        if (followingRef != null) {
-            followingRef.addValueEventListener(object : ValueEventListener {
-                override fun onCancelled(error: DatabaseError) {
-                }
+        followingRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+            }
 
-                override fun onDataChange(p0: DataSnapshot) {
-                    if (p0.child(profileId).exists()) {
-                        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
-                        binding.ivFollow.background = drawable
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.child(profileId).exists()) {
+                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
+                    binding.ivFollow.background = drawable
 //                        view?.edit_profile_Button?.text = "Following"
-                    } else {
-                        val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart_edge, null)
-                        binding.ivFollow.background = drawable                    }
-                }
-            })
-        }
+                } else {
+                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart_edge, null)
+                    binding.ivFollow.background = drawable                    }
+            }
+        })
     }
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)

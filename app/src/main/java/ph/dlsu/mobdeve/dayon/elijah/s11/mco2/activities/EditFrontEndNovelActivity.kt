@@ -24,7 +24,7 @@ class EditFrontEndNovelActivity : AppCompatActivity() {
 
         chapterTitle = resources.getStringArray(R.array.novelChapterTitle).toCollection(ArrayList())
         binding.rvEpisodes.layoutManager = LinearLayoutManager(applicationContext)
-        novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, chapterTitle, "edit")
+//        novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, chapterTitle, "edit")
         binding.rvEpisodes.adapter = novelEpisodeAdapter
 
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
