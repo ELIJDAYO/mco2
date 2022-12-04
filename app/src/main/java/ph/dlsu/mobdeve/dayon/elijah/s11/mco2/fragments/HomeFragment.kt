@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.*
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.Interface.FirebaseCallback
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentHomeBinding
@@ -19,6 +21,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.system.measureTimeMillis
 
 class HomeFragment : Fragment() {
     private lateinit var adapter1: NovelItemAdapter
@@ -79,7 +82,12 @@ class HomeFragment : Fragment() {
             }
 
         })
-//        readData2(object :FirebaseCallback{
+        CoroutineScope(IO).launch{
+            readData2()
+
+        }
+
+    //        readData2(object :FirebaseCallback{
 //            override fun onCallBack1(list: ArrayList<String>) {
 //                tagNameList = list
 //                Log.d(TAG, "Read Data 2: On CallBack1 ${list.toString()}")
@@ -104,88 +112,112 @@ class HomeFragment : Fragment() {
 
 
     }
-    private fun fetchTop3Tags(firebaseCallBack: FirebaseCallback){
-        tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-        var query = tagRef.orderByChild("novelId").limitToFirst(3)
-        query.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    tagNameList.clear()
-                    for (element in snapshot.children){
-                        val tag = element.getValue(Tag::class.java)
-                        if(tag!!.getTagName() !in tagNameList) {
-                            tagNameList.add(tag!!.getTagName())
-                        }
-                    }
-                    firebaseCallBack.onCallBack1(tagNameList)
-                }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+    private suspend fun readData2() {
+        withContext(IO){
+            val executionTime = measureTimeMillis {
+                async {
+                    println("debug: launching 1st job: ${Thread.currentThread().name}")
+                    fetchTop3Tags()
+                }.await()
 
-        })
-    }
-    private fun fetchNovelIdsForTag1(firebaseCallBack: FirebaseCallback) {
-        if(tagNameList.size < 1){
-            return
+                async {
+                    println("debug: launching 2nd job: ${Thread.currentThread().name}")
+                    fetchNovelIdsForTag1()
+                }.await()
+
+                async {
+                    println("debug: launching 3rd job: ${Thread.currentThread().name}")
+                    fetchNovelsForTag1()
+                }.await()
+            }
+            Log.e(TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
+
         }
-        tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-        var query = tagRef.orderByChild("tagName").equalTo(tagNameList[0]).limitToLast(10)
-        query.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                novelIdsByTag1.clear()
-                novelDateUpdatedList.clear()
-                if(snapshot.exists()){
-                    for(element in snapshot.children) {
-                        val tag = element.getValue(Tag::class.java)
-                        novelIdsByTag1.add(tag!!.getNovelId())
-                        novelDateUpdatedList.add("")
-                    }
-//                    firebaseCallBack.onCallBack1(novelDateUpdatedList)
-                    firebaseCallBack.onCallBack2(novelIdsByTag1)
-                }
-
-            }
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
-    private fun fetchNovelsForTag1(firebaseCallBack: FirebaseCallback){
-        novelRef = FirebaseDatabase.getInstance().getReference("Novels")
-        var query = novelRef.orderByChild("novelId")
-        query.addValueEventListener(object :ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                novelsByTag1.clear()
-                if(snapshot.exists()){
-                    for (element in snapshot.children){
-                        val novel = element.getValue(Novel::class.java)
-                        if(novel!!.getNovelId() in novelIdsByTag1) {
-                            novelsByTag1.add(novel)
-                            Log.e(TAG,"fetchNovelsForTag1 ${novel.getTitle()}")
+    private suspend fun fetchTop3Tags(){
+        withContext(Main){
+            tagRef = FirebaseDatabase.getInstance().getReference("Tags")
+            var query = tagRef.orderByChild("novelId").limitToFirst(3)
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        tagNameList.clear()
+                        for (element in snapshot.children){
+                            val tag = element.getValue(Tag::class.java)
+                            if(tag!!.getTagName() !in tagNameList) {
+                                tagNameList.add(tag.getTagName())
+                            }
                         }
                     }
-                    firebaseCallBack.onCallBack3(novelsByTag1)
                 }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+            delay(1000)
+            Log.e(TAG,"Size of tagNameList: ${tagNameList[0]}")
+        }
+    }
+    private suspend fun fetchNovelIdsForTag1() {
+
+        withContext(Main){
+            if(tagNameList.size < 1){
+                return@withContext
             }
+            tagRef = FirebaseDatabase.getInstance().getReference("Tags")
+            var query = tagRef.orderByChild("tagName").equalTo(tagNameList[0]).limitToLast(10)
+            query.addValueEventListener(object : ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    novelIdsByTag1.clear()
+                    novelDateUpdatedList.clear()
+                    if(snapshot.exists()){
+                        for(element in snapshot.children) {
+                            val tag = element.getValue(Tag::class.java)
+                            novelIdsByTag1.add(tag!!.getNovelId())
+                            novelDateUpdatedList.add("")
+                        }
+                    }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay(1000)
+            Log.e(TAG,"Size of NovelIdsByTag: ${novelIdsByTag1[0]}")
+        }
+    }
+    private suspend fun fetchNovelsForTag1(){
+        withContext(Main){
+            novelRef = FirebaseDatabase.getInstance().getReference("Novels")
+            var query = novelRef.orderByChild("novelId")
+            query.addValueEventListener(object :ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    novelsByTag1.clear()
+                    if(snapshot.exists()){
+                        for (element in snapshot.children){
+                            val novel = element.getValue(Novel::class.java)
+                            if(novel!!.getNovelId() in novelIdsByTag1) {
+                                novelsByTag1.add(novel)
+                            }
+                        }
+                    }
+                }
 
-        })
-
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay(1000)
+            adapter2 = context?.let { NovelItemAdapter(it,novelsByTag1,novelDateUpdatedList ) }!!
+            binding.rvTag1.adapter = adapter2
+            Log.e(TAG,"NovelsByTag: ${novelsByTag1[0].getTitle()}")
+        }
     }
     private fun readData1(firebaseCallBack: FirebaseCallback) {
         fetchRecentlyUpdatedNovelId(firebaseCallBack)
         fetchRecentlyUpdatedNovel(firebaseCallBack)
-    }
-    private fun readData2(firebaseCallBack: FirebaseCallback){
-        fetchTop3Tags(firebaseCallBack)
-        fetchNovelIdsForTag1(firebaseCallBack)
-        fetchNovelsForTag1(firebaseCallBack)
     }
 
     private fun publishEpisodes(){
