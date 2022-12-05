@@ -19,22 +19,31 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".RemoveBookmarkActivity"
+            android:name=".activities.FrontEndEditNovelActivity"
             android:exported="false" />
         <activity
-            android:name=".removeFollowersActivity"
+            android:name=".activities.EditExistingNovelActivity"
             android:exported="false" />
         <activity
-            android:name=".editImageActivity"
+            android:name=".activities.EditExistingEpisodeActivity"
             android:exported="false" />
         <activity
-            android:name=".editUsernameActivity"
+            android:name=".activities.RemoveBookmarkActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.removeFollowersActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.editImageActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activities.editUsernameActivity"
             android:exported="false" />
         <activity
             android:name=".activities.WorkRepoActivity"
             android:exported="false" />
         <activity
-            android:name=".activities.EditFrontEndNovelActivity"
+            android:name=".activities.EditExistingNovelActivity"
             android:exported="false" />
         <activity
             android:name=".activities.CreateNewEpisodeActivity"

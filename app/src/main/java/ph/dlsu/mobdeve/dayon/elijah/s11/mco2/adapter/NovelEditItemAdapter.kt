@@ -1,5 +1,6 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter
 
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
@@ -7,37 +8,30 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditFrontEndNovelActivity
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditExistingEpisodeActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 
 
-class NovelEditItemAdapter : RecyclerView.Adapter<NovelEditItemAdapter.ViewHolder>() {
-    private val titleNovel = arrayOf(
-        "Battle Ship Yamato Awakens",
-        "Dungeon Seeker",
-        "Helmed Beast Slayer",
-        "High School of the Elites")
+class NovelEditItemAdapter : RecyclerView.Adapter<NovelEditItemAdapter.ViewHolder>{
+    private var novelList:ArrayList<Novel>
+    private var context: Context
+    constructor(context: Context, novelList:ArrayList<Novel>){
+        this.context = context
+        this.novelList = novelList
+    }
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemTitle: TextView? = null
 
         init {
             itemTitle = itemView.findViewById(R.id.tv_title_inp)
-
-            itemView.setOnClickListener {
-                var position: Int = bindingAdapterPosition
-                val context = itemView.context
-//                val intent = Intent(context, HomeFragment::class.java).apply {
-//                    putExtra("NUMBER", position)
-
-                    if (position>=0){
-                        itemView.setOnClickListener{
-                            val intent = Intent(context, EditFrontEndNovelActivity::class.java)
-                            context.startActivity(intent)
-                        }
-                    }
-//                context.startActivity(intent)
-            }
+//
+//            itemView.setOnClickListener {
+//                var position: Int = bindingAdapterPosition
+//                val context = itemView.context
+//
+//            }
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -47,10 +41,17 @@ class NovelEditItemAdapter : RecyclerView.Adapter<NovelEditItemAdapter.ViewHolde
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.itemTitle?.text = titleNovel[i]
+        val novel = novelList[i]
+
+        viewHolder.itemTitle?.text = novel.getTitle()
+        viewHolder.itemView.setOnClickListener {
+            val intent = Intent(context,FrontEndNovelActivity::class.java)
+            intent.putExtra("novelId",novel.getNovelId())
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {
-        return titleNovel.size
+        return novelList.size
     }
 }

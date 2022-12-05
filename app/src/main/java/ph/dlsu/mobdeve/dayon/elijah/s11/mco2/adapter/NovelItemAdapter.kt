@@ -8,9 +8,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditFrontEndNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.HomeFragment
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 
 

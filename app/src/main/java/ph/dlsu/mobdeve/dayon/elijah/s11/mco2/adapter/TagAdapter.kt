@@ -20,12 +20,9 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 
 
 class TagAdapter : RecyclerView.Adapter<TagAdapter.ViewHolder>{
-    private val tags = arrayOf(
-        "Dark Fantasy",
-        "Sci-fi",
-        "Cute",)
-    private var tagList:ArrayList<Tag>
-    private lateinit var context:Context
+
+    private var tagList= arrayListOf<Tag>()
+    private var context:Context
     private lateinit var tagRemove:Tag
 
     constructor(context:Context,tagList:ArrayList<Tag>){
@@ -41,7 +38,7 @@ class TagAdapter : RecyclerView.Adapter<TagAdapter.ViewHolder>{
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
-        val v = LayoutInflater.from(viewGroup.context)
+        val v = LayoutInflater.from(context)
             .inflate(R.layout.item_tag, viewGroup, false)
         return ViewHolder(v)
     }
@@ -78,6 +75,6 @@ class TagAdapter : RecyclerView.Adapter<TagAdapter.ViewHolder>{
         })
     }
     override fun getItemCount(): Int {
-        return tags.size
+        return tagList.size
     }
 }

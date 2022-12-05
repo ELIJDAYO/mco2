@@ -12,10 +12,12 @@ import com.google.firebase.database.*
 import kotlinx.coroutines.delay
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.CalendarAndTimeActivity
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditExistingEpisodeActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EpisodeViewerActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.NovelChapterBtnBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
 
 class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder> {
@@ -49,9 +51,16 @@ class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder>
         viewHolder.itemReleaseDate?.text = episode.getReleaseDateTime()
 
         viewHolder.itemView.setOnClickListener {
-            val intent = Intent(context, EpisodeViewerActivity::class.java)
-            intent.putExtra("episodeId",episode.getEpisodeId())
-            context.startActivity(intent)
+            if (mode=="view"){
+                val intent = Intent(context, EpisodeViewerActivity::class.java)
+                intent.putExtra("episodeId",episode.getEpisodeId())
+                context.startActivity(intent)
+            }
+            else if(mode == "edit"){
+                val intent = Intent(context, EditExistingEpisodeActivity::class.java)
+                intent.putExtra("episodeId",episode.getEpisodeId())
+                context.startActivity(intent)
+            }
         }
     }
 
@@ -64,16 +73,6 @@ class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder>
             itemEpisodeTitle = itemView.findViewById(R.id.tv_ep_title_iwp)
             itemNovelTitle = itemView.findViewById(R.id.tv_novel_title_iwp)
             itemReleaseDate = itemView.findViewById(R.id.tv_release_date_iwp)
-//            itemView.setOnClickListener {
-//                if (mode=="view"){
-//                    val intent = Intent(context, EpisodeViewerActivity::class.java)
-//                    context.startActivity(intent)
-//                }
-//                else if(mode == "edit"){
-//                    val intent = Intent(context, EditNovelActivity::class.java)
-//                    context.startActivity(intent)
-//                }
-//            }
         }
     }
 }

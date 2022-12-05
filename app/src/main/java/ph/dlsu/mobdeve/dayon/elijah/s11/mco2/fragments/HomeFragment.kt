@@ -84,32 +84,7 @@ class HomeFragment : Fragment() {
         })
         CoroutineScope(IO).launch{
             readData2()
-
         }
-
-    //        readData2(object :FirebaseCallback{
-//            override fun onCallBack1(list: ArrayList<String>) {
-//                tagNameList = list
-//                Log.d(TAG, "Read Data 2: On CallBack1 ${list.toString()}")
-//            }
-//
-//            override fun onCallBack2(list: ArrayList<String>) {
-//                novelIdsByTag1 = list
-//                Log.d(TAG, "Read Data 2: On CallBack2 ${list.toString()}")
-//            }
-//
-//            override fun onCallBack3(list: ArrayList<Novel>) {
-//                novelsByTag1 = list
-//                for (mem in list){
-//                    Log.d(TAG, "Read Data2: On CallBack3 ${mem.getTitle()}")
-//    //                    novelList = list
-//                }
-//                adapter2 = context?.let { NovelItemAdapter(it,novelsByTag1,novelDateUpdatedList ) }!!
-//                binding.rvTag1.adapter = adapter2
-//            }
-//
-//        })
-
 
     }
     private suspend fun readData2() {
@@ -156,7 +131,6 @@ class HomeFragment : Fragment() {
 
             })
             delay(1000)
-            Log.e(TAG,"Size of tagNameList: ${tagNameList[0]}")
         }
     }
     private suspend fun fetchNovelIdsForTag1() {
@@ -212,7 +186,6 @@ class HomeFragment : Fragment() {
             delay(1000)
             adapter2 = context?.let { NovelItemAdapter(it,novelsByTag1,novelDateUpdatedList ) }!!
             binding.rvTag1.adapter = adapter2
-            Log.e(TAG,"NovelsByTag: ${novelsByTag1[0].getTitle()}")
         }
     }
     private fun readData1(firebaseCallBack: FirebaseCallback) {

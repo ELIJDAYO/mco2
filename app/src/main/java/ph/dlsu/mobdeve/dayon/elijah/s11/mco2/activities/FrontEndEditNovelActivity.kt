@@ -4,36 +4,30 @@ import android.content.ContentValues.TAG
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.*
-import kotlinx.coroutines.Dispatchers.IO
-import kotlinx.coroutines.Dispatchers.Main
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelEpisodeAdapter
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.TagAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityFrontEndNovelBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
-import java.util.*
-import kotlin.concurrent.schedule
-import kotlin.system.measureTimeMillis
 
 
-class FrontEndNovelActivity : AppCompatActivity() {
+class FrontEndEditNovelActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityFrontEndNovelBinding
-    private lateinit var episodeAdapter: NovelEpisodeAdapter
-    private lateinit var tagAdapter: TagAdapter
-
+    private lateinit var novelEpisodeAdapter: NovelEpisodeAdapter
     private lateinit var firebaseUser: FirebaseUser
     private lateinit var profileId: String
     private lateinit var novelId:String
@@ -53,20 +47,14 @@ class FrontEndNovelActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityFrontEndNovelBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        binding.rvEpisodes.layoutManager = LinearLayoutManager(applicationContext)
-        binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
 
+        binding.rvEpisodes.layoutManager = LinearLayoutManager(applicationContext)
         setupNovelDetail()
         setupEpisodeList()
         fetchAuthor()
-
-        episodeAdapter = NovelEpisodeAdapter(this, episodeList,"view")
-        binding.rvEpisodes.adapter = episodeAdapter
-        CoroutineScope(IO).launch{
-            readData1()
-        }
-
-
+        setupTags()
+        novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, episodeList,"edit")
+        binding.rvEpisodes.adapter = novelEpisodeAdapter
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
         this.profileId = firebaseUser.uid
 
@@ -76,39 +64,13 @@ class FrontEndNovelActivity : AppCompatActivity() {
         }
         binding.ivNovel.visibility = View.INVISIBLE
         binding.ivEps.visibility = View.INVISIBLE
-        binding.ivClose.setOnClickListener {
-            val intent= Intent(this@FrontEndNovelActivity,MainActivity::class.java)
-            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
-            intent.putExtra("last_fragment","home")
+        binding.ivNovel.setOnClickListener{
+            val intent= Intent(this@FrontEndEditNovelActivity,EditExistingNovelActivity::class.java)
             startActivity(intent)
             finish()
         }
-        binding.shareTWIB.setOnClickListener {
-            val authorName = binding.novelAuthorTV
-            val novelName = binding.novelTitleTV
-            val intent = Intent()
-            intent.action = Intent.ACTION_SEND
-            intent.putExtra(Intent.EXTRA_TEXT,"Go Check out ${authorName}'s Novel ${novelName} at FICTION HERO App\nIt is available at App/Google Store")
-            intent.type = "text/plain"
-
-            startActivity(Intent.createChooser(intent,"Please select app: "))
-        }
-
-    }
-    private suspend fun readData1(){
-        withContext(IO){
-            val executionTime = measureTimeMillis {
-                async{
-                    println("debug: launching 1st job: ${Thread.currentThread().name}")
-                    setupTags()
-                }.await()
-            }
-            Log.e(TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
-
-        }
     }
     private fun setupEpisodeList(){
-
         episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
         var query = episodeRef.orderByChild("novelId").equalTo(novelId)
         query.addValueEventListener(object:ValueEventListener{
@@ -157,33 +119,26 @@ class FrontEndNovelActivity : AppCompatActivity() {
             }
         })
     }
-    private suspend fun setupTags(){
-        withContext(Main){
-            novelId = intent.getStringExtra("novelId").toString()
-            tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-            var query = tagRef.orderByChild("novelId")
-            query.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    Log.e(TAG, "Tag count ${snapshot.childrenCount}")
-                    for (element in snapshot.children) {
-                        val tag = element.getValue(Tag::class.java)
-                        Log.e(TAG, "Inside Tag ${novelId} vs ${tag!!.getNovelId()}")
-                        if(tag!!.getNovelId()==novelId) {
-                            tagList.add(tag)
-                        }
-                    }
-                    Log.e(TAG,"Size of Taglist ${tagList.size}")
+    private fun setupTags(){
+        novelId = intent.getStringExtra("novelId").toString()
+
+        tagRef = FirebaseDatabase.getInstance().getReference("Tags")
+        var query = tagRef.orderByChild("novelId").equalTo(novelId)
+        query.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.e(TAG,"Tag count ${snapshot.childrenCount}")
+                for(element in snapshot.children){
+                    val tag = element.getValue(Tag::class.java)
+                    tagList.add(tag!!)
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    TODO("Not yet implemented")
-                }
+            }
 
-            })
-            delay(1000)
-            tagAdapter = TagAdapter(this@FrontEndNovelActivity, tagList)
-            binding.rvTags.adapter = tagAdapter
-        }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
     }
     private fun fetchAuthor(){
         author=""

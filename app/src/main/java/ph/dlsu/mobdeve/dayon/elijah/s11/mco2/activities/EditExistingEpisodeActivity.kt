@@ -8,12 +8,11 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCreateNewEpisodeBinding
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityWorkRepoBinding
-
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCreateNewNovelBinding
 import java.util.*
 import kotlin.collections.HashMap
 
-class CreateNewEpisodeActivity : AppCompatActivity() {
+class EditExistingEpisodeActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityCreateNewEpisodeBinding
     private var novelId: String? = null
@@ -25,7 +24,7 @@ class CreateNewEpisodeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.ibBack.setOnClickListener {
-            val intent= Intent(this@CreateNewEpisodeActivity,CreateNewNovelActivity::class.java)
+            val intent= Intent(this@EditExistingEpisodeActivity,FrontEndEditNovelActivity::class.java)
             startActivity(intent)
             finish()
         }
