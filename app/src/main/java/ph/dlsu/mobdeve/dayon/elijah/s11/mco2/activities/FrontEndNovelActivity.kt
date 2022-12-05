@@ -20,6 +20,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelEpisodeAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityFrontEndNovelBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
 
 
 class FrontEndNovelActivity : AppCompatActivity() {
@@ -33,7 +34,9 @@ class FrontEndNovelActivity : AppCompatActivity() {
     lateinit var episodeRef: DatabaseReference
     private  var episodeList= arrayListOf<Episode>()
 
-
+    private  var uid = ""
+    private lateinit var author:String
+    lateinit var userRef:DatabaseReference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,6 +51,7 @@ class FrontEndNovelActivity : AppCompatActivity() {
 
         setupNovelDetail()
         setupEpisodeList()
+        fetchAuthor()
         binding.ibBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
@@ -60,13 +64,20 @@ class FrontEndNovelActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
+        binding.shareTWIB.setOnClickListener {
+            val authorName = binding.novelAuthorTV
+            val novelName = binding.novelTitleTV
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT,"Go Check out ${authorName}'s Novel ${novelName} at FICTION HERO App\nIt is available at App/Google Store")
+            intent.type = "text/plain"
+
+            startActivity(Intent.createChooser(intent,"Please select app: "))
+        }
     }
     private fun setupEpisodeList(){
         episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
         var query = episodeRef.orderByChild("novelId").equalTo(novelId)
-        GlobalScope.launch(Dispatchers.IO) {
-
-        }
         query.addValueEventListener(object:ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot.exists()){
@@ -103,8 +114,32 @@ class FrontEndNovelActivity : AppCompatActivity() {
                     if (novel != null) {
                         binding.novelTitleTV.text = novel.getTitle()
                         binding.expandTv.text = novel.getSynopsis()
+//                        binding.novelAuthorTV.text = novel.getUid()
+                        uid = novel.getUid()
                     }
                 }
+            }
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+    private fun fetchAuthor(){
+        author=""
+        userRef = FirebaseDatabase.getInstance().getReference("Users")
+        var query = userRef.orderByChild("uid")
+        query.addValueEventListener(object: ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                Log.e(TAG,"Author count uid ${snapshot.childrenCount} $uid")
+                for(element in snapshot.children){
+                    val user = element.getValue(User::class.java)
+                    if(user!!.getUid() == uid) {
+                        author = user.getUsername()
+                        binding.novelAuthorTV.text = author
+                        return
+                    }
+                }
+
             }
 
             override fun onCancelled(error: DatabaseError) {

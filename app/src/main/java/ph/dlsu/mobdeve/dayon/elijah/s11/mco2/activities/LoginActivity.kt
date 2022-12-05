@@ -1,6 +1,7 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
 import android.app.ProgressDialog
+import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
@@ -45,13 +46,14 @@ class LoginActivity : AppCompatActivity() {
         progressDialog.setCanceledOnTouchOutside(false)
         progressDialog.show()
         val auth: FirebaseAuth = FirebaseAuth.getInstance()
+
         auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener {
 
             if (it.isSuccessful) {
-//                val editor = prefs.edit()
-//                editor.putString("profileId",)
-//                editor.putString("email", email)
-//                editor.putString("password", pass)
+                val profileId = FirebaseAuth.getInstance().currentUser!!.uid
+//                val sharedPreference = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+//                val editor = sharedPreference.edit()
+//                editor.putString("profileId",profileId)
 //                editor.apply()
 
                 progressDialog.dismiss()
@@ -59,6 +61,7 @@ class LoginActivity : AppCompatActivity() {
                 Toast.makeText(this, "Successfully LoggedIn", Toast.LENGTH_SHORT).show()
                 val intent=Intent(this, MainActivity::class.java)
                 intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
+                intent.putExtra("profileId",profileId)
                 startActivity(intent)
                 finish()
             } else {

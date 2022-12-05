@@ -76,6 +76,8 @@ dependencies {
 
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.4"
+
+    implementation 'com.facebook.android:facebook-share:latest.release'
 }
 //connects to firebase
 apply plugin: 'com.google.gms.google-services'

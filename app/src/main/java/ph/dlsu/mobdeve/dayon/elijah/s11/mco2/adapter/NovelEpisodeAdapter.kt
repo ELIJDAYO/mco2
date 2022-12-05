@@ -8,12 +8,15 @@ import android.view.ViewGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.*
+import kotlinx.coroutines.delay
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.CalendarAndTimeActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EpisodeViewerActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.NovelChapterBtnBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
 
 class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder> {
     private var episodeList = ArrayList<Episode>()
@@ -56,6 +59,7 @@ class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder>
         var itemNovelTitle: TextView? = null
         var itemEpisodeTitle: TextView? = null
         var itemReleaseDate: TextView? = null
+
         init{
             itemEpisodeTitle = itemView.findViewById(R.id.tv_ep_title_iwp)
             itemNovelTitle = itemView.findViewById(R.id.tv_novel_title_iwp)
@@ -72,6 +76,5 @@ class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder>
 //            }
         }
     }
-
 }
 

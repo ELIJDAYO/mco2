@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.ProgressDialog
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.icu.number.NumberFormatter.with
 import android.icu.number.NumberRangeFormatter.with
 import android.net.Uri
@@ -24,6 +25,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.Glide.with
 import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.with
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.with
+import com.facebook.share.Share
 import com.google.android.gms.tasks.Continuation
 import com.google.android.gms.tasks.OnCompleteListener
 import com.google.android.gms.tasks.Task
@@ -55,7 +57,7 @@ class UserFragment : Fragment() {
     private lateinit var profileId: String
     private lateinit var firebaseUser: FirebaseUser
     private var storageProfileRef: StorageReference?=null
-
+    private lateinit var sharedPreferences:SharedPreferences
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
