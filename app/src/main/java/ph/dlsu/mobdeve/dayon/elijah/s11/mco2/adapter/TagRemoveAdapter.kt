@@ -20,16 +20,15 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 
 
 class TagRemoveAdapter : RecyclerView.Adapter<TagRemoveAdapter.ViewHolder>{
-//    private val tags = arrayOf(
-//        "Dark Fantasy",
-//        "Sci-fi",
-//        "Cute",)
     private var tagList: ArrayList<String>
     private lateinit var context:Context
+    private var novelId: String
 
-    constructor(context:Context,tagList:ArrayList<String>){
+
+    constructor(context:Context,tagList:ArrayList<String>,novelId:String){
         this.context = context
         this.tagList = tagList
+        this.novelId = novelId
     }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemTag: TextView? = null
@@ -52,31 +51,31 @@ class TagRemoveAdapter : RecyclerView.Adapter<TagRemoveAdapter.ViewHolder>{
         viewHolder.removeIv?.setOnClickListener{
             tagList.removeAt(i)
             notifyDataSetChanged()
-//            removeTag()
+            removeTag(tagList[i])
         }
     }
-//    private fun removeTag(){
-//        val tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-//        val query = tagRef.orderByChild("novelId").equalTo(tagRemove.getNovelId())
-//        query.addValueEventListener(object : ValueEventListener{
-//            override fun onDataChange(snapshot: DataSnapshot) {
-//                if(snapshot.exists()){
-//                    for(element in snapshot.children){
-//                        var tag = element.getValue(Tag::class.java)
-//                        if(tag!!.getTagName() == tagRemove.getTagName()){
-//                            tagRef.removeValue()
-//                            return
-//                        }
-//                    }
-//                }
-//            }
-//
-//            override fun onCancelled(error: DatabaseError) {
-//                TODO("Not yet implemented")
-//            }
-//
-//        })
-//    }
+    private fun removeTag(tagName:String){
+        val tagRef = FirebaseDatabase.getInstance().getReference("Tags")
+        val query = tagRef.orderByChild("novelId").equalTo(novelId)
+        query.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(element in snapshot.children){
+                        var tag = element.getValue(Tag::class.java)
+                        if(tag!!.getTagName() == tagName){
+                            tagRef.removeValue()
+                            return
+                        }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+    }
     override fun getItemCount(): Int {
         return tagList.size
     }

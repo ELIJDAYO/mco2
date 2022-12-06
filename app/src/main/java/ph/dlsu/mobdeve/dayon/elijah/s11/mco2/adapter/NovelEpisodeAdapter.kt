@@ -23,9 +23,10 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
 class NovelEpisodeAdapter : RecyclerView.Adapter<NovelEpisodeAdapter.ViewHolder> {
     private var episodeList = ArrayList<Episode>()
     private lateinit var context: Context
-    private var mode:String="view"
+    private var mode:String=""
 
     constructor(context: Context, episodeList: ArrayList<Episode>, mode: String){
+        this.mode = mode
         this.context = context
         this.episodeList = episodeList
     }

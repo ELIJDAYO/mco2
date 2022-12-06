@@ -24,6 +24,8 @@ import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.*
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityCreateNewNovelBinding
@@ -32,6 +34,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
+import kotlin.system.measureTimeMillis
 
 
 class EditExistingNovelActivity : AppCompatActivity() {
@@ -42,7 +45,11 @@ class EditExistingNovelActivity : AppCompatActivity() {
     private var imageUri:String = ""
     private lateinit var tagAdapter: TagRemoveAdapter
     private lateinit var tagRef:DatabaseReference
+    lateinit var novelRef: DatabaseReference
     private var storageProfileRef: StorageReference?=null
+    private lateinit var novelId:String
+    private  var tagList= arrayListOf<String>()
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,10 +59,11 @@ class EditExistingNovelActivity : AppCompatActivity() {
 
         storageProfileRef = FirebaseStorage.getInstance().reference.child("Pictures")
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
-
+        fetchNovel()
+        CoroutineScope(Dispatchers.IO).launch{
+            readData1()
+        }
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
-        tagAdapter = TagRemoveAdapter(this@EditExistingNovelActivity,tagNameList)
-        binding.rvTags.adapter = tagAdapter
 
 
         binding.ibBack.setOnClickListener {
@@ -97,11 +105,71 @@ class EditExistingNovelActivity : AppCompatActivity() {
                         p0.cancel()
                     }
                 }
-
             })
             tagDialog.show()
         }
     }
+    private suspend fun readData1(){
+        withContext(Dispatchers.IO){
+            val executionTime = measureTimeMillis {
+                async{
+                    println("debug: launching 1st job: ${Thread.currentThread().name}")
+                    setupTags()
+                }.await()
+            }
+            Log.e(ContentValues.TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
+
+        }
+    }
+    private suspend fun setupTags(){
+        withContext(Main){
+            novelId = intent.getStringExtra("novelId").toString()
+            tagRef = FirebaseDatabase.getInstance().getReference("Tags")
+            var query = tagRef.orderByChild("novelId")
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (element in snapshot.children) {
+                        val tag = element.getValue(Tag::class.java)
+                        if(tag!!.getNovelId()==novelId) {
+                            tagList.add(tag.getTagName())
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+            delay(1000)
+            tagAdapter = TagRemoveAdapter(this@EditExistingNovelActivity, tagList,novelId)
+            binding.rvTags.adapter = tagAdapter
+        }
+    }
+    private fun fetchNovel(){
+        novelId = intent.getStringExtra("novelId").toString()
+        novelRef = FirebaseDatabase.getInstance().getReference("Novels")
+        var query = novelRef.orderByChild("novelId").equalTo(novelId)
+        query.addValueEventListener(object:ValueEventListener{
+        override fun onDataChange(snapshot: DataSnapshot) {
+            if(snapshot.exists()){
+                for (element in snapshot.children){
+                    val novel = element.getValue(Novel::class.java)
+                    binding.etTitle.setText(novel!!.getTitle())
+                    binding.etSynopsis.setText(novel.getSynopsis())
+                    return
+                }
+            }
+        }
+
+        override fun onCancelled(error: DatabaseError) {
+            TODO("Not yet implemented")
+        }
+
+    })
+
+
+}
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
         registerForActivityResult( ActivityResultContracts.StartActivityForResult()) { result ->
             if (result != null) {
@@ -159,18 +227,13 @@ class EditExistingNovelActivity : AppCompatActivity() {
         }else{
             this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
             val novelRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Novels")
-            val novelId = novelRef.push().key.toString()
             val novelMap=HashMap<String,Any>()
 
-            novelMap["novelId"] = novelId
-            novelMap["uid"] = profileId
             novelMap["title"] = title
             novelMap["synopsis"] = synopsis
             novelMap["imageUri"] = imageUri
-            novelMap["numEpisodes"] = 0
 
-            novelRef.child(novelId).setValue(novelMap)
-//            novelRef.child(novelId).updateChildren(novelMap)
+            novelRef.child(novelId).updateChildren(novelMap)
 
             val tagRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Tags")
             val tagMap=HashMap<String, Any>()
@@ -181,9 +244,7 @@ class EditExistingNovelActivity : AppCompatActivity() {
             }
 
 
-            val intent = Intent(this, CreateNewEpisodeActivity::class.java)
-            intent.putExtra("novelId", novelId)
-            intent.putExtra("novelTitle",title)
+            val intent = Intent(this, FrontEndEditNovelActivity::class.java)
             startActivity(intent)
             finish()
         }

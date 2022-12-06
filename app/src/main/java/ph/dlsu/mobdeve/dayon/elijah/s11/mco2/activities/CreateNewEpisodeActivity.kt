@@ -25,7 +25,7 @@ class CreateNewEpisodeActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.ibBack.setOnClickListener {
-            val intent= Intent(this@CreateNewEpisodeActivity,CreateNewNovelActivity::class.java)
+            val intent= Intent(this@CreateNewEpisodeActivity,EditNovelActivity::class.java)
             startActivity(intent)
             finish()
         }

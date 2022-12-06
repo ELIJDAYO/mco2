@@ -49,7 +49,7 @@ class CreateNewNovelActivity : AppCompatActivity() {
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
 
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
-        tagAdapter = TagRemoveAdapter(this@CreateNewNovelActivity,tagNameList)
+        tagAdapter = TagRemoveAdapter(this@CreateNewNovelActivity,tagNameList, "")
         binding.rvTags.adapter = tagAdapter
 
 

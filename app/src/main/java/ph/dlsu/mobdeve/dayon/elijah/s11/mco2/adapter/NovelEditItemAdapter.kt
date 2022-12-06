@@ -9,6 +9,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditExistingEpisodeActivity
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndEditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 
@@ -45,7 +46,7 @@ class NovelEditItemAdapter : RecyclerView.Adapter<NovelEditItemAdapter.ViewHolde
 
         viewHolder.itemTitle?.text = novel.getTitle()
         viewHolder.itemView.setOnClickListener {
-            val intent = Intent(context,FrontEndNovelActivity::class.java)
+            val intent = Intent(context,FrontEndEditNovelActivity::class.java)
             intent.putExtra("novelId",novel.getNovelId())
             context.startActivity(intent)
         }

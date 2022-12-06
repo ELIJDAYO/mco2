@@ -164,15 +164,12 @@ class FrontEndNovelActivity : AppCompatActivity() {
             var query = tagRef.orderByChild("novelId")
             query.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
-                    Log.e(TAG, "Tag count ${snapshot.childrenCount}")
                     for (element in snapshot.children) {
                         val tag = element.getValue(Tag::class.java)
-                        Log.e(TAG, "Inside Tag ${novelId} vs ${tag!!.getNovelId()}")
                         if(tag!!.getNovelId()==novelId) {
                             tagList.add(tag)
                         }
                     }
-                    Log.e(TAG,"Size of Taglist ${tagList.size}")
                 }
 
                 override fun onCancelled(error: DatabaseError) {

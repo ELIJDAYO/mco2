@@ -29,7 +29,6 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFrontEndNovelBinding
     private lateinit var novelEpisodeAdapter: NovelEpisodeAdapter
     private lateinit var firebaseUser: FirebaseUser
-    private lateinit var profileId: String
     private lateinit var novelId:String
     lateinit var novelRef: DatabaseReference
     lateinit var episodeRef: DatabaseReference
@@ -49,6 +48,8 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         binding.rvEpisodes.layoutManager = LinearLayoutManager(applicationContext)
+        binding.tvPageName.text = "Edit Mode"
+        binding.ivClose.visibility = View.INVISIBLE
         setupNovelDetail()
         setupEpisodeList()
         fetchAuthor()
@@ -56,16 +57,15 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
         novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, episodeList,"edit")
         binding.rvEpisodes.adapter = novelEpisodeAdapter
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
-        this.profileId = firebaseUser.uid
-
 
         binding.ibBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
         }
-        binding.ivNovel.visibility = View.INVISIBLE
-        binding.ivEps.visibility = View.INVISIBLE
+        binding.ivNovel.visibility = View.VISIBLE
+        binding.ivEps.visibility = View.VISIBLE
         binding.ivNovel.setOnClickListener{
             val intent= Intent(this@FrontEndEditNovelActivity,EditExistingNovelActivity::class.java)
+            intent.putExtra("novelId",novelId)
             startActivity(intent)
             finish()
         }
