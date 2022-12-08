@@ -172,7 +172,7 @@ class CreateNewNovelActivity : AppCompatActivity() {
             for (tag in tagNameList){
                 tagMap["novelId"] = novelId
                 tagMap["tagName"] = tag
-                tagRef.child(novelId).setValue(tagMap)
+                tagRef.setValue(tagMap)
             }
 
 

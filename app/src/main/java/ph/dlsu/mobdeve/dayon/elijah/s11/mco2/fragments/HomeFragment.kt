@@ -54,39 +54,37 @@ class HomeFragment : Fragment() {
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         return binding.root
     }
-    @OptIn(DelicateCoroutinesApi::class)
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         binding.rvNewest.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         binding.rvTag1.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
 
         publishEpisodes()
-        readData1(object : FirebaseCallback {
-            override fun onCallBack1(list: ArrayList<String>) {
-                Log.d(TAG, "Read Data1: On CallBack1 ${list.toString()}")
-                novelIdList = list
-            }
 
-            override fun onCallBack2(list: ArrayList<String>) {
-                Log.d(TAG, "Read Data1: On CallBack2 ${list.toString()}")
-                novelDateUpdatedList = list
-            }
 
-            override fun onCallBack3(list: ArrayList<Novel>) {
-                novelList = list
-                for (mem in list){
-                    Log.d(TAG, "Read Data1: On CallBack3 ${mem.getTitle()}")
-                }
-                adapter1 = context?.let { NovelItemAdapter(it,novelList as ArrayList<Novel>,novelDateUpdatedList as ArrayList<String>) }!!
-                binding.rvNewest.adapter = adapter1
-            }
-
-        })
         CoroutineScope(IO).launch{
+            readData1()
             readData2()
         }
 
     }
+    private suspend fun readData1(){
+        withContext(IO){
+            val executionTime = measureTimeMillis {
+                async {
+                    println("debug: launching 1st job: ${Thread.currentThread().name}")
+                    fetchRecentlyUpdatedNovelId()
+                }.await()
+
+                async {
+                    println("debug: launching 2nd job: ${Thread.currentThread().name}")
+                    fetchRecentlyUpdatedNovel()
+                }.await()
+
+            }
+            Log.e(TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
+
+        }    }
     private suspend fun readData2() {
         withContext(IO){
             val executionTime = measureTimeMillis {
@@ -130,7 +128,7 @@ class HomeFragment : Fragment() {
                 }
 
             })
-            delay(1000)
+            delay(500)
         }
     }
     private suspend fun fetchNovelIdsForTag1() {
@@ -158,7 +156,7 @@ class HomeFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay(1000)
+            delay(500)
             Log.e(TAG,"Size of NovelIdsByTag: ${novelIdsByTag1[0]}")
         }
     }
@@ -187,10 +185,6 @@ class HomeFragment : Fragment() {
             adapter2 = context?.let { NovelItemAdapter(it,novelsByTag1,novelDateUpdatedList ) }!!
             binding.rvTag1.adapter = adapter2
         }
-    }
-    private fun readData1(firebaseCallBack: FirebaseCallback) {
-        fetchRecentlyUpdatedNovelId(firebaseCallBack)
-        fetchRecentlyUpdatedNovel(firebaseCallBack)
     }
 
     private fun publishEpisodes(){
@@ -242,52 +236,58 @@ class HomeFragment : Fragment() {
         }
         return result
     }
-    private fun fetchRecentlyUpdatedNovelId(firebaseCallBack: FirebaseCallback){
-        episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
-        var query = episodeRef.orderByChild("releaseDateTime").limitToFirst(10)
-        query.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    novelIdList.clear()
-                    novelDateUpdatedList.clear()
-                    for(element in snapshot.children){
-                        val episode = element.getValue(Episode::class.java)
-                        if(episode!!.getNovelId() !in novelIdList && episode.getIsPublished()){
-                            novelIdList.add(episode.getNovelId())
-                            novelDateUpdatedList.add(episode.getReleaseDateTime())
+    private suspend fun fetchRecentlyUpdatedNovelId(){
+        withContext(Main) {
+            episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
+            var query = episodeRef.orderByChild("releaseDateTime").limitToFirst(10)
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        novelIdList.clear()
+                        novelDateUpdatedList.clear()
+                        for (element in snapshot.children) {
+                            val episode = element.getValue(Episode::class.java)
+                            if (episode!!.getNovelId() !in novelIdList && episode.getIsPublished()) {
+                                novelIdList.add(episode.getNovelId())
+                                novelDateUpdatedList.add(episode.getReleaseDateTime())
+                            }
                         }
+
                     }
-//                    Log.v("Async101", "End of onDataChange novelIdListSize ${novelIdList.size}")
-                    firebaseCallBack.onCallBack1(novelIdList)
-                    firebaseCallBack.onCallBack2(novelDateUpdatedList)
                 }
-            }
-            override fun onCancelled(error: DatabaseError) {
-                Log.d(TAG, "$error")
-            }
-        })
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d(TAG, "$error")
+                }
+            })
+            delay(500)
+        }
     }
-    private fun fetchRecentlyUpdatedNovel(firebaseCallBack: FirebaseCallback){
-        novelRef = FirebaseDatabase.getInstance().getReference("Novels")
-        var query = novelRef.orderByChild("novelId")
-        query.addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                novelList.clear()
-                if(snapshot.exists()){
-                    for(element in snapshot.children){
-                        var novel = element.getValue(Novel::class.java)
-                        if(novel!!.getNovelId() in novelIdList) {
-                            novelList.add(novel)
+    private suspend fun fetchRecentlyUpdatedNovel(){
+        withContext(Main) {
+            novelRef = FirebaseDatabase.getInstance().getReference("Novels")
+            var query = novelRef.orderByChild("novelId")
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    novelList.clear()
+                    if (snapshot.exists()) {
+                        for (element in snapshot.children) {
+                            var novel = element.getValue(Novel::class.java)
+                            if (novel!!.getNovelId() in novelIdList) {
+                                novelList.add(novel)
+                            }
                         }
                     }
-                    firebaseCallBack.onCallBack3(novelList)
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented") }
-        })
-
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay(500)
+            adapter1 = context?.let { NovelItemAdapter(it,novelList,novelDateUpdatedList) }!!
+            binding.rvNewest.adapter = adapter1
+        }
     }
 
 }

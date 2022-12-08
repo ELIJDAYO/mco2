@@ -1,7 +1,10 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter
 
+import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,14 +16,17 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
+import kotlin.system.measureTimeMillis
 
 
 class TagRemoveAdapter : RecyclerView.Adapter<TagRemoveAdapter.ViewHolder>{
-    private var tagList: ArrayList<String>
+    private var tagList= arrayListOf<String>()
     private lateinit var context:Context
     private var novelId: String
 
@@ -51,30 +57,7 @@ class TagRemoveAdapter : RecyclerView.Adapter<TagRemoveAdapter.ViewHolder>{
         viewHolder.removeIv?.setOnClickListener{
             tagList.removeAt(i)
             notifyDataSetChanged()
-            removeTag(tagList[i])
         }
-    }
-    private fun removeTag(tagName:String){
-        val tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-        val query = tagRef.orderByChild("novelId").equalTo(novelId)
-        query.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    for(element in snapshot.children){
-                        var tag = element.getValue(Tag::class.java)
-                        if(tag!!.getTagName() == tagName){
-                            tagRef.removeValue()
-                            return
-                        }
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
     override fun getItemCount(): Int {
         return tagList.size

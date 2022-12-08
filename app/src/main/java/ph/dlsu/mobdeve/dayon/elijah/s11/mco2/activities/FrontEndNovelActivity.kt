@@ -96,7 +96,7 @@ class FrontEndNovelActivity : AppCompatActivity() {
 
     }
     private suspend fun readData1(){
-        withContext(IO){
+        withContext(Main){
             val executionTime = measureTimeMillis {
                 async{
                     println("debug: launching 1st job: ${Thread.currentThread().name}")
@@ -177,7 +177,7 @@ class FrontEndNovelActivity : AppCompatActivity() {
                 }
 
             })
-            delay(1000)
+            delay(500)
             tagAdapter = TagAdapter(this@FrontEndNovelActivity, tagList)
             binding.rvTags.adapter = tagAdapter
         }

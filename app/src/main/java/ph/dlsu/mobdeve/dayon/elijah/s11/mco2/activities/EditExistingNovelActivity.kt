@@ -2,6 +2,7 @@ package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.DialogInterface
 import android.content.Intent
@@ -25,6 +26,7 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.IO
 import kotlinx.coroutines.Dispatchers.Main
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.*
@@ -48,7 +50,6 @@ class EditExistingNovelActivity : AppCompatActivity() {
     lateinit var novelRef: DatabaseReference
     private var storageProfileRef: StorageReference?=null
     private lateinit var novelId:String
-    private  var tagList= arrayListOf<String>()
 
 
 
@@ -60,20 +61,22 @@ class EditExistingNovelActivity : AppCompatActivity() {
         storageProfileRef = FirebaseStorage.getInstance().reference.child("Pictures")
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
         fetchNovel()
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(IO).launch{
             readData1()
         }
+        tagAdapter = TagRemoveAdapter(this@EditExistingNovelActivity, tagNameList,novelId)
+        binding.rvTags.adapter = tagAdapter
+
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
-
-
+        binding.btnCreateEpisode.setText("Update Novel Detail")
+        binding.tvAppBarTitle.setText("Edit Novel")
         binding.ibBack.setOnClickListener {
-            val intent= Intent(this@EditExistingNovelActivity,FrontEndEditNovelActivity::class.java)
-            startActivity(intent)
-            finish()
+            onBackPressed()
         }
         binding.btnCreateEpisode.setOnClickListener {
             addNovel()
         }
+        Log.e(TAG,"EditExistingNovelActivity uri $imageUri")
         binding.tvThumbnail.setOnClickListener{
             if(!imageUri.isNullOrBlank()) {
                 deleteThumbnail()
@@ -97,6 +100,7 @@ class EditExistingNovelActivity : AppCompatActivity() {
                     val tag = etTag.text.toString()
                     tagNameList.add(tag)
                     tagAdapter.notifyDataSetChanged()
+                    Log.e(TAG,"Whas in tagNameList? $tagNameList")
                 }
             })
             tagDialog.setNegativeButton("Cancel", object : DialogInterface.OnClickListener {
@@ -110,11 +114,23 @@ class EditExistingNovelActivity : AppCompatActivity() {
         }
     }
     private suspend fun readData1(){
-        withContext(Dispatchers.IO){
+        withContext(IO){
             val executionTime = measureTimeMillis {
                 async{
                     println("debug: launching 1st job: ${Thread.currentThread().name}")
                     setupTags()
+                }.await()
+            }
+            Log.e(ContentValues.TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
+
+        }
+    }
+    private suspend fun readData2(){
+        withContext(Main){
+            val executionTime = measureTimeMillis {
+                async{
+                    println("debug: launching 1st job: ${Thread.currentThread().name}")
+                    deleteFromTags()
                 }.await()
             }
             Log.e(ContentValues.TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
@@ -128,10 +144,11 @@ class EditExistingNovelActivity : AppCompatActivity() {
             var query = tagRef.orderByChild("novelId")
             query.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
+//                    tagNameList.clear()
                     for (element in snapshot.children) {
                         val tag = element.getValue(Tag::class.java)
-                        if(tag!!.getNovelId()==novelId) {
-                            tagList.add(tag.getTagName())
+                        if(tag!!.getNovelId()==novelId && tag.getTagName() !in tagNameList) {
+                            tagNameList.add(tag.getTagName())
                         }
                     }
                 }
@@ -141,9 +158,32 @@ class EditExistingNovelActivity : AppCompatActivity() {
                 }
 
             })
-            delay(1000)
-            tagAdapter = TagRemoveAdapter(this@EditExistingNovelActivity, tagList,novelId)
+            delay(300)
+            tagAdapter = TagRemoveAdapter(this@EditExistingNovelActivity, tagNameList,novelId)
             binding.rvTags.adapter = tagAdapter
+        }
+    }
+    private suspend fun deleteFromTags(){
+        withContext(Main){
+            novelId = intent.getStringExtra("novelId").toString()
+            tagRef = FirebaseDatabase.getInstance().getReference("Tags")
+            var query = tagRef.orderByChild("novelId")
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (element in snapshot.children) {
+                        val tag = element.getValue(Tag::class.java)
+                        if((tag!!.getNovelId()==novelId) && tag.getTagName() !in tagNameList) {
+                            element.ref.removeValue()
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+            delay(300)
         }
     }
     private fun fetchNovel(){
@@ -157,11 +197,12 @@ class EditExistingNovelActivity : AppCompatActivity() {
                     val novel = element.getValue(Novel::class.java)
                     binding.etTitle.setText(novel!!.getTitle())
                     binding.etSynopsis.setText(novel.getSynopsis())
+                    imageUri = novel.getImageUri()
+                    binding.tvThumbnail.text = imageUri
                     return
                 }
             }
         }
-
         override fun onCancelled(error: DatabaseError) {
             TODO("Not yet implemented")
         }
@@ -237,10 +278,14 @@ class EditExistingNovelActivity : AppCompatActivity() {
 
             val tagRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Tags")
             val tagMap=HashMap<String, Any>()
+
+            CoroutineScope(Main).launch {
+                readData2()
+            }
             for (tag in tagNameList){
                 tagMap["novelId"] = novelId
                 tagMap["tagName"] = tag
-                tagRef.child(novelId).setValue(tagMap)
+                tagRef.setValue(tagMap)
             }
 
 
