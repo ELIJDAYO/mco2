@@ -9,14 +9,15 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.FrontEndNovelActivity
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Notification
 
 
-class NotificationItemAdapter : RecyclerView.Adapter<NotificationItemAdapter.ViewHolder>(){
-    private var notificationArray = arrayOf(
-        "You got a comment by @shimara",
-        "@garian reported a grammar error",
-        "Reincarnated slave reached 1000 stars!"
-    )
+class NotificationItemAdapter(private var notificationArray: ArrayList<Notification>): RecyclerView.Adapter<NotificationItemAdapter.ViewHolder>(){
+//    private var notificationArray = arrayOf(
+//        "You got a comment by @shimara",
+//        "@garian reported a grammar error",
+//        "Reincarnated slave reached 1000 stars!"
+//    )
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var notificationText: TextView
@@ -44,7 +45,7 @@ class NotificationItemAdapter : RecyclerView.Adapter<NotificationItemAdapter.Vie
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, i: Int) {
-        viewHolder.notificationText.text = notificationArray[i]
+        viewHolder.notificationText.text = notificationArray[i].getContent()
     }
 
     override fun getItemCount(): Int {
