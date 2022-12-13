@@ -84,7 +84,8 @@ class HomeFragment : Fragment() {
             }
             Log.e(TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
 
-        }    }
+        }
+    }
     private suspend fun readData2() {
         withContext(IO){
             val executionTime = measureTimeMillis {

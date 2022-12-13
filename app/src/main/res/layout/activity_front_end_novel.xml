@@ -159,16 +159,25 @@
                         app:layout_constraintStart_toEndOf="@+id/starIB"
                         app:layout_constraintTop_toTopOf="@+id/starIB" />
 
+<!--                    <ImageButton-->
+<!--                        android:id="@+id/shareTWIB"-->
+<!--                        android:layout_width="40dp"-->
+<!--                        android:layout_height="40dp"-->
+<!--                        android:background="@drawable/share_twi_img"-->
+<!--                        android:scaleType="fitCenter"-->
+<!--                        android:src="@drawable/share_twi_img"-->
+<!--                        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--                        app:layout_constraintEnd_toEndOf="@+id/novelTitleTV" />-->
+
                     <ImageButton
-                        android:id="@+id/shareTWIB"
+                        android:id="@+id/ib_bookmark"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/share_twi_img"
+                        android:background="@drawable/open_book"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/share_twi_img"
+                        android:src="@drawable/open_book"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/novelTitleTV" />
-
                     <ImageButton
                         android:id="@+id/shareFBIB"
                         android:layout_width="40dp"
@@ -177,7 +186,16 @@
                         android:scaleType="fitCenter"
                         android:src="@drawable/share_fb_img"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/shareTWIB" />
+                        app:layout_constraintEnd_toStartOf="@+id/ib_bookmark" />
+
+                    <TextView
+                        android:id="@+id/tv_isfollowed"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:text="no"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </LinearLayout>

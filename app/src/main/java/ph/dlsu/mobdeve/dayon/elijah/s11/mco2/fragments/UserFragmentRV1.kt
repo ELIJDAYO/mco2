@@ -16,10 +16,6 @@ class UserFragmentRV1 : Fragment() {
     private var _binding: FragmentUserRV1Binding? = null
     private val binding get() = _binding!!
 
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -37,11 +33,6 @@ class UserFragmentRV1 : Fragment() {
             layoutManager = LinearLayoutManager(activity)
 //            adapter = NovelItemAdapter()
         }
-//        binding.label.text = getString(R.string.app_name)
-//        val color = arguments?.getString("color")
-//        binding.root.setBackgroundColor(Color.parseColor(color))
-//        val position = arguments?.getString("label")
-//        binding.label.text = position
     }
     override fun onDestroyView() {
         super.onDestroyView()

@@ -7,6 +7,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -83,15 +85,39 @@ class FrontEndNovelActivity : AppCompatActivity() {
             startActivity(intent)
             finish()
         }
-        binding.shareTWIB.setOnClickListener {
-            val authorName = binding.novelAuthorTV
-            val novelName = binding.novelTitleTV
-            val intent = Intent()
-            intent.action = Intent.ACTION_SEND
-            intent.putExtra(Intent.EXTRA_TEXT,"Go Check out ${authorName}'s Novel ${novelName} at FICTION HERO App\nIt is available at App/Google Store")
-            intent.type = "text/plain"
+        binding.ibBookmark.setOnClickListener {
+            //make fun if its bookmarked 12-14-2022
+            if(binding.tvIsfollowed.text == "no"){
+                binding.tvIsfollowed.text = "yes"
+                firebaseUser.uid.let { it1 ->
+                    FirebaseDatabase.getInstance().reference
+                        .child("Bookmark_Follow").child(it1.toString())
+                        .child("Bookmark_Following").child(profileId)
+                        .setValue(true)
+                }
 
-            startActivity(Intent.createChooser(intent,"Please select app: "))
+                firebaseUser.uid.let { it1 ->
+                    FirebaseDatabase.getInstance().reference
+                        .child("Bookmark_Follow").child(profileId)
+                        .child("Bookmark_Followers").child(it1.toString())
+                        .setValue(true)
+                }
+                Toast.makeText(this,"Bookmarked",Toast.LENGTH_SHORT).show()
+            }else{
+                binding.tvIsfollowed.text = "no"
+                firebaseUser.uid.let { it1 ->
+                    FirebaseDatabase.getInstance().reference
+                        .child("Bookmark_Follow").child(it1)
+                        .child("Bookmark_Following").child(profileId)
+                        .removeValue()
+                }
+                firebaseUser.uid.let { it1 ->
+                    FirebaseDatabase.getInstance().reference
+                        .child("Bookmark_Follow").child(profileId)
+                        .child("Bookmark_Followers").child(it1)
+                        .removeValue()
+                }
+            }
         }
 
     }

@@ -7,10 +7,15 @@ import androidx.viewpager2.adapter.FragmentStateAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.UserFragmentRV1
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.UserFragmentRV2
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.UserFragmentRV3
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
 
 private const val NUM_TABS = 3
 
-public class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle) :
+public class ViewPagerAdapter(fragmentManager: FragmentManager, lifecycle: Lifecycle,
+                                recentNovels:ArrayList<Novel>,
+                                bookmarks:ArrayList<Novel>,
+                                followedUsers: ArrayList<User>) :
     FragmentStateAdapter(fragmentManager, lifecycle) {
 
     override fun getItemCount(): Int {

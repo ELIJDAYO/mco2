@@ -1,16 +1,13 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments
 
 import android.annotation.SuppressLint
-import android.app.ProgressDialog
+import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.icu.number.NumberFormatter.with
-import android.icu.number.NumberRangeFormatter.with
 import android.net.Uri
 import android.os.Bundle
 import android.provider.OpenableColumns
-import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -20,30 +17,24 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.res.ResourcesCompat
 import androidx.fragment.app.Fragment
-import com.bumptech.glide.GenericTransitionOptions.with
 import com.bumptech.glide.Glide
-import com.bumptech.glide.Glide.with
-import com.bumptech.glide.load.resource.bitmap.BitmapTransitionOptions.with
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions.with
-import com.facebook.share.Share
-import com.google.android.gms.tasks.Continuation
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.StorageTask
-import com.google.firebase.storage.UploadTask
 import com.squareup.picasso.Picasso
+import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers.Main
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.OptionActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.ViewPagerAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserBinding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.User
+import kotlin.system.measureTimeMillis
 
 
 class UserFragment : Fragment() {
@@ -58,6 +49,14 @@ class UserFragment : Fragment() {
     private lateinit var firebaseUser: FirebaseUser
     private var storageProfileRef: StorageReference?=null
     private lateinit var sharedPreferences:SharedPreferences
+    private var recentNovels = arrayListOf<Novel>()
+    private var bookmarks = arrayListOf<Novel>()
+    private var followedUsers = arrayListOf<User>()
+
+    lateinit var episodeRef: DatabaseReference
+    lateinit var novelRef: DatabaseReference
+    lateinit var userRef: DatabaseReference
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,21 +67,31 @@ class UserFragment : Fragment() {
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
         storageProfileRef = FirebaseStorage.getInstance().reference.child("Pictures")
 
-        //for now use this
         this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
+        var publisher = arguments?.getString("publisher_id")
+
+        if(publisher != null){
+            val prefs =
+                this.activity?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+                    ?.edit().apply {
+                        this!!.putString("profileId", publisher)
+                        this.apply()
+                    }
+            profileId = publisher.toString()
+        }
+        else{
+           profileId = firebaseUser.uid
+            this.activity?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+                ?.edit().apply {
+                    this!!.putString("profileId", profileId)
+                    this.apply()
+                }
+        }
         init()
 
-        if (profileId == firebaseUser.uid) {
-            binding.ivFollow.background = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
-            binding.ivEdit.visibility = View.VISIBLE
-            binding.ivSetting.visibility = View.VISIBLE
-        } else if (profileId != firebaseUser.uid) {
-            binding.ivFollow.background = ResourcesCompat.getDrawable(resources,R.drawable.heart_edge, null)
-            binding.ivEdit.visibility = View.INVISIBLE
-            binding.ivSetting.visibility = View.INVISIBLE
-            checkFollowOrFollowingButtonStatus()
-        }
+
         binding.ivFollow.setOnClickListener {
+            //make fun if its bookmarked 12-14-2022
             if(binding.tvIsfollowed.text == "no"){
                 binding.tvIsfollowed.text = "yes"
                 binding.ivFollow.background = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
@@ -135,6 +144,16 @@ class UserFragment : Fragment() {
         return binding.root
     }
     private fun init(){
+        if (profileId == firebaseUser.uid) {
+            binding.ivFollow.background = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
+            binding.ivEdit.visibility = View.VISIBLE
+            binding.ivSetting.visibility = View.VISIBLE
+        } else {
+            binding.ivFollow.background = ResourcesCompat.getDrawable(resources,R.drawable.heart_edge, null)
+            binding.ivEdit.visibility = View.INVISIBLE
+            binding.ivSetting.visibility = View.INVISIBLE
+            checkFollowOrFollowingButtonStatus()
+        }
         setNumFollowers()
         setUserInfo()
     }
@@ -195,8 +214,12 @@ class UserFragment : Fragment() {
         userRef.addValueEventListener(object: ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()){
+
                     val user = snapshot.getValue(User::class.java)
                     val uri = user!!.getImage()
+                    if(uri == "R.drawable.superhero"){
+                        return
+                    }
                     val ref = FirebaseStorage.getInstance().getReferenceFromUrl(uri)
                     Toast.makeText(context,"$ref",Toast.LENGTH_SHORT).show()
                     ref.delete()
@@ -278,14 +301,104 @@ class UserFragment : Fragment() {
         super.onViewCreated(itemView, savedInstanceState)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabs
-        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle)
+        CoroutineScope(Dispatchers.IO).launch{
+            readData1()
+        }
+
+        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,
+            recentNovels,
+            bookmarks,
+            followedUsers)
         viewPager.adapter = adapter
 
         TabLayoutMediator(tabLayout, viewPager) { tab, position ->
             tab.text = tabArray[position]
         }.attach()
+    }
+    private suspend fun readData1(){
+        withContext(Dispatchers.IO){
+            val executionTime = measureTimeMillis {
+                async {
+                    println("debug: launching 1st job: ${Thread.currentThread().name}")
+                    fetchRecentNovels()
+                }.await()
 
+                async {
+                    println("debug: launching 2nd job: ${Thread.currentThread().name}")
+                    fetchBookmarks()
+                }.await()
+                async {
+                    println("debug: launching 2nd job: ${Thread.currentThread().name}")
+                    fetchFollowing()
+                }.await()
+            }
+            Log.e(ContentValues.TAG,"debug: job1 and job2 are complete. It took ${executionTime} ms")
 
+        }
+    }
+    private suspend fun fetchRecentNovels(){
+        withContext(Main){
+            novelRef = FirebaseDatabase.getInstance().getReference("Novels")
+            var query = novelRef.orderByChild("novelId")
+            query.addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        recentNovels.clear()
+                        for (element in snapshot.children){
+                            val novel = element.getValue(Novel::class.java)
+                            recentNovels.add(novel!!)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay (500)
+        }
+    }
+    private suspend fun fetchBookmarks(){
+        withContext(Main){
+            novelRef = FirebaseDatabase.getInstance().getReference("Bookmark_Follow/$profileId/Bookmark_Following/")
+            novelRef.addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        bookmarks.clear()
+                        for (element in snapshot.children){
+                            val bookmark = element.getValue(Novel::class.java)
+                            bookmarks.add(bookmark!!)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay (500)
+        }
+    }
+    private suspend fun fetchFollowing(){
+        withContext(Main){
+            userRef = FirebaseDatabase.getInstance().getReference("Follow/$profileId/Following/")
+            userRef.addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        followedUsers.clear()
+                        for (element in snapshot.children){
+                            val user = element.getValue(User::class.java)
+                            followedUsers.add(user!!)
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay (500)
+        }
     }
     override fun onDestroyView() {
         super.onDestroyView()

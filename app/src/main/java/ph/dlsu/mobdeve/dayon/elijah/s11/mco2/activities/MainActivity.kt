@@ -1,12 +1,11 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
 import android.content.Context
-import android.content.Intent
-import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.google.firebase.auth.FirebaseAuth
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.ActivityMainBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.*
@@ -15,7 +14,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments.*
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     internal var selectedFragment: Fragment?=null
-
+    private lateinit var uid: String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,13 +25,15 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(findViewById(R.id.home_toolbar))
         val navView: BottomNavigationView = findViewById(R.id.nav_view)
         navView.setOnNavigationItemSelectedListener(onNavigationItemSelectedListener)
+        this.uid = FirebaseAuth.getInstance().currentUser!!.uid
 
 
-        val publisher = intent.getStringExtra("PUBLISHER_ID")
+
+        val publisher = intent.getStringExtra("publisher_id")
         val lastFragment = intent.getStringExtra("last_fragment")
         if(publisher!=null) {
-            val prefs: SharedPreferences.Editor? =
-                getSharedPreferences("PREFS", Context.MODE_PRIVATE)
+            val prefs =
+                getSharedPreferences("prefs", Context.MODE_PRIVATE)
                     .edit().apply {
                         putString("profileId", publisher)
                         apply()
@@ -41,6 +42,11 @@ class MainActivity : AppCompatActivity() {
         }
 
         else if (lastFragment == "userprofile"){
+            val prefs = getSharedPreferences("prefs", Context.MODE_PRIVATE)
+                .edit().apply {
+                    putString("profileId", publisher)
+                    apply()
+                }
             moveToFragment(UserFragment())
         }
         else if (lastFragment == "home"){
