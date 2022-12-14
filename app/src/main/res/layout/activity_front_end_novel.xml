@@ -141,7 +141,7 @@
                         app:layout_constraintTop_toBottomOf="@+id/novelTitleTV" />
 
                     <ImageButton
-                        android:id="@+id/starIB"
+                        android:id="@+id/ib_star"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
                         android:background="@drawable/star"
@@ -156,8 +156,8 @@
                         android:text="0"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/shareFBIB"
-                        app:layout_constraintStart_toEndOf="@+id/starIB"
-                        app:layout_constraintTop_toTopOf="@+id/starIB" />
+                        app:layout_constraintStart_toEndOf="@+id/ib_star"
+                        app:layout_constraintTop_toTopOf="@+id/ib_star" />
 
 <!--                    <ImageButton-->
 <!--                        android:id="@+id/shareTWIB"-->
@@ -173,9 +173,9 @@
                         android:id="@+id/ib_bookmark"
                         android:layout_width="40dp"
                         android:layout_height="40dp"
-                        android:background="@drawable/open_book"
+                        android:background="@drawable/ic_bookmark_empty"
                         android:scaleType="fitCenter"
-                        android:src="@drawable/open_book"
+                        android:src="@drawable/ic_bookmark_empty"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toEndOf="@+id/novelTitleTV" />
                     <ImageButton
@@ -187,9 +187,16 @@
                         android:src="@drawable/share_fb_img"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintEnd_toStartOf="@+id/ib_bookmark" />
-
                     <TextView
-                        android:id="@+id/tv_isfollowed"
+                        android:id="@+id/tv_is_star"
+                        android:layout_width="0dp"
+                        android:layout_height="0dp"
+                        android:text="no"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+                    <TextView
+                        android:id="@+id/tv_is_bookmark"
                         android:layout_width="0dp"
                         android:layout_height="0dp"
                         android:text="no"

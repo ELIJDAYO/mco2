@@ -129,7 +129,7 @@ class HomeFragment : Fragment() {
                 }
 
             })
-            delay(500)
+            delay(300)
         }
     }
     private suspend fun fetchNovelIdsForTag1() {
@@ -157,7 +157,7 @@ class HomeFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay(500)
+            delay(300)
             Log.e(TAG,"Size of NovelIdsByTag: ${novelIdsByTag1[0]}")
         }
     }
@@ -182,7 +182,7 @@ class HomeFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay(1000)
+            delay(300)
             adapter2 = context?.let { NovelItemAdapter(it,novelsByTag1,novelDateUpdatedList ) }!!
             binding.rvTag1.adapter = adapter2
         }
@@ -261,7 +261,7 @@ class HomeFragment : Fragment() {
                     Log.d(TAG, "$error")
                 }
             })
-            delay(500)
+            delay(300)
         }
     }
     private suspend fun fetchRecentlyUpdatedNovel(){
@@ -285,7 +285,7 @@ class HomeFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay(500)
+            delay(300)
             adapter1 = context?.let { NovelItemAdapter(it,novelList,novelDateUpdatedList) }!!
             binding.rvNewest.adapter = adapter1
         }

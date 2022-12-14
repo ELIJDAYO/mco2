@@ -2,6 +2,7 @@ package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.fragments
 
 import android.annotation.SuppressLint
 import android.content.ContentValues
+import android.content.ContentValues.TAG
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
@@ -50,7 +51,10 @@ class UserFragment : Fragment() {
     private var storageProfileRef: StorageReference?=null
     private lateinit var sharedPreferences:SharedPreferences
     private var recentNovels = arrayListOf<Novel>()
-    private var bookmarks = arrayListOf<Novel>()
+    private var bookmarkNovels = arrayListOf<Novel>()
+    private var bookmarkNovelIds = arrayListOf<String>()
+
+    private var followedUsersIds = arrayListOf<String>()
     private var followedUsers = arrayListOf<User>()
 
     lateinit var episodeRef: DatabaseReference
@@ -67,28 +71,9 @@ class UserFragment : Fragment() {
         firebaseUser = FirebaseAuth.getInstance().currentUser!!
         storageProfileRef = FirebaseStorage.getInstance().reference.child("Pictures")
 
-        this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
-        var publisher = arguments?.getString("publisher_id")
-
-        if(publisher != null){
-            val prefs =
-                this.activity?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-                    ?.edit().apply {
-                        this!!.putString("profileId", publisher)
-                        this.apply()
-                    }
-            profileId = publisher.toString()
-        }
-        else{
-           profileId = firebaseUser.uid
-            this.activity?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
-                ?.edit().apply {
-                    this!!.putString("profileId", profileId)
-                    this.apply()
-                }
-        }
         init()
-
+//temporary
+        this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
 
         binding.ivFollow.setOnClickListener {
             //make fun if its bookmarked 12-14-2022
@@ -144,15 +129,28 @@ class UserFragment : Fragment() {
         return binding.root
     }
     private fun init(){
+        var publisher = arguments?.getString("publisher_id").toString()
+        if(publisher != "null"){
+            val prefs =
+                this.activity?.getSharedPreferences("prefs", Context.MODE_PRIVATE)
+                    ?.edit().apply {
+                        this!!.putString("profileId", publisher)
+                        this.apply()
+                    }
+            this.profileId = publisher
+            Log.e(TAG,"A UserFragment: ${publisher} vs ${profileId}")
+        }
+        else{
+            this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
+            Log.e(TAG,"B UserFragment: ${publisher} vs ${profileId}")
+        }
+        checkFollowOrFollowingButtonStatus()
         if (profileId == firebaseUser.uid) {
-            binding.ivFollow.background = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
             binding.ivEdit.visibility = View.VISIBLE
             binding.ivSetting.visibility = View.VISIBLE
         } else {
-            binding.ivFollow.background = ResourcesCompat.getDrawable(resources,R.drawable.heart_edge, null)
             binding.ivEdit.visibility = View.INVISIBLE
             binding.ivSetting.visibility = View.INVISIBLE
-            checkFollowOrFollowingButtonStatus()
         }
         setNumFollowers()
         setUserInfo()
@@ -290,33 +288,38 @@ class UserFragment : Fragment() {
                 if (p0.child(profileId).exists()) {
                     val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart, null)
                     binding.ivFollow.background = drawable
+                    binding.tvIsfollowed.text = "yes"
 //                        view?.edit_profile_Button?.text = "Following"
                 } else {
                     val drawable = ResourcesCompat.getDrawable(resources, R.drawable.heart_edge, null)
-                    binding.ivFollow.background = drawable                    }
+                    binding.ivFollow.background = drawable
+                    binding.tvIsfollowed.text = "no"
+                }
             }
         })
     }
+
     override fun onViewCreated(itemView: View, savedInstanceState: Bundle?) {
         super.onViewCreated(itemView, savedInstanceState)
         val viewPager = binding.viewPager
         val tabLayout = binding.tabs
-        CoroutineScope(Dispatchers.IO).launch{
+        CoroutineScope(Main).launch{
             readData1()
+            val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,
+                recentNovels,
+                bookmarkNovels,
+                followedUsers)
+            viewPager.adapter = adapter
+
+            TabLayoutMediator(tabLayout, viewPager) { tab, position ->
+                tab.text = tabArray[position]
+            }.attach()
         }
 
-        val adapter = ViewPagerAdapter(childFragmentManager, lifecycle,
-            recentNovels,
-            bookmarks,
-            followedUsers)
-        viewPager.adapter = adapter
 
-        TabLayoutMediator(tabLayout, viewPager) { tab, position ->
-            tab.text = tabArray[position]
-        }.attach()
     }
     private suspend fun readData1(){
-        withContext(Dispatchers.IO){
+        withContext(Main){
             val executionTime = measureTimeMillis {
                 async {
                     println("debug: launching 1st job: ${Thread.currentThread().name}")
@@ -325,10 +328,18 @@ class UserFragment : Fragment() {
 
                 async {
                     println("debug: launching 2nd job: ${Thread.currentThread().name}")
-                    fetchBookmarks()
+                    fetchBookmarksIds()
                 }.await()
                 async {
                     println("debug: launching 2nd job: ${Thread.currentThread().name}")
+                    fetchBookmarks()
+                }.await()
+                async {
+                    println("debug: launching 3rd job: ${Thread.currentThread().name}")
+                    fetchFollowingIds()
+                }.await()
+                async {
+                    println("debug: launching 4th job: ${Thread.currentThread().name}")
                     fetchFollowing()
                 }.await()
             }
@@ -355,19 +366,19 @@ class UserFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay (500)
+            delay (300)
         }
     }
-    private suspend fun fetchBookmarks(){
+    private suspend fun fetchBookmarksIds(){
         withContext(Main){
             novelRef = FirebaseDatabase.getInstance().getReference("Bookmark_Follow/$profileId/Bookmark_Following/")
             novelRef.addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
-                        bookmarks.clear()
+                        bookmarkNovelIds.clear()
                         for (element in snapshot.children){
-                            val bookmark = element.getValue(Novel::class.java)
-                            bookmarks.add(bookmark!!)
+                            val novelId = element.key.toString()
+                            bookmarkNovelIds.add(novelId!!)
                         }
                     }
                 }
@@ -376,19 +387,68 @@ class UserFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay (500)
+            delay (300)
+        }
+    }
+    private suspend fun fetchBookmarks(){
+        withContext(Main){
+            novelRef = FirebaseDatabase.getInstance().getReference("Novels")
+            novelRef.addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        bookmarkNovels.clear()
+                        for (element in snapshot.children){
+                            val novel = element.getValue(Novel::class.java)
+                            if(novel!!.getNovelId() in bookmarkNovelIds){
+                                bookmarkNovels.add(novel)
+                            }
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay (300)
+        }
+    }
+    private suspend fun fetchFollowingIds(){
+        withContext(Main){
+            userRef = FirebaseDatabase.getInstance().getReference("Follow/$profileId/Following/")
+            userRef.addValueEventListener(object: ValueEventListener{
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if(snapshot.exists()){
+                        followedUsersIds.clear()
+                        for (element in snapshot.children){
+                            val userId = element.key.toString()
+                            followedUsersIds.add(userId)
+//                            Log.e(TAG,"Display UserId $userId")
+                        }
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay (300)
         }
     }
     private suspend fun fetchFollowing(){
         withContext(Main){
-            userRef = FirebaseDatabase.getInstance().getReference("Follow/$profileId/Following/")
+            userRef = FirebaseDatabase.getInstance().getReference("Users")
             userRef.addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
                         followedUsers.clear()
                         for (element in snapshot.children){
                             val user = element.getValue(User::class.java)
-                            followedUsers.add(user!!)
+                            if(user!!.getUid() in followedUsersIds){
+                                followedUsers.add(user)
+
+                            }
+//                            Log.e(TAG,"Display UserId $userId")
                         }
                     }
                 }
@@ -397,7 +457,7 @@ class UserFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay (500)
+            delay (300)
         }
     }
     override fun onDestroyView() {

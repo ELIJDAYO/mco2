@@ -1,6 +1,7 @@
 package ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities
 
 import android.content.ContentValues.TAG
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -57,21 +58,16 @@ class FrontEndNovelActivity : AppCompatActivity() {
         setContentView(binding.root)
         binding.rvEpisodes.layoutManager = LinearLayoutManager(applicationContext)
         binding.rvTags.layoutManager = LinearLayoutManager(applicationContext)
+        firebaseUser = FirebaseAuth.getInstance().currentUser!!
+        this.profileId = firebaseUser.uid
 
-        setupNovelDetail()
-        setupEpisodeList()
-        fetchAuthor()
+        init()
 
         episodeAdapter = NovelEpisodeAdapter(this, episodeList,"view")
         binding.rvEpisodes.adapter = episodeAdapter
         CoroutineScope(IO).launch{
             readData1()
         }
-
-
-        firebaseUser = FirebaseAuth.getInstance().currentUser!!
-        this.profileId = firebaseUser.uid
-
 
         binding.ibBack.setOnClickListener {
             onBackPressedDispatcher.onBackPressed()
@@ -87,40 +83,147 @@ class FrontEndNovelActivity : AppCompatActivity() {
         }
         binding.ibBookmark.setOnClickListener {
             //make fun if its bookmarked 12-14-2022
-            if(binding.tvIsfollowed.text == "no"){
-                binding.tvIsfollowed.text = "yes"
-                firebaseUser.uid.let { it1 ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Bookmark_Follow").child(it1.toString())
-                        .child("Bookmark_Following").child(profileId)
-                        .setValue(true)
-                }
+            if(binding.tvIsBookmark.text == "no"){
+                binding.tvIsBookmark.text = "yes"
+                Log.e(TAG,"After pressing bookmark $profileId")
+                FirebaseDatabase.getInstance().reference
+                    .child("Bookmark_Follow").child(novelId)
+                    .child("Bookmark_Following").child(profileId)
+                    .setValue(true)
 
-                firebaseUser.uid.let { it1 ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Bookmark_Follow").child(profileId)
-                        .child("Bookmark_Followers").child(it1.toString())
-                        .setValue(true)
-                }
+
+                FirebaseDatabase.getInstance().reference
+                    .child("Bookmark_Follow").child(profileId)
+                    .child("Bookmark_Followers").child(novelId)
+                    .setValue(true)
+                val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_shade, null)
+                binding.ibBookmark.background = drawable
                 Toast.makeText(this,"Bookmarked",Toast.LENGTH_SHORT).show()
             }else{
-                binding.tvIsfollowed.text = "no"
-                firebaseUser.uid.let { it1 ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Bookmark_Follow").child(it1)
-                        .child("Bookmark_Following").child(profileId)
-                        .removeValue()
-                }
-                firebaseUser.uid.let { it1 ->
-                    FirebaseDatabase.getInstance().reference
-                        .child("Bookmark_Follow").child(profileId)
-                        .child("Bookmark_Followers").child(it1)
-                        .removeValue()
-                }
+                binding.tvIsBookmark.text = "no"
+                FirebaseDatabase.getInstance().reference
+                    .child("Bookmark_Follow").child(novelId)
+                    .child("Bookmark_Following").child(profileId)
+                    .removeValue()
+
+                FirebaseDatabase.getInstance().reference
+                    .child("Bookmark_Follow").child(profileId)
+                    .child("Bookmark_Followers").child(novelId)
+                    .removeValue()
+                val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_empty, null)
+                binding.ibBookmark.background = drawable
+                Toast.makeText(this,"Remove Bookmarked",Toast.LENGTH_SHORT).show()
             }
         }
+        binding.ibStar.setOnClickListener {
+            //make fun if its bookmarked 12-14-2022
+            if(binding.tvIsBookmark.text == "no"){
+                binding.tvIsBookmark.text = "yes"
+                FirebaseDatabase.getInstance().reference
+                    .child("Star_Follow").child(novelId)
+                    .child("Star_Following").child(profileId)
+                    .setValue(true)
+
+
+                FirebaseDatabase.getInstance().reference
+                    .child("Star_Follow").child(profileId)
+                    .child("Star_FollowedBy").child(novelId)
+                    .setValue(true)
+                val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_2, null)
+                binding.ibStar.background = drawable
+                Toast.makeText(this,"Starred",Toast.LENGTH_SHORT).show()
+            }else{
+                binding.tvIsBookmark.text = "no"
+                FirebaseDatabase.getInstance().reference
+                    .child("Star_Follow").child(novelId)
+                    .child("Star_Following").child(profileId)
+                    .removeValue()
+
+                FirebaseDatabase.getInstance().reference
+                    .child("Star_Follow").child(profileId)
+                    .child("Star_FollowedBy").child(novelId)
+                    .removeValue()
+                val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_1, null)
+                binding.ibStar.background = drawable
+                Toast.makeText(this,"Remove Star",Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+    private fun init(){
+        var publisher = intent.getStringExtra("publisher_id").toString()
+        Log.e(TAG,"UserFragment: ${publisher.toString()} vs ${profileId}")
+        if(publisher != "null"){
+            val prefs =
+                getSharedPreferences("prefs", Context.MODE_PRIVATE)
+                    ?.edit().apply {
+                        this!!.putString("profileId", publisher)
+                        this.apply()
+                    }
+            profileId = publisher
+        }
+        else{
+            this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
+            Log.e(TAG,"B UserFragment: ${publisher} vs ${profileId}")//            getSharedPreferences("prefs", Context.MODE_PRIVATE)
+//                ?.edit().apply {
+//                    this!!.putString("profileId", profileId)
+//                    this.apply()
+//                }
+        }
+        setupNovelDetail()
+        setupEpisodeList()
+        fetchAuthor()
+        checkBookmarkStatus()
+        checkStarStatus()
 
     }
+    private fun checkBookmarkStatus() {
+        val followingRef = FirebaseDatabase.getInstance().reference
+                .child("Bookmark_Follow").child(novelId)
+                .child("Bookmark_Following")
+
+
+        followingRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.child(profileId).exists()) {
+                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_shade, null)
+                    binding.tvIsBookmark.background = drawable
+                    binding.tvIsBookmark.text = "yes"
+//                        view?.edit_profile_Button?.text = "Following"
+                } else {
+                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_empty, null)
+                    binding.tvIsBookmark.background = drawable
+                    binding.tvIsBookmark.text = "no"
+                }
+            }
+        })
+    }
+    private fun checkStarStatus() {
+        val followingRef = FirebaseDatabase.getInstance().reference
+                .child("Star_Follow").child(novelId)
+                .child("Star_Following")
+
+        followingRef.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                if (p0.child(profileId).exists()) {
+                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_2, null)
+                    binding.tvIsStar.background = drawable
+                    binding.tvIsStar.text = "yes"
+//                        view?.edit_profile_Button?.text = "Following"
+                } else {
+                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_1, null)
+                    binding.tvIsStar.background = drawable
+                    binding.tvIsStar.text = "no"
+                }
+            }
+        })
+    }
+
     private suspend fun readData1(){
         withContext(Main){
             val executionTime = measureTimeMillis {
