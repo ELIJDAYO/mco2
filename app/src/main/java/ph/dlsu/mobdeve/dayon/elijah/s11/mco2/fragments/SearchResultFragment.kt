@@ -31,7 +31,7 @@ class SearchResultFragment : Fragment() {
     private lateinit var dbEssay: DatabaseReference
     private lateinit var dbNSFW: DatabaseReference
 
-    private val appContext = requireContext().applicationContext
+    private val appContext = activity
     private var profileId: String = FirebaseAuth.getInstance().currentUser!!.uid
     private var resultList = arrayListOf<String>()
 
@@ -80,17 +80,28 @@ class SearchResultFragment : Fragment() {
         var filterEssay: Boolean = false
         var filterNSFW: Boolean = false
 
+        var noFilter = true
+
 
 
         if (filterSeries) {
             database = FirebaseDatabase.getInstance().getReference("Series")
+            noFilter = false
         } else if (filterNovel) {
             database = FirebaseDatabase.getInstance().getReference("Novel")
+            noFilter = false
         } else if (filterEssay) {
             database = FirebaseDatabase.getInstance().getReference("Essay")
+            noFilter = false
         } else if (filterNSFW) {
             database = FirebaseDatabase.getInstance().getReference("NSFW")
+            noFilter = false
+        } else{
+            database = FirebaseDatabase.getInstance().getReference("")
+            noFilter = true
+
         }
+
 
         if (filterPopularity) {
             queryFirst = database.orderByChild("Stars")
@@ -153,7 +164,9 @@ class SearchResultFragment : Fragment() {
                     adapter = SearchResultNavAdapter(resultList)
                     binding.searchResultRV.adapter = adapter
                 }
+                else if(noFilter){
 
+                }
                 else{
                     if (snapshot.exists()) {
                         for (element in snapshot.children) {
