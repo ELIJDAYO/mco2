@@ -166,13 +166,13 @@ class CreateNewNovelActivity : AppCompatActivity() {
 
             novelRef.child(novelId).setValue(novelMap)
 //            novelRef.child(novelId).updateChildren(novelMap)
-
+            val tagId = novelRef.push().key.toString()
             val tagRef: DatabaseReference = FirebaseDatabase.getInstance().reference.child("Tags")
             val tagMap=HashMap<String, Any>()
             for (tag in tagNameList){
                 tagMap["novelId"] = novelId
                 tagMap["tagName"] = tag
-                tagRef.setValue(tagMap)
+                tagRef.child(tagId).setValue(tagMap)
             }
 
 

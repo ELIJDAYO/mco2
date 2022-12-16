@@ -37,14 +37,15 @@ class HomeFragment : Fragment() {
     private var novelIdList= arrayListOf<String>()
     private var novelDateUpdatedList= arrayListOf<String>()
     private var novelList= arrayListOf<Novel>()
-//getting top3 tags by childCounts and get novel
+    private var listNovelIdsWithNewEp = arrayListOf<String>()
+
+    //getting top3 tags by childCounts and get novel
     //reuse novelId and novelList
     private var tagNameList = arrayListOf<String>()
     private var novelIdsByTag1 = arrayListOf<String>()
     private var novelsByTag1 = arrayListOf<Novel>()
     private var novelIdsByTag2 = arrayListOf<String>()
     private var novelIdsByTag3 = arrayListOf<String>()
-
 
     private val binding get() = _binding!!
 
@@ -60,7 +61,6 @@ class HomeFragment : Fragment() {
         binding.rvNewest.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
         binding.rvTag1.layoutManager = LinearLayoutManager(activity,LinearLayoutManager.VERTICAL,false)
 
-        publishEpisodes()
 
 
         CoroutineScope(IO).launch{
@@ -74,11 +74,19 @@ class HomeFragment : Fragment() {
             val executionTime = measureTimeMillis {
                 async {
                     println("debug: launching 1st job: ${Thread.currentThread().name}")
+                    publishEpisodes_a()
+                }.await()
+                async {
+                    println("debug: launching 1.5st job: ${Thread.currentThread().name}")
+                    publishEpisodes_b()
+                }.await()
+                async {
+                    println("debug: launching 2nd job: ${Thread.currentThread().name}")
                     fetchRecentlyUpdatedNovelId()
                 }.await()
 
                 async {
-                    println("debug: launching 2nd job: ${Thread.currentThread().name}")
+                    println("debug: launching 3rd job: ${Thread.currentThread().name}")
                     fetchRecentlyUpdatedNovel()
                 }.await()
 
@@ -219,68 +227,78 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun publishEpisodes(){
-        var listNovelIdsWithNewEp = arrayListOf<String>()
-        episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
-        var query = episodeRef.orderByChild("isPublished").equalTo(false)
-        query.addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    for(element in snapshot.children){
-                        var episode = element.getValue(Episode::class.java)
-                        Log.e(TAG,"episode releasedatetime ${episode!!.getReleaseDateTime()}")
-                        if(episode.getReleaseDateTime().isBlank()){
-                            Log.e(TAG,"This is blank")
-                        }
-                        else if(compareNowAndReleaseDate(episode!!.getReleaseDateTime())){
-                            val episodeMap = HashMap<String,Any>()
-                            episodeMap["episodeId"] = episode.getEpisodeId()
-                            episodeMap["isDraft"] = false
-                            episodeMap["isPublished"] = true
-                            episodeRef.child(episode.getEpisodeId()).updateChildren(episodeMap)
-                            listNovelIdsWithNewEp.add(episode.getNovelId())
-                        }
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        } )
-
-        novelRef = FirebaseDatabase.getInstance().getReference("Novels")
-        query = episodeRef.orderByChild("numEpisodes")
-        query.addValueEventListener(object:ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    for(element in snapshot.children){
-                        var novel = element.getValue(Novel::class.java)
-                        for(novelId in listNovelIdsWithNewEp){
-                            if(novel!!.getNovelId()==novelId){
-                                var count = novel.getNumEpisodes().toInt()
-                                count += 1
-                                val novelMap = HashMap<String,Any>()
-                                novelMap["numEpisodes"] = count.toString()
-                                novelRef.child(novelId).updateChildren(novelMap)
+    private suspend fun publishEpisodes_a(){
+        withContext(Main) {
+            var listNovelIdsWithNewEp = arrayListOf<String>()
+            episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
+            var query = episodeRef.orderByChild("isPublished").equalTo(false)
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    listNovelIdsWithNewEp.clear()
+                    if (snapshot.exists()) {
+                        for (element in snapshot.children) {
+                            var episode = element.getValue(Episode::class.java)
+                            Log.e(TAG, "episode releasedatetime ${episode!!.getReleaseDateTime()}")
+                            if (episode.getReleaseDateTime().isBlank()) {
+                                Log.e(TAG, "This is blank")
+                            } else if (compareNowAndReleaseDate(episode!!.getReleaseDateTime())) {
+                                val episodeMap = HashMap<String, Any>()
+                                episodeMap["episodeId"] = episode.getEpisodeId()
+                                episodeMap["isDraft"] = false
+                                episodeMap["isPublished"] = true
+                                episodeRef.child(episode.getEpisodeId()).updateChildren(episodeMap)
+                                listNovelIdsWithNewEp.add(episode.getNovelId())
                             }
-                            listNovelIdsWithNewEp.remove(novelId)
                         }
-
-
-
                     }
                 }
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
 
-        } )
-
+            })
+            delay(500)
+            Log.e(TAG, "Before Beofre publishing episode $listNovelIdsWithNewEp")
+        }
     }
+    private suspend fun publishEpisodes_b(){
+        withContext(Main) {
+            novelRef = FirebaseDatabase.getInstance().getReference("Novels")
+            val query = episodeRef.orderByChild("numEpisodes")
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        for (element in snapshot.children) {
+                            var novel = element.getValue(Novel::class.java)
+                            for (novelId in listNovelIdsWithNewEp) {
+                                if (novel!!.getNovelId() == novelId) {
+                                    Log.e(
+                                        TAG,
+                                        "Before publishing episode ${
+                                            novel.getNumEpisodes().toInt()
+                                        } "
+                                    )
+                                    var count = novel.getNumEpisodes().toInt()
+                                    count += 1
+                                    val novelMap = HashMap<String, Any>()
+                                    novelMap["numEpisodes"] = count.toString()
+                                    Log.e(TAG, "After publishing episode ${count} ")
+                                    novelRef.child(novelId).updateChildren(novelMap)
+                                }
+                                listNovelIdsWithNewEp.remove(novelId)
+                            }
+                        }
+                    }
+                }
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+            })
+            delay(500)
+        }
+    }
+
     private fun compareNowAndReleaseDate(releaseDateTime:String): Boolean {
         val now = Calendar.getInstance()
         val year = now[Calendar.YEAR]

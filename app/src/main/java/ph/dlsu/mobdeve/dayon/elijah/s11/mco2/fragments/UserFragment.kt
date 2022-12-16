@@ -33,7 +33,6 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.EditNovelActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.activities.OptionActivity
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.UserAdapter
-import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.ViewPagerAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserBinding
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Episode
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
@@ -49,7 +48,6 @@ class UserFragment : Fragment() {
         "Bookmark",
         "Followed"
     )
-    private lateinit var adapter: ViewPagerAdapter
     private lateinit var profileId: String
     private lateinit var firebaseUser: FirebaseUser
     private var storageProfileRef: StorageReference?=null

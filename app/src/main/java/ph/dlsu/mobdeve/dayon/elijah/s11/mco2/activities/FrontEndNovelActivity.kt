@@ -75,6 +75,7 @@ class FrontEndNovelActivity : AppCompatActivity() {
         }
         binding.ivNovel.visibility = View.INVISIBLE
         binding.ivEps.visibility = View.INVISIBLE
+        binding.ivAdd.visibility = View.INVISIBLE
         binding.ivClose.setOnClickListener {
             val intent= Intent(this@FrontEndNovelActivity,MainActivity::class.java)
             intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_NEW_TASK)
@@ -310,11 +311,11 @@ class FrontEndNovelActivity : AppCompatActivity() {
             query.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (element in snapshot.children) {
-                        val tag = element.getValue(String::class.java)
+                        val tag = element.getValue(Tag::class.java)
                         Log.e(TAG,"Content of tag $tag")
-//                        if(tag!!.getNovelId()==novelId) {
-//                            tagList.add(tag)
-//                        }
+                        if(tag!!.getNovelId()==novelId) {
+                            tagList.add(tag)
+                        }
                     }
                 }
 

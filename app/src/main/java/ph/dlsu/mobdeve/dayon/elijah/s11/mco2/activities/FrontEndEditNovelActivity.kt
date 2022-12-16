@@ -15,6 +15,7 @@ import com.google.firebase.database.ktx.getValue
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
+import kotlinx.coroutines.Dispatchers.Main
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.R
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelEpisodeAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.TagAdapter
@@ -32,6 +33,8 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
     private lateinit var novelEpisodeAdapter: NovelEpisodeAdapter
     private lateinit var firebaseUser: FirebaseUser
     private lateinit var novelId:String
+    private lateinit var novelTitle:String
+
     lateinit var novelRef: DatabaseReference
     lateinit var episodeRef: DatabaseReference
     lateinit var tagRef: DatabaseReference
@@ -56,7 +59,7 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
         setupNovelDetail()
         setupEpisodeList()
         fetchAuthor()
-        CoroutineScope(IO).launch{
+        CoroutineScope(Main).launch{
             readData1()
         }
         novelEpisodeAdapter = NovelEpisodeAdapter(applicationContext, episodeList,"edit")
@@ -68,9 +71,19 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
         }
         binding.ivNovel.visibility = View.VISIBLE
         binding.ivEps.visibility = View.VISIBLE
+        binding.ivAdd.visibility = View.VISIBLE
         binding.ivNovel.setOnClickListener{
             val intent= Intent(this@FrontEndEditNovelActivity,EditExistingNovelActivity::class.java)
+            intent.putExtra("novelId", novelId)
+
+            startActivity(intent)
+            finish()
+        }
+        binding.ivAdd.setOnClickListener {
+            val intent= Intent(this@FrontEndEditNovelActivity,CreateNewEpisodeActivity::class.java)
             intent.putExtra("novelId",novelId)
+            intent.putExtra("novelTitle",novelTitle)
+            Log.e(TAG,"FrontEndEditNovel: novelTitle $novelTitle")
             startActivity(intent)
             finish()
         }
@@ -98,7 +111,7 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
 
     }
     private suspend fun readData1(){
-        withContext(Dispatchers.IO){
+        withContext(Main){
             val executionTime = measureTimeMillis {
                 async{
                     println("debug: launching 1st job: ${Thread.currentThread().name}")
@@ -124,9 +137,10 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
                             .into(binding.novelCoverIV)
                     }
                     if (novel != null) {
-                        binding.novelTitleTV.text = novel.getTitle()
+                        novelTitle = novel.getTitle()
+                        binding.novelTitleTV.text = novelTitle
+
                         binding.expandTv.text = novel.getSynopsis()
-//                        binding.novelAuthorTV.text = novel.getUid()
                         uid = novel.getUid()
                     }
                 }
@@ -137,7 +151,7 @@ class FrontEndEditNovelActivity : AppCompatActivity() {
         })
     }
     private suspend fun setupTags(){
-        withContext(IO) {
+        withContext(Main) {
             novelId = intent.getStringExtra("novelId").toString()
 
             tagRef = FirebaseDatabase.getInstance().getReference("Tags")
