@@ -65,7 +65,7 @@ class HomeFragment : Fragment() {
 
         CoroutineScope(IO).launch{
             readData1()
-            readData2()
+//            readData2()
         }
 
     }
@@ -92,7 +92,7 @@ class HomeFragment : Fragment() {
             val executionTime = measureTimeMillis {
                 async {
                     println("debug: launching 1st job: ${Thread.currentThread().name}")
-                    fetchTop3Tags()
+//                    fetchTop3Tags()
                 }.await()
                 async {
                     println("debug: launching 2nd job: ${Thread.currentThread().name}")
@@ -228,7 +228,11 @@ class HomeFragment : Fragment() {
                 if(snapshot.exists()){
                     for(element in snapshot.children){
                         var episode = element.getValue(Episode::class.java)
-                        if(compareNowAndReleaseDate(episode!!.getReleaseDateTime())){
+                        Log.e(TAG,"episode releasedatetime ${episode!!.getReleaseDateTime()}")
+                        if(episode.getReleaseDateTime().isBlank()){
+                            Log.e(TAG,"This is blank")
+                        }
+                        else if(compareNowAndReleaseDate(episode!!.getReleaseDateTime())){
                             val episodeMap = HashMap<String,Any>()
                             episodeMap["episodeId"] = episode.getEpisodeId()
                             episodeMap["isDraft"] = false
@@ -255,7 +259,7 @@ class HomeFragment : Fragment() {
                         var novel = element.getValue(Novel::class.java)
                         for(novelId in listNovelIdsWithNewEp){
                             if(novel!!.getNovelId()==novelId){
-                                var count = novel.getNumEp().toInt()
+                                var count = novel.getNumEpisodes().toInt()
                                 count += 1
                                 val novelMap = HashMap<String,Any>()
                                 novelMap["numEpisodes"] = count.toString()

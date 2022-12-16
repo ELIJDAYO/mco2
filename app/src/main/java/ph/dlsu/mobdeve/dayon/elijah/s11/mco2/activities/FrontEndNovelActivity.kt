@@ -306,14 +306,15 @@ class FrontEndNovelActivity : AppCompatActivity() {
         withContext(Main){
             novelId = intent.getStringExtra("novelId").toString()
             tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-            var query = tagRef.orderByChild("novelId")
+            var query = tagRef
             query.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     for (element in snapshot.children) {
-                        val tag = element.getValue(Tag::class.java)
-                        if(tag!!.getNovelId()==novelId) {
-                            tagList.add(tag)
-                        }
+                        val tag = element.getValue(String::class.java)
+                        Log.e(TAG,"Content of tag $tag")
+//                        if(tag!!.getNovelId()==novelId) {
+//                            tagList.add(tag)
+//                        }
                     }
                 }
 
