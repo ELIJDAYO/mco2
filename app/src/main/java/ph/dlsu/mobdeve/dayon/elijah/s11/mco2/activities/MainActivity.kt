@@ -80,7 +80,7 @@ class MainActivity : AppCompatActivity() {
                 return@OnNavigationItemSelectedListener true
             }
             R.id.nav_search -> {
-                moveToFragment(SearchResultFragment())
+                moveToFragment(SearchFragment())
                 return@OnNavigationItemSelectedListener true
             }
 
