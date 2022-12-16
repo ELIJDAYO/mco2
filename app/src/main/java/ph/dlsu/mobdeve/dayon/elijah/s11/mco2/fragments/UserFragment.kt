@@ -376,9 +376,9 @@ class UserFragment : Fragment() {
                             val novel = element.getValue(Novel::class.java)
 //                            Log.e(TAG,"userfragment: what in here: ${novel!!.getTitle()} has ${novel.getNumEpisodes()} episodes")
 
-//                            if(novel!!.getNumEp() > 0){
+                            if(novel!!.getNumEpisodes().toInt() > 0){
                                 recentNovels.add(novel!!)
-//                            }
+                            }
                         }
                     }
 //                    Log.e(TAG,"userfragment: 0 what in here: $recentNovels")
@@ -399,6 +399,7 @@ class UserFragment : Fragment() {
             for(element in recentNovels){
                 tmp.add(element.getNovelId())
             }
+            Log.e(TAG,"Crushing point $recentNovels")
             episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
             var query = episodeRef.orderByChild("releaseDateTime").limitToLast(100)
             query.addValueEventListener(object : ValueEventListener {
@@ -407,7 +408,10 @@ class UserFragment : Fragment() {
                         novelDateUpdatedList.clear()
                         for (element in snapshot.children) {
                             val episode = element.getValue(Episode::class.java)
-                            if(episode!!.getNovelId() in tmp){
+                            if(episode!!.getReleaseDateTime().isBlank()){
+                                Log.e(TAG,"This is blank")
+                            }
+                            else if(episode.getNovelId() in tmp){
                                 novelDateUpdatedList.add(episode.getReleaseDateTime())
                                 tmp.remove(episode.getNovelId())
                             }
@@ -423,6 +427,7 @@ class UserFragment : Fragment() {
                 }
             })
             delay(700)
+            Log.e(TAG,"Crushing point $novelDateUpdatedList")
         }
     }
     private suspend fun fetchBookmarksIds(){
