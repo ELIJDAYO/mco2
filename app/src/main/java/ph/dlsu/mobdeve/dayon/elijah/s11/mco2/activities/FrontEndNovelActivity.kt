@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.*
+import com.google.firebase.database.ktx.getValue
 import com.squareup.picasso.Picasso
 import kotlinx.coroutines.*
 import kotlinx.coroutines.Dispatchers.IO
@@ -186,15 +187,23 @@ class FrontEndNovelActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.child(profileId).exists()) {
-                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_shade, null)
-                    binding.tvIsBookmark.background = drawable
-                    binding.tvIsBookmark.text = "yes"
+            override fun onDataChange(snapShot: DataSnapshot) {
+                if (snapShot.exists()) {
+                    for(element in snapShot.children){
+                        val userId = element.getValue(String::class.java)
+                        if(profileId==userId){
+                            Log.e(TAG,"frontend: is it bookmarked [$userId] vs $profileId")
+
+                            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_shade, null)
+                            binding.ibBookmark.background = drawable
+                            binding.tvIsBookmark.text = "yes"
+                        }
+                    }
 //                        view?.edit_profile_Button?.text = "Following"
                 } else {
+                    Log.e(TAG,"frontend: not here")
                     val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_empty, null)
-                    binding.tvIsBookmark.background = drawable
+                    binding.ibBookmark.background = drawable
                     binding.tvIsBookmark.text = "no"
                 }
             }
@@ -209,15 +218,22 @@ class FrontEndNovelActivity : AppCompatActivity() {
             override fun onCancelled(error: DatabaseError) {
             }
 
-            override fun onDataChange(p0: DataSnapshot) {
-                if (p0.child(profileId).exists()) {
-                    val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_2, null)
-                    binding.tvIsStar.background = drawable
-                    binding.tvIsStar.text = "yes"
+            override fun onDataChange(snapShot: DataSnapshot) {
+                if (snapShot.exists()) {
+                    for(element in snapShot.children){
+                        val userId = element.getValue(String::class.java)
+                        if(profileId==userId){
+                            Log.e(TAG,"frontend: is it starred [$userId] vs $profileId")
+                            val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_2, null)
+                            binding.ibStar.background = drawable
+                            binding.tvIsStar.text = "yes"
+                        }
+                    }
 //                        view?.edit_profile_Button?.text = "Following"
                 } else {
+                    Log.e(TAG,"frontend: not here")
                     val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_1, null)
-                    binding.tvIsStar.background = drawable
+                    binding.ibStar.background = drawable
                     binding.tvIsStar.text = "no"
                 }
             }

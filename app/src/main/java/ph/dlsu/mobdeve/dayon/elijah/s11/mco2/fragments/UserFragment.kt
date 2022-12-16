@@ -85,11 +85,11 @@ class UserFragment : Fragment() {
                         this.apply()
                     }
             this.profileId = publisher
-            Log.e(TAG,"A UserFragment: ${publisher} vs ${profileId}")
+//            Log.e(TAG,"A UserFragment: ${publisher} vs ${profileId}")
         }
         else{
             this.profileId = FirebaseAuth.getInstance().currentUser!!.uid
-            Log.e(TAG,"B UserFragment: ${publisher} vs ${profileId}")
+//            Log.e(TAG,"B UserFragment: ${publisher} vs ${profileId}")
         }
         checkFollowOrFollowingButtonStatus()
         if (profileId == firebaseUser.uid) {
@@ -374,10 +374,10 @@ class UserFragment : Fragment() {
                         recentNovels.clear()
                         for (element in snapshot.children){
                             val novel = element.getValue(Novel::class.java)
-                            Log.e(TAG,"userfragment: what in here: ${novel!!.getTitle()} has ${novel.getNumEpisodes()} episodes")
+//                            Log.e(TAG,"userfragment: what in here: ${novel!!.getTitle()} has ${novel.getNumEpisodes()} episodes")
 
 //                            if(novel!!.getNumEp() > 0){
-                                recentNovels.add(novel)
+                                recentNovels.add(novel!!)
 //                            }
                         }
                     }
@@ -390,7 +390,7 @@ class UserFragment : Fragment() {
                 }
             })
             delay (700)
-            Log.e(TAG,"userfragment: what in here: $recentNovels")
+//            Log.e(TAG,"userfragment: what in here: $recentNovels")
         }
     }
     private suspend fun fetchUpdateDateNovel(){
@@ -411,9 +411,9 @@ class UserFragment : Fragment() {
                                 novelDateUpdatedList.add(episode.getReleaseDateTime())
                                 tmp.remove(episode.getNovelId())
                             }
-                            Log.e(TAG,"userfragment: whats in episode ${episode.getReleaseDateTime()}")
-                            Log.e(TAG,"userfragment: whats in tmp ${tmp}")
-                            Log.e(TAG,"userfragment: whats in tmp size ${tmp.size} novelDateUpdatelis size ${novelDateUpdatedList.size}")
+//                            Log.e(TAG,"userfragment: whats in episode ${episode.getReleaseDateTime()}")
+//                            Log.e(TAG,"userfragment: whats in tmp ${tmp}")
+//                            Log.e(TAG,"userfragment: whats in tmp size ${tmp.size} novelDateUpdatelis size ${novelDateUpdatedList.size}")
                         }
                     }
                 }
@@ -430,14 +430,16 @@ class UserFragment : Fragment() {
             novelRef = FirebaseDatabase.getInstance().reference
                 .child("Bookmark_Follow")
                 .child(profileId)
-                .child("Bookmark_Following")
+                .child("Bookmark_Followers")
             novelRef.addValueEventListener(object: ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     if(snapshot.exists()){
                         bookmarkNovelIds.clear()
                         for (element in snapshot.children){
-                            val novelId = element.getValue(Novel::class.java)
-                            bookmarkNovelIds.add(novelId!!.getNovelId())
+                            val novelId = element.getValue(String::class.java)
+                            Log.e(TAG,"number of bookmarkIds $novelId")
+
+                            bookmarkNovelIds.add(novelId!!)
                         }
                     }
                 }
@@ -446,7 +448,7 @@ class UserFragment : Fragment() {
                     TODO("Not yet implemented")
                 }
             })
-            delay (300)
+            delay (500)
         }
     }
     private suspend fun fetchBookmarks(){
@@ -470,6 +472,7 @@ class UserFragment : Fragment() {
                 }
             })
             delay (300)
+            Log.e(TAG,"number of bookmark novels $bookmarkNovels")
         }
     }
     private suspend fun fetchFollowingIds(){
