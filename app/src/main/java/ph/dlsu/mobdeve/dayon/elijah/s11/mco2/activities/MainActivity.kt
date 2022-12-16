@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
 
         publisher = intent.getStringExtra("publisher_id").toString()
         val lastFragment = intent.getStringExtra("last_fragment")
-        if(publisher.isNotBlank()) {
+        if(publisher != "null") {
             val prefs =
                 getSharedPreferences("prefs", Context.MODE_PRIVATE)
                     .edit().apply {

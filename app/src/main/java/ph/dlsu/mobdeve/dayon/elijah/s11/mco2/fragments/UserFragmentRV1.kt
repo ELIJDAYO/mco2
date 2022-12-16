@@ -9,8 +9,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.adapter.NovelItemAdapter
 import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.databinding.FragmentUserRV1Binding
+import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Novel
 
-class UserFragmentRV1 : Fragment() {
+class UserFragmentRV1() : Fragment() {
     private var layoutManager: RecyclerView.LayoutManager? = null
     private var adapter: RecyclerView.Adapter<NovelItemAdapter.ViewHolder>? = null
     private var _binding: FragmentUserRV1Binding? = null

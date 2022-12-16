@@ -89,13 +89,13 @@ class FrontEndNovelActivity : AppCompatActivity() {
                 FirebaseDatabase.getInstance().reference
                     .child("Bookmark_Follow").child(novelId)
                     .child("Bookmark_Following").child(profileId)
-                    .setValue(true)
+                    .setValue(profileId)
 
 
                 FirebaseDatabase.getInstance().reference
                     .child("Bookmark_Follow").child(profileId)
                     .child("Bookmark_Followers").child(novelId)
-                    .setValue(true)
+                    .setValue(novelId)
                 val drawable = ResourcesCompat.getDrawable(resources, R.drawable.ic_bookmark_shade, null)
                 binding.ibBookmark.background = drawable
                 Toast.makeText(this,"Bookmarked",Toast.LENGTH_SHORT).show()
@@ -122,13 +122,13 @@ class FrontEndNovelActivity : AppCompatActivity() {
                 FirebaseDatabase.getInstance().reference
                     .child("Star_Follow").child(novelId)
                     .child("Star_Following").child(profileId)
-                    .setValue(true)
+                    .setValue(profileId)
 
 
                 FirebaseDatabase.getInstance().reference
                     .child("Star_Follow").child(profileId)
                     .child("Star_FollowedBy").child(novelId)
-                    .setValue(true)
+                    .setValue(novelId)
                 val drawable = ResourcesCompat.getDrawable(resources, R.drawable.star_2, null)
                 binding.ibStar.background = drawable
                 Toast.makeText(this,"Starred",Toast.LENGTH_SHORT).show()

@@ -139,7 +139,7 @@ class RegistrationActivity : AppCompatActivity(), DatePickerDialog.OnDateSetList
                         .child(currentUserId)
                         .child("Following")
                         .child(currentUserId)
-                        .setValue(true)
+                        .setValue(currentUserId)
 
 
                     val intent=Intent(this, LoginActivity::class.java)

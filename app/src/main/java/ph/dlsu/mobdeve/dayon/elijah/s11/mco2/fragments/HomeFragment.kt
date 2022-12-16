@@ -21,6 +21,7 @@ import ph.dlsu.mobdeve.dayon.elijah.s11.mco2.model.Tag
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 import kotlin.system.measureTimeMillis
 
 class HomeFragment : Fragment() {
@@ -93,14 +94,16 @@ class HomeFragment : Fragment() {
                     println("debug: launching 1st job: ${Thread.currentThread().name}")
                     fetchTop3Tags()
                 }.await()
-
                 async {
                     println("debug: launching 2nd job: ${Thread.currentThread().name}")
                     fetchNovelIdsForTag1()
                 }.await()
-
                 async {
                     println("debug: launching 3rd job: ${Thread.currentThread().name}")
+                    fetchUpdateDateNovel()
+                }.await()
+                async {
+                    println("debug: launching 4th job: ${Thread.currentThread().name}")
                     fetchNovelsForTag1()
                 }.await()
             }
@@ -143,12 +146,12 @@ class HomeFragment : Fragment() {
             query.addValueEventListener(object : ValueEventListener{
                 override fun onDataChange(snapshot: DataSnapshot) {
                     novelIdsByTag1.clear()
-                    novelDateUpdatedList.clear()
+//                    novelDateUpdatedList.clear()
                     if(snapshot.exists()){
                         for(element in snapshot.children) {
                             val tag = element.getValue(Tag::class.java)
                             novelIdsByTag1.add(tag!!.getNovelId())
-                            novelDateUpdatedList.add("")
+//                            novelDateUpdatedList.add("")
                         }
                     }
 
@@ -158,7 +161,35 @@ class HomeFragment : Fragment() {
                 }
             })
             delay(300)
-            Log.e(TAG,"Size of NovelIdsByTag: ${novelIdsByTag1[0]}")
+//            Log.e(TAG,"Size of NovelIdsByTag: ${novelIdsByTag1[0]}")
+        }
+    }
+    private suspend fun fetchUpdateDateNovel(){
+        withContext(Main) {
+            var tmp = novelIdsByTag1
+
+            episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
+            var query = episodeRef.orderByChild("releaseDateTime").limitToLast(100)
+            query.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        novelDateUpdatedList.clear()
+                        for (element in snapshot.children) {
+                            val episode = element.getValue(Episode::class.java)
+                            if(episode!!.getNovelId() in tmp){
+                                novelDateUpdatedList.add(episode.getReleaseDateTime())
+                                tmp.remove(episode.getNovelId())
+                            }
+                        }
+
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.d(TAG, "$error")
+                }
+            })
+            delay(300)
         }
     }
     private suspend fun fetchNovelsForTag1(){
@@ -189,6 +220,7 @@ class HomeFragment : Fragment() {
     }
 
     private fun publishEpisodes(){
+        var listNovelIdsWithNewEp = arrayListOf<String>()
         episodeRef = FirebaseDatabase.getInstance().getReference("Episodes")
         var query = episodeRef.orderByChild("isPublished").equalTo(false)
         query.addValueEventListener(object:ValueEventListener{
@@ -202,7 +234,38 @@ class HomeFragment : Fragment() {
                             episodeMap["isDraft"] = false
                             episodeMap["isPublished"] = true
                             episodeRef.child(episode.getEpisodeId()).updateChildren(episodeMap)
+                            listNovelIdsWithNewEp.add(episode.getNovelId())
                         }
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        } )
+
+        novelRef = FirebaseDatabase.getInstance().getReference("Novels")
+        query = episodeRef.orderByChild("numEpisodes")
+        query.addValueEventListener(object:ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot.exists()){
+                    for(element in snapshot.children){
+                        var novel = element.getValue(Novel::class.java)
+                        for(novelId in listNovelIdsWithNewEp){
+                            if(novel!!.getNovelId()==novelId){
+                                var count = novel.getNumEp().toInt()
+                                count += 1
+                                val novelMap = HashMap<String,Any>()
+                                novelMap["numEpisodes"] = count.toString()
+                                novelRef.child(novelId).updateChildren(novelMap)
+                            }
+                            listNovelIdsWithNewEp.remove(novelId)
+                        }
+
+
+
                     }
                 }
             }

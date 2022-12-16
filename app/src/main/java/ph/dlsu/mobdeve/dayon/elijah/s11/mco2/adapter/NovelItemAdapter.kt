@@ -25,25 +25,13 @@ class NovelItemAdapter : RecyclerView.Adapter<NovelItemAdapter.ViewHolder>{
         var itemTitle: TextView? = null
         var itemDate: TextView? = null
         var itemCount: TextView? = null
+        var itemNumEp: TextView?= null
         init {
             itemTitle = itemView.findViewById(R.id.tv_title_inp)
             itemDate = itemView.findViewById(R.id.tv_date_inp)
             itemCount = itemView.findViewById(R.id.tv_count_inp)
+            itemNumEp = itemView.findViewById(R.id.tv_sum_of_episodes_inp)
 
-//            var position: Int = bindingAdapterPosition
-//            val context = itemView.context
-//               val intent = Intent(context, HomeFragment::class.java).apply {
-//                   putExtra("NUMBER", position)
-//                   putExtra("title", itemTitle?.text)
-//                   putExtra("date", itemDate?.text)
-//                   putExtra("num_episodes", itemCount?.text)
-//            if (position >= 0){
-//                itemView.setOnClickListener{
-//                    val intent = Intent(context, FrontEndNovelActivity::class.java)
-//                    context.startActivity(intent)
-//                }
-//            }
-//                context.startActivity(intent)
             }
         }
 
@@ -58,7 +46,8 @@ class NovelItemAdapter : RecyclerView.Adapter<NovelItemAdapter.ViewHolder>{
         val releasedDate = novelDateUpdatedList[position]
         holder.itemTitle?.text = novel.getTitle()
         holder.itemDate?.text = releasedDate
-        holder.itemCount?.text = novel.getNumEp().toString()
+        holder.itemCount?.text = "updating"
+        holder.itemNumEp?.text = novel.getNumEpisodes()
 
         holder.itemView.setOnClickListener {
             val intent = Intent(context,FrontEndNovelActivity::class.java)

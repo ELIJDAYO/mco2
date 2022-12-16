@@ -31,10 +31,8 @@ class TagAdapter : RecyclerView.Adapter<TagAdapter.ViewHolder>{
     }
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var itemTag: TextView? = null
-        var removeIv: ImageView? = null
         init {
             itemTag = itemView.findViewById(R.id.tv_title_it)
-            removeIv = itemView.findViewById(R.id.iv_remove_irt)
         }
     }
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ViewHolder {
@@ -47,32 +45,6 @@ class TagAdapter : RecyclerView.Adapter<TagAdapter.ViewHolder>{
         val tag = tagList[i]
         viewHolder.itemTag?.text = tag.getTagName()
 
-        viewHolder.removeIv?.setOnClickListener{
-            tagRemove = tag
-            removeTag()
-        }
-    }
-    private fun removeTag(){
-        val tagRef = FirebaseDatabase.getInstance().getReference("Tags")
-        val query = tagRef.orderByChild("novelId").equalTo(tagRemove.getNovelId())
-        query.addValueEventListener(object : ValueEventListener{
-            override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot.exists()){
-                    for(element in snapshot.children){
-                        var tag = element.getValue(Tag::class.java)
-                        if(tag!!.getTagName() == tagRemove.getTagName()){
-                            tagRef.removeValue()
-                            return
-                        }
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                TODO("Not yet implemented")
-            }
-
-        })
     }
     override fun getItemCount(): Int {
         return tagList.size

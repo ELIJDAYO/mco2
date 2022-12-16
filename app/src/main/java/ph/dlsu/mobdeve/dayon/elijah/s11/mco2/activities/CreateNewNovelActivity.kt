@@ -162,7 +162,7 @@ class CreateNewNovelActivity : AppCompatActivity() {
             novelMap["title"] = title
             novelMap["synopsis"] = synopsis
             novelMap["imageUri"] = imageUri
-            novelMap["numEpisodes"] = 0
+            novelMap["numEpisodes"] = "0"
 
             novelRef.child(novelId).setValue(novelMap)
 //            novelRef.child(novelId).updateChildren(novelMap)
